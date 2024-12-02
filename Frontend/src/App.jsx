@@ -44,7 +44,7 @@ function App() {
                 <ul class="space-y-1 border-t border-gray-100 pt-4">
                   <li>
                     <a
-                      href="forum/forum.html"
+                      href="#"
                       class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <img src="images/forum-icon.svg" alt="" />
@@ -59,7 +59,7 @@ function App() {
 
                   <li>
                     <a
-                      href="./blogs/blogs.html"
+                      href="#"
                       class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <img src="images/blogs-icon.svg" alt="" />
@@ -74,7 +74,7 @@ function App() {
 
                   <li>
                     <a
-                      href="./ecom/ecom.html"
+                      href="#"
                       class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <img src="images/shopping-cart.svg" alt="" />
@@ -104,7 +104,7 @@ function App() {
 
                   <li>
                     <a
-                      href="consultation/consultation.html"
+                      href="#"
                       class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <img src="images/user-logo.svg" alt="" />

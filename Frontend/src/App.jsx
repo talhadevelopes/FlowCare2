@@ -176,7 +176,7 @@ function App() {
           and connect with a community that cares about your well-being.
         </p>
         <button class="header-button">Join Us!</button>
-        <img src="../Images/women.png" alt="women" class="feature-image" />
+        <img src="../public/Images/women.png" alt="women" class="feature-image" />
       </div>
     </main>
 

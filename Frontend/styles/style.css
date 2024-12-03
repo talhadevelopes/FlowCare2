@@ -17,7 +17,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url('/images/health-logo.svg');
+  background-image: url("../images/pinkish-white-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -152,7 +152,13 @@ button:focus:before {
   margin: 15px;
 }
 
+
 span {
+  color: #fc00ff;
+  text-shadow: 0 0 20px #fc00ff;
+  font-family: sans-serif;
+}
+.unique-span {
   color: #fc00ff;
   text-shadow: 0 0 20px #fc00ff;
   font-family: Dancing Script;

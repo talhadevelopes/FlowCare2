@@ -5,6 +5,7 @@ import { Forum } from './components/Forum';
 import { Blogs } from './components/Blogs';
 import { Consultations } from './components/Consultations';
 import "./App.css";
+import { Tracker } from "./Tracker";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
 {
   path: "/consultations",
   element: <Consultations />
+},
+{
+  path: "/tracker",
+  element: <Tracker />
 }
 ])
 

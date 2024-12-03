@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 export function Blogs() {
+    const navigate = useNavigate();
   return (
     <>
     <meta charSet="UTF-8" />
@@ -35,7 +37,7 @@ export function Blogs() {
               <div className="px-2">
                 <div className="py-4">
                   <a
-                    href="../index.html"
+                    href="#" onClick={() => navigate("/")}
                     className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
                   >
                     <img src="../images/house-icon.svg" alt="" />
@@ -47,7 +49,7 @@ export function Blogs() {
                 <ul className="space-y-1 border-t border-gray-100 pt-4">
                   <li>
                     <a
-                      href="#"
+                      href="#" onClick={() => navigate("/forum")}
                       className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <img src="../images/forum-icon.svg" alt="" />
@@ -58,7 +60,7 @@ export function Blogs() {
                   </li>
                   <li>
                     <a
-                      href="blogs.html"
+                      href="#" onClick={() => navigate("/")}
                       className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                     >
                       <img src="../images/blogs-icon.svg" alt="" />

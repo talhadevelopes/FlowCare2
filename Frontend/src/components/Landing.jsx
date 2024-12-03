@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export function Landing () {
+    const navigate = useNavigate();
   return (
     <div>
       {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
@@ -18,7 +20,7 @@ export function Landing () {
                 <div class="px-2">
                   <div class="py-4">
                     <a
-                      href="#"
+                      href="#" onClick={() => navigate("/")}
                       class="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
                     >
                       <img src="images/house-icon.svg" alt="" />
@@ -31,8 +33,8 @@ export function Landing () {
 
                   <ul class="space-y-1 border-t border-gray-100 pt-4">
                     <li>
-                      <a
-                        href="#"
+                      <a 
+                        href="#" onClick={() => navigate("/forum")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/forum-icon.svg" alt="" />
@@ -45,7 +47,7 @@ export function Landing () {
 
                     <li>
                       <a
-                        href="#"
+                        href="#" onClick={() => navigate("/blogs")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/blogs-icon.svg" alt="" />

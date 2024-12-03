@@ -1,8 +1,16 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export function Landing () {
-    const navigate = useNavigate();
+export function Landing() {
+  const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState(
+    "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
+  );
+
+  const changeImage = (newImage) => {
+    setProfileImage(newImage);
+  };
   return (
     <div>
       {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
@@ -10,17 +18,62 @@ export function Landing () {
         <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
           <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
             <div>
-              <div class="inline-flex size-16 items-center justify-center">
-                <span class="grid size-10 place-content-center rounded-lg bg-pink-50 text-xs text-gray-600">
-                  FlowCare
-                </span>
+              <div className="py-4 px-2">
+                <div className="group relative inline-block">
+                  {/* Profile Picture */}
+                  <div
+                    id="profilePicture"
+                    className="w-12 h-12 rounded-full bg-cover bg-center"
+                    style={{ backgroundImage: `url(${profileImage})` }}
+                  ></div>
+
+                  {/* Tooltip Container */}
+                  <div className="invisible opacity-0 ml-20 group-hover:visible group-hover:opacity-100 absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform rounded bg-gray-900 p-2 text-white transition-all duration-300">
+                    <div className="flex flex-col gap-2 whitespace-nowrap">
+                      <button
+                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                        onClick={() =>
+                          changeImage(
+                            "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
+                          )
+                        }
+                      >
+                        User 1
+                      </button>
+                      <button
+                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                        onClick={() =>
+                          changeImage(
+                            "https://media.istockphoto.com/photos/beautiful-young-muslim-woman-wearing-a-hijab-on-her-head-picture-id618035002?k=6&m=618035002&s=612x612&w=0&h=_1m2fRBf_DbVeFOZN-VwC2cW9QnV7tYerZwZo44lLjo="
+                          )
+                        }
+                      >
+                        User 2
+                      </button>
+                      <button
+                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                        onClick={() =>
+                          changeImage(
+                            "https://i.pinimg.com/originals/ab/6d/70/ab6d70b2b5ac104f4459487d3a94bec7.jpg"
+                          )
+                        }
+                      >
+                        User 3
+                      </button>
+                    </div>
+
+                    {/* Arrow */}
+                    <div className="absolute left-1/2 top-0 -mt-2 h-0 w-0 -translate-x-1/2 transform border-8 border-transparent border-b-gray-900"></div>
+                  </div>
+                </div>
               </div>
 
               <div class="border-t border-gray-100">
                 <div class="px-2">
                   <div class="py-4">
                     <a
-                      href="#" onClick={() => navigate("/")}
+                      href="#"
+                      onClick={() => navigate("/")}
                       class="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
                     >
                       <img src="images/house-icon.svg" alt="" />
@@ -33,8 +86,9 @@ export function Landing () {
 
                   <ul class="space-y-1 border-t border-gray-100 pt-4">
                     <li>
-                      <a 
-                        href="#" onClick={() => navigate("/forum")}
+                      <a
+                        href="#"
+                        onClick={() => navigate("/forum")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/forum-icon.svg" alt="" />
@@ -47,7 +101,8 @@ export function Landing () {
 
                     <li>
                       <a
-                        href="#" onClick={() => navigate("/blogs")}
+                        href="#"
+                        onClick={() => navigate("/blogs")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/blogs-icon.svg" alt="" />
@@ -928,6 +983,5 @@ export function Landing () {
         </div>
       </footer>
     </div>
-  )
+  );
 }
-

@@ -1,8 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function Tracker() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState(
+    "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
+  );
+  const [activeTab, setActiveTab] = useState("cycle-phases");
+
+  const tabs = [
+    { id: "cycle-phases", label: "Cycle Phases" },
+    { id: "common-symptoms", label: "Common Symptoms" },
+    { id: "nutrition-tips", label: "Nutrition Tips" },
+    { id: "myths-facts", label: "Myths & Facts" },
+    { id: "expert-consultation", label: "Expert Consultation" },
+  ];
+
+  const content = {
+    "cycle-phases": (
+      <div>
+        <h3 className="font-medium mb-3">Menstrual Cycle Phases</h3>
+        <ul className="space-y-2 text-sm">
+          <li>• Menstrual phase (1-5 days)</li>
+          <li>• Follicular phase (1-13 days)</li>
+          <li>• Ovulation phase (14th day)</li>
+          <li>• Luteal phase (15-28 days)</li>
+        </ul>
+      </div>
+    ),
+    "common-symptoms": (
+      <div>
+        <h3 className="font-medium mb-3">Common Symptoms</h3>
+        <ul className="space-y-2 text-sm">
+          <li>• Bloating</li>
+          <li>• Cramps</li>
+          <li>• Fatigue</li>
+          <li>• Mood swings</li>
+        </ul>
+      </div>
+    ),
+    "nutrition-tips": (
+      <div>
+        <h3 className="font-medium mb-3">Nutrition Tips</h3>
+        <ul className="space-y-2 text-sm">
+          <li>• Stay hydrated</li>
+          <li>• Eat iron-rich foods</li>
+          <li>• Include Omega-3 fatty acids</li>
+          <li>• Avoid excessive caffeine</li>
+        </ul>
+      </div>
+    ),
+    "myths-facts": (
+      <div>
+        <h3 className="font-medium mb-3">Myths & Facts</h3>
+        <ul className="space-y-2 text-sm">
+          <li>• Myth: You can't get pregnant during your period</li>
+          <li>• Fact: Ovulation can happen soon after your period ends</li>
+          <li>• Myth: PMS is just an excuse for mood swings</li>
+          <li>
+            • Fact: PMS is a real condition with physical and emotional symptoms
+          </li>
+        </ul>
+      </div>
+    ),
+    "expert-consultation": (
+      <div>
+        <h3 className="font-medium mb-3">Expert Consultation</h3>
+        <ul className="space-y-2 text-sm">
+          <li>
+            • Dr. Sarvar Khan (A very Big Doctor)
+            <br />
+            <span className="cursor-pointer underline font-sans">
+              Request a Call Back
+            </span>
+          </li>
+        </ul>
+      </div>
+    ),
+  };
+
+  const changeImage = (newImage) => {
+    setProfileImage(newImage);
+  };
   return (
     <div>
       <>
@@ -30,141 +109,177 @@ export function Tracker() {
         />
         {/*----------------------SIDEBAR SECTION---------------------------------*/}
         <div id="sidebar-container">
-          <div className="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
-            <div className="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
-              <div className="border-t border-gray-100">
-                <div className="px-2">
-                  <div className="py-4">
-                    {/* Main button */}
-                    <div className="group relative inline-block">
-                      <div
-                        className="w-12 h-12 rounded-full bg-cover bg-center"
-                        style={{
-                          backgroundImage:
-                            'url("https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg")',
-                        }}
-                      />
-                      <div className="invisible opacity-0 ml-20 group-hover:visible group-hover:opacity-100 absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform rounded bg-gray-900 p-2 text-white transition-all duration-300">
-                        <div className="flex flex-col gap-2 whitespace-nowrap">
-                          <a
-                            href="#"
-                            className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                          >
-                            User 1
-                          </a>
-                          <a
-                            href="#"
-                            className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                          >
-                            User 2
-                          </a>
-                          <a
-                            href="#"
-                            className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                          >
-                            User 3
-                          </a>
-                        </div>
-                        <div className="absolute left-1/2 top-0 -mt-2 h-0 w-0 -translate-x-1/2 transform border-8 border-transparent border-b-gray-900"></div>
+          <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
+            <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
+              <div>
+                <div className="py-4 px-2">
+                  <div className="group relative inline-block">
+                    {/* Profile Picture */}
+                    <div
+                      id="profilePicture"
+                      className="w-12 h-12 rounded-full bg-cover bg-center"
+                      style={{ backgroundImage: `url(${profileImage})` }}
+                    ></div>
+
+                    {/* Tooltip Container */}
+                    <div className="invisible opacity-0 ml-20 group-hover:visible group-hover:opacity-100 absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform rounded bg-gray-900 p-2 text-white transition-all duration-300">
+                      <div className="flex flex-col gap-2 whitespace-nowrap">
+                        <button
+                          className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                          onClick={() =>
+                            changeImage(
+                              "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
+                            )
+                          }
+                        >
+                          User 1
+                        </button>
+                        <button
+                          className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                          onClick={() =>
+                            changeImage(
+                              "https://media.istockphoto.com/photos/beautiful-young-muslim-woman-wearing-a-hijab-on-her-head-picture-id618035002?k=6&m=618035002&s=612x612&w=0&h=_1m2fRBf_DbVeFOZN-VwC2cW9QnV7tYerZwZo44lLjo="
+                            )
+                          }
+                        >
+                          User 2
+                        </button>
+                        <button
+                          className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                          onClick={() =>
+                            changeImage(
+                              "https://i.pinimg.com/originals/ab/6d/70/ab6d70b2b5ac104f4459487d3a94bec7.jpg"
+                            )
+                          }
+                        >
+                          User 3
+                        </button>
                       </div>
+
+                      {/* Arrow */}
+                      <div className="absolute left-1/2 top-0 -mt-2 h-0 w-0 -translate-x-1/2 transform border-8 border-transparent border-b-gray-900"></div>
                     </div>
                   </div>
-                  <div className="py-4">
-                    <a
-                      href="#" onClick={() => navigate("/")}
-                      className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
-                    >
-                      <img src="../images/house-icon.svg" alt="" />
-                      <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                        Home
-                      </span>
-                    </a>
+                </div>
+
+                <div class="border-t border-gray-100">
+                  <div class="px-2">
+                    <div class="py-4">
+                      <a
+                        href="#"
+                        onClick={() => navigate("/")}
+                        class="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
+                      >
+                        <img src="images/house-icon.svg" alt="" />
+
+                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                          Home
+                        </span>
+                      </a>
+                    </div>
+
+                    <ul class="space-y-1 border-t border-gray-100 pt-4">
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => navigate("/forum")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <img src="images/forum-icon.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                            Forum
+                          </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => navigate("/blogs")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <img src="images/blogs-icon.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                            Blogs
+                          </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => navigate("/Ecom")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <img src="images/shopping-cart.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                            Shop
+                          </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => navigate("/tracker")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <img src="images/health-logo.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 font-sans rounded bg-gray-900 px-4 py-1.5 text-xl font-medium text-white group-hover:visible">
+                            Track Your Health Cycle
+                          </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => navigate("/consultations")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <img src="images/user-logo.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                            Expert Consultation
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
                   </div>
-                  <ul className="space-y-1 border-t border-gray-100 pt-4">
-                    <li>
-                      <a
-                        href="#" onClick={() => navigate("/forum")}
-                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="../images/forum-icon.svg" alt="" />
-                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Forum
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#" onClick={() => navigate("/blogs")}
-                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="../images/blogs-icon.svg" alt="" />
-                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Blogs
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#" onClick={() => navigate("/Ecom")}
-                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="../images/shopping-cart.svg" alt="" />
-                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Shop
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#" onClick={() => navigate("/tracker")}
-                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="../images/health-logo.svg" alt="" />
-                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 font-sans rounded bg-gray-900 px-4 py-1.5 text-xl font-medium text-white group-hover:visible">
-                          Track Your Health Cycle
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#" onClick={() => navigate("/consultations")}
-                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="../images/user-logo.svg" alt="" />
-                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Expert Consultation
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
                 </div>
               </div>
-            </div>
-            <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
-              <form action="#">
-                <button
-                  type="submit"
-                  className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="size-5 opacity-75"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
+
+              <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+                <form action="#">
+                  <button
+                    type="submit"
+                    class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
-                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                    Logout
-                  </span>
-                </button>
-              </form>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="size-5 opacity-75"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
+
+                    <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                      Logout
+                    </span>
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -464,6 +579,7 @@ export function Tracker() {
                   </div>
                 </div>
                 {/* Menstraul Information Section */}
+
                 <div className="bg-white rounded-lg border p-6">
                   <div className="mb-4">
                     <h2 className="text-lg font-semibold">
@@ -473,114 +589,46 @@ export function Tracker() {
                       Learn more about your menstrual cycle
                     </p>
                   </div>
+
                   <div className="border-b mb-4">
                     <div className="flex space-x-4">
-                      <button
-                        id="cycle-phases-tab"
-                        className="tab-button px-4 py-2 text-sm font-medium border-b-2 border-pink-500"
-                      >
-                        Cycle Phases
-                      </button>
-                      <button
-                        id="common-symptoms-tab"
-                        className="tab-button px-4 py-2 text-sm font-medium text-gray-500"
-                      >
-                        Common Symptoms
-                      </button>
-                      <button
-                        id="nutrition-tips-tab"
-                        className="tab-button px-4 py-2 text-sm font-medium text-gray-500"
-                      >
-                        Nutrition Tips
-                      </button>
-                      <button
-                        id="myths-facts-tab"
-                        className="tab-button px-4 py-2 text-sm font-medium text-gray-500"
-                      >
-                        Myths &amp; Facts
-                      </button>
-                      <button
-                        id="expert-consultation-tab"
-                        className="tab-button px-4 py-2 text-sm font-medium text-gray-500"
-                      >
-                        Expert Consultation
-                      </button>
+                      {[
+                        "cycle-phases",
+                        "common-symptoms",
+                        "nutrition-tips",
+                        "myths-facts",
+                        "expert-consultation",
+                      ].map((tab) => (
+                        <button
+                          key={tab}
+                          onClick={() => setActiveTab(tab)}
+                          className={`tab-button px-4 py-2 text-sm font-medium ${
+                            activeTab === tab
+                              ? "border-b-2 border-pink-500 text-pink-500"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          {tab
+                            .replace(/-/g, " ")
+                            .replace(/\b\w/g, (c) => c.toUpperCase())}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <div
-                    id="cycle-phases-content"
-                    className="tab-content mb-6 hidden"
-                  >
-                    <h3 className="font-medium mb-3">Menstrual Cycle Phases</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li>• Menstrual phase (1-5 days)</li>
-                      <li>• Follicular phase (1-13 days)</li>
-                      <li>• Ovulation phase (14th day)</li>
-                      <li>• Luteal phase (15-28 days)</li>
-                    </ul>
+
+                  <div className="tab-content mb-6">
+                    {content[activeTab] || (
+                      <div>No content available for this tab.</div>
+                    )}
                   </div>
-                  <div
-                    id="common-symptoms-content"
-                    className="tab-content mb-6 hidden"
-                  >
-                    <h3 className="font-medium mb-3">Common Symptoms</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li>• Bloating</li>
-                      <li>• Cramps</li>
-                      <li>• Fatigue</li>
-                      <li>• Mood swings</li>
-                    </ul>
-                  </div>
-                  <div
-                    id="nutrition-tips-content"
-                    className="tab-content mb-6 hidden"
-                  >
-                    <h3 className="font-medium mb-3">Nutrition Tips</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li>• Stay hydrated</li>
-                      <li>• Eat iron-rich foods</li>
-                      <li>• Include Omega-3 fatty acids</li>
-                      <li>• Avoid excessive caffeine</li>
-                    </ul>
-                  </div>
-                  <div
-                    id="myths-facts-content"
-                    className="tab-content mb-6 hidden"
-                  >
-                    <h3 className="font-medium mb-3">Myths &amp; Facts</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li>• Myth: You can't get pregnant during your period</li>
-                      <li>
-                        • Fact: Ovulation can happen soon after your period ends
-                      </li>
-                      <li>• Myth: PMS is just an excuse for mood swings</li>
-                      <li>
-                        • Fact: PMS is a real condition with physical and
-                        emotional symptoms
-                      </li>
-                    </ul>
-                  </div>
-                  <div
-                    id="expert-consultation-content"
-                    className="tab-content mb-6 hidden"
-                  >
-                    <h3 className="font-medium mb-3">Expert Consultation</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li>
-                        • Dr. Sarvar Khan (A very Big Doctor)
-                        <br />
-                        <span className="cursor-pointer underline font-sans">
-                          Request a Call Back
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
+
                   <div className="text-center">
                     <button className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors">
                       Download Health Report
                     </button>
                   </div>
                 </div>
+
                 <section className=" w-[80%] h-96 ml-[10%] relative mt-24 -mb-36">
                   <div className="flex items-center justify-center">
                     <section className="w-full p-6 rounded-lg max-w-2xl shadow-lg shadow-gray-300 bg-white">

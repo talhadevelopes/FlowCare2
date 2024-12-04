@@ -392,7 +392,7 @@ export function Tracker() {
                   <div className="bg-gray-50 flex justify-center items-center h-screen flex-col">
                     <div className="calendar w-11/12 max-w-md text-center bg-white rounded-lg shadow-lg p-6">
                       <h2 className="text-xl text-gray-800 mb-6">
-                        Developer's Calendar - 2025
+                        Calendar
                       </h2>
                       <div className="controls flex justify-between items-center mb-6">
                         <select

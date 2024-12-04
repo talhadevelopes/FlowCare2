@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function Tracker() {
@@ -82,6 +82,59 @@ export function Tracker() {
   const changeImage = (newImage) => {
     setProfileImage(newImage);
   };
+
+  //Calender Part
+  const [currentMonth, setCurrentMonth] = useState(0);
+  const [notes, setNotes] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [noteText, setNoteText] = useState("");
+  const [time, setTime] = useState("");
+
+  const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
+
+  const renderCalendar = () => {
+    const days = daysInMonth(currentMonth, 2025);
+    const calendarDays = [];
+    for (let i = 1; i <= days; i++) {
+      calendarDays.push(i);
+    }
+    return calendarDays;
+  };
+
+  const handleOpenModal = (day) => {
+    setSelectedDate(day);
+    setIsModalOpen(true);
+    setNoteText("");
+    setTime("");
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSaveNote = () => {
+    if (time && noteText) {
+      const key = `${currentMonth}-${selectedDate}`;
+      const newNotes = { ...notes };
+      if (!newNotes[key]) newNotes[key] = [];
+      newNotes[key].push({ time, text: noteText });
+      setNotes(newNotes);
+      handleCloseModal();
+    } else {
+      alert("Please fill out both time and note.");
+    }
+  };
+
+  const handleResetCalendar = () => {
+    setNotes({});
+  };
+
+  const updateNotesDisplay = (day) => {
+    const key = `${currentMonth}-${day}`;
+    return notes[key] || [];
+  };
+
   return (
     <div>
       <>
@@ -336,188 +389,128 @@ export function Tracker() {
                 </div>
                 <div className="grid md:grid-cols-2  gap-6 mb-14">
                   {/* Calendar Section */}
-                  <div className="flex items-center   justify-center  bg-gradient-to-br">
-                    <div className="w-full max-w-lg p-6 mx-auto bg-white rounded-2xl shadow-xl flex flex-col">
-                      <div className="flex justify-between pb-4">
-                        <div className="-rotate-90 cursor-pointer">
-                          <svg
-                            width={12}
-                            height={7}
-                            viewBox="0 0 12 7"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                  <div className="bg-gray-50 flex justify-center items-center h-screen flex-col">
+                    <div className="calendar w-11/12 max-w-md text-center bg-white rounded-lg shadow-lg p-6">
+                      <h2 className="text-xl text-gray-800 mb-6">
+                        Developer's Calendar - 2025
+                      </h2>
+                      <div className="controls flex justify-between items-center mb-6">
+                        <select
+                          id="monthSelect"
+                          value={currentMonth}
+                          onChange={(e) =>
+                            setCurrentMonth(parseInt(e.target.value))
+                          }
+                          className="text-sm p-2 rounded border border-gray-300 bg-gray-50 text-gray-700 focus:outline-none"
+                        >
+                          <option value="0">January</option>
+                          <option value="1">February</option>
+                          <option value="2">March</option>
+                          <option value="3">April</option>
+                          <option value="4">May</option>
+                          <option value="5">June</option>
+                          <option value="6">July</option>
+                          <option value="7">August</option>
+                          <option value="8">September</option>
+                          <option value="9">October</option>
+                          <option value="10">November</option>
+                          <option value="11">December</option>
+                        </select>
+                        <button
+                          onClick={handleResetCalendar}
+                          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-400"
+                        >
+                          Reset Calendar
+                        </button>
+                      </div>
+                      <div className="calendar-grid grid grid-cols-7 gap-2">
+                        {renderCalendar().map((day) => (
+                          <div
+                            key={day}
+                            className="day p-4 bg-gray-100 text-gray-700 cursor-pointer rounded-lg transition hover:bg-gray-200 min-h-20 relative text-sm"
+                            onClick={() => handleOpenModal(day)}
                           >
-                            <path
-                              d="M11.001 6L6.00098 1L1.00098 6"
-                              stroke="black"
-                              strokeOpacity="0.4"
-                              strokeWidth={2}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                        <span className="uppercase text-sm font-semibold font-sans text-gray-600">
-                          january - 2025
-                        </span>
-                        <div className="rotate-90 cursor-pointer">
-                          <svg
-                            width={12}
-                            height={7}
-                            viewBox="0 0 12 7"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M11.001 6L6.00098 1L1.00098 6"
-                              stroke="black"
-                              strokeOpacity="0.4"
-                              strokeWidth={2}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="flex relative justify-between font-medium uppercase text-xs pt-4 pb-2 border-t">
-                        <div className="px-3 border rounded-sm w-1 h-5 flex items-center justify-center border-red-500 text-red-500 shadow-md">
-                          sun
-                        </div>
-                        <span className="px-3 border rounded-sm w-1 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
-                          mon
-                        </span>
-                        <span className="px-3 border rounded-sm w-1 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
-                          tue
-                        </span>
-                        <span className="px-3 border rounded-sm w-1 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
-                          wed
-                        </span>
-                        <span className="px-3 border rounded-sm w-1 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
-                          thu
-                        </span>
-                        <span className="px-3 border rounded-sm w-1 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
-                          fri
-                        </span>
-                        <span className="px-3 border rounded-sm w-1 h-5 flex items-center justify-center border-green-500 text-green-500 shadow-md">
-                          sat
-                        </span>
-                      </div>
-                      <div className="flex justify-between font-medium text-sm pb-2">
-                        <span className="px-1 text-gray-400 w-14 flex justify-center items-center">
-                          30
-                        </span>
-                        <span className="px-1 text-gray-400 w-14 flex justify-center items-center">
-                          31
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          01
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          02
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          03
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          04
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          05
-                        </span>
-                      </div>
-                      <div className="flex justify-between font-medium text-sm pb-2">
-                        <span className="px-1 w-14 flex justify-center items-center border border-red-500 text-red-500 cursor-pointer">
-                          06
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          07
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          08
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          09
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          10
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          11
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          12
-                        </span>
-                      </div>
-                      <div className="flex justify-between font-medium text-sm pb-2">
-                        <span className="px-1 w-14 flex justify-center items-center border border-red-500 text-red-500 cursor-pointer">
-                          13
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          14
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          15
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          16
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          17
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          18
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          19
-                        </span>
-                      </div>
-                      <div className="flex justify-between font-medium text-sm pb-2">
-                        <span className="px-1 w-14 flex justify-center items-center border border-red-500 text-red-500 cursor-pointer">
-                          20
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          21
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          22
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          23
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          24
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border border-green-500 text-white bg-green-500 rounded-2xl cursor-pointer shadow-md">
-                          25
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          26
-                        </span>
-                      </div>
-                      <div className="flex justify-between font-medium text-sm pb-2">
-                        <span className="px-1 w-14 flex justify-center items-center border border-red-500 text-red-500 cursor-pointer">
-                          27
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          28
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          29
-                        </span>
-                        <span className="px-1 w-14 flex justify-center items-center border hover:border-green-500 hover:text-green-500 cursor-pointer">
-                          30
-                        </span>
-                        <span className="px-1 text-gray-400 w-14 flex justify-center items-center">
-                          01
-                        </span>
-                        <span className="px-1 text-gray-400 w-14 flex justify-center items-center">
-                          02
-                        </span>
-                        <span className="px-1 text-gray-400 w-14 flex justify-center items-center">
-                          03
-                        </span>
+                            {day}
+                            <div className="note text-xs text-gray-500 mt-1">
+                              {updateNotesDisplay(day).map((note, index) => (
+                                <div key={index} className="note-entry mt-1">
+                                  🕒 {note.time} - {note.text}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
+
+                    {/* Modal for adding notes */}
+                    {isModalOpen && (
+                      <div className="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                        <div className="modal-content bg-white p-6 rounded-lg w-11/12 max-w-sm shadow-lg">
+                          <span
+                            onClick={handleCloseModal}
+                            className="close text-xl cursor-pointer text-gray-500 float-right hover:text-gray-700"
+                          >
+                            &times;
+                          </span>
+                          <h3 className="text-lg text-gray-800 mb-2">
+                            Add Note
+                          </h3>
+                          <p className="text-gray-600">
+                            Day: {selectedDate},{" "}
+                            {
+                              [
+                                "January",
+                                "February",
+                                "March",
+                                "April",
+                                "May",
+                                "June",
+                                "July",
+                                "August",
+                                "September",
+                                "October",
+                                "November",
+                                "December",
+                              ][currentMonth]
+                            }
+                          </p>
+                          <label
+                            htmlFor="time"
+                            className="text-sm text-gray-600"
+                          >
+                            Select Time:
+                          </label>
+                          <input
+                            type="time"
+                            id="time"
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
+                            className="w-full p-2 mt-2 border rounded text-sm border-gray-300"
+                          />
+                          <label
+                            htmlFor="note"
+                            className="text-sm text-gray-600 mt-2"
+                          >
+                            Note:
+                          </label>
+                          <textarea
+                            id="note"
+                            value={noteText}
+                            onChange={(e) => setNoteText(e.target.value)}
+                            rows="2"
+                            placeholder="Enter your note..."
+                            className="w-full p-2 mt-2 border rounded text-sm border-gray-300"
+                          ></textarea>
+                          <button
+                            onClick={handleSaveNote}
+                            className="bg-green-500 text-white py-2 px-4 rounded mt-4 w-full hover:bg-green-400"
+                          >
+                            Save Note
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {/* CYCLE LENGTH Section */}
                   <div>

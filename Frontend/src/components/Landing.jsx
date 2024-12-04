@@ -115,7 +115,8 @@ export function Landing() {
 
                     <li>
                       <a
-                        href="#" onClick={() => navigate("/Ecom")}
+                        href="#"
+                        onClick={() => navigate("/Ecom")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/shopping-cart.svg" alt="" />
@@ -128,7 +129,8 @@ export function Landing() {
 
                     <li>
                       <a
-                        href="#" onClick={() => navigate("/tracker")}
+                        href="#"
+                        onClick={() => navigate("/tracker")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/health-logo.svg" alt="" />
@@ -141,7 +143,8 @@ export function Landing() {
 
                     <li>
                       <a
-                        href="#" onClick={() => navigate("/consultations")}
+                        href="#"
+                        onClick={() => navigate("/consultations")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/user-logo.svg" alt="" />

@@ -148,7 +148,7 @@ const AuthRequired = () => {
 
           <a
             href="#"
-            onClick={() => navigate("/Login")}
+            onClick={() => navigate("/Signup")}
             className="mt-6 inline-block rounded bg-pink-600 px-5 py-3 text-sm font-medium text-white hover:bg-pink-700 focus:outline-none focus:ring"
           >
             Sign-in

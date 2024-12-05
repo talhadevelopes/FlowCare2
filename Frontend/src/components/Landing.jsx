@@ -222,7 +222,7 @@ export function Landing() {
             and connect with a community that cares about your well-being.
           </p>
           <a href="#" onClick={() => navigate("/AuthRequired")}>
-            <button class="header-button">Join Us!</button>
+            <button class="header-button" >Join Us!</button>
           </a>
           <img src="../images/women.png" alt="women" class="feature-image" />
         </div>

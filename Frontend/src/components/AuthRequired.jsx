@@ -127,7 +127,7 @@ const AuthRequired = () => {
         </div>
       </div>
 
-      {/* MAIN CONTENT SECTION */}
+      {/*  MAIN CONTENT SECTION **/}
       <div className="grid h-screen place-content-center px-4">
         <div className="text-center">
           <h1 className="text-9xl font-black text-gray-200">OOPS !!</h1>

@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   mode: "jit", // Force Just-in-Time mode
   content: [
     "./index.html",

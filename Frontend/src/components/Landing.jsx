@@ -218,7 +218,7 @@ export function Landing() {
             <span>FlowCare</span>!
           </h1>
           <p>
-            Your trusted companion on the path to better health! Explore, learn,
+            Your Trusted companion on the path to better health! Explore, learn,
             and connect with a community that cares about your well-being.
           </p>
           <a href="#" onClick={() => navigate("/AuthRequired")}>

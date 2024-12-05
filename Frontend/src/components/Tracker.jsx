@@ -391,9 +391,7 @@ export function Tracker() {
                   {/* Calendar Section */}
                   <div className="bg-gray-50 flex justify-center items-center h-screen flex-col">
                     <div className="calendar w-11/12 max-w-md text-center bg-white rounded-lg shadow-lg p-6">
-                      <h2 className="text-xl text-gray-800 mb-6">
-                        Calendar
-                      </h2>
+                      <h2 className="text-xl text-gray-800 mb-6">Calendar</h2>
                       <div className="controls flex justify-between items-center mb-6">
                         <select
                           id="monthSelect"
@@ -514,9 +512,22 @@ export function Tracker() {
                   </div>
                   {/* CYCLE LENGTH Section */}
                   <div>
+                    <div class="mb-6">
+                      <label
+                        for="lastPeriod"
+                        class="text-sm font-medium block mb-2"
+                      >
+                        Date of Your Last Period? (DD-MM-YYYY)
+                      </label>
+                      <input
+                        id="lastPeriod"
+                        type="date"
+                        class="w-full border rounded-lg p-2"
+                      />
+                    </div>
                     <div className="mb-6">
                       <label className="text-sm font-medium block mb-2">
-                        Input 1
+                        How long did it last? ( Number of Days )
                       </label>
                       <input
                         type="number"
@@ -526,17 +537,7 @@ export function Tracker() {
                     </div>
                     <div className="mb-6">
                       <label className="text-sm font-medium block mb-2">
-                        Input 2
-                      </label>
-                      <input
-                        type="number"
-                        defaultValue={28}
-                        className="w-full border rounded-lg p-2"
-                      />
-                    </div>
-                    <div className="mb-6">
-                      <label className="text-sm font-medium block mb-2">
-                        Input 3
+                        Whats Your usual cycle length?
                       </label>
                       <input
                         type="number"

@@ -460,7 +460,7 @@ const Forum = () => {
 
       <div className="ml-[10%] mt-12">{renderForums()}</div>
 
-      {/* <!------------------------FOOTER-----------------------------------> */}
+      {/* <!------------------------FOOTER-----------------------------> */}
       <footer class="mt-20 xl:mt-32 mx-auto w-full relative text-center bg-pink-400 text-white">
         <div class="px-6 py-8 md:py-14 xl:pt-20 xl:pb-12">
           <h2 class="font-bold text-3xl xl:text-4xl leading-snug">

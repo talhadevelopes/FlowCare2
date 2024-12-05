@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const Login = () => {
+export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,7 +15,7 @@ export const Login = () => {
   }
 
   function handleLogin(e) {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault(); 
     alert(`Email: ${email}`);
     alert(`Password:, ${password}`);
   }

@@ -13,6 +13,7 @@ import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
 import { Tracker } from "./components/Tracker";
 import { Ecom } from "./components/Ecom";
+import AuthRequired from "./components/AuthRequired";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <Login />,
+  },
+  {
+    path: "/AuthRequired",
+    element: <AuthRequired />,
   },
 ]);
 

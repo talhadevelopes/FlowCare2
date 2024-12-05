@@ -161,7 +161,8 @@ export function Landing() {
 
             <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
               <form action="#">
-                <button onClick={() => navigate("/Signup")}
+                <button
+                  onClick={() => navigate("/Signup")}
                   type="submit"
                   class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
@@ -220,7 +221,9 @@ export function Landing() {
             Your trusted companion on the path to better health! Explore, learn,
             and connect with a community that cares about your well-being.
           </p>
-          <button class="header-button">Join Us!</button>
+          <a href="#" onClick={() => navigate("/AuthRequired")}>
+            <button class="header-button">Join Us!</button>
+          </a>
           <img src="../images/women.png" alt="women" class="feature-image" />
         </div>
       </main>

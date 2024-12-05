@@ -8,10 +8,11 @@ import {
 import { Landing } from "./components/Landing";
 import Forum from "./components/Forum";
 import { Blogs } from "./components/Blogs";
+import AuthRequired from "./components/AuthRequired";
 import { Consultations } from "./components/Consultations";
 //idher file linking me kuch hai kya problem?
-import { Signup } from "./components/Signup";
-import { Login } from "./components/Login";
+import { Login } from "./components/login";
+import { Signup } from "./components/signup";
 import { Tracker } from "./components/Tracker";
 import { Ecom } from "./components/Ecom";
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <Login />,
+  },
+  {
+    path: "/AuthRequired",
+    element: <AuthRequired />,
   },
 ]);
 

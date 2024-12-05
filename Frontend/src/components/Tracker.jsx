@@ -527,7 +527,7 @@ export function Tracker() {
                     </div>
                     <div className="mb-6">
                       <label className="text-sm font-medium block mb-2">
-                        How long did it last? (Number of Days)
+                        How long did it last? ( Number of Days )
                       </label>
                       <input
                         type="number"

@@ -10,7 +10,6 @@ import Forum from "./components/Forum";
 import { Blogs } from "./components/Blogs";
 import AuthRequired from "./components/AuthRequired";
 import { Consultations } from "./components/Consultations";
-//idher file linking me kuch hai kya problem?
 import { Login } from "./components/login";
 import { Signup } from "./components/signup";
 import { Tracker } from "./components/Tracker";

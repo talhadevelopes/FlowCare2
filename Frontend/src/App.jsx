@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Landing } from "./components/Landing";
-import { Forum } from "./components/Forum";
+import Forum from "./components/Forum";
 import { Blogs } from "./components/Blogs";
 import { Consultations } from "./components/Consultations";
 

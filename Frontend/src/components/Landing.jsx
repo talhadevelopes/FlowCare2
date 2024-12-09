@@ -220,7 +220,7 @@ export function Landing() {
             Your trusted companion on the path to better health! Explore, learn,
             and connect with a community that cares about your well-being.
           </p>
-          <button class="header-button">Join Us!</button>
+          <button class="header-button" onClick={() => navigate("/Signup")}>Join Us!</button>
           <img src="../images/women.png" alt="women" class="feature-image" />
         </div>
       </main>

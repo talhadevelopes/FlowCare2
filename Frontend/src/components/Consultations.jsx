@@ -1,8 +1,11 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export function Consultations() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState(
+    "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
+  );
   return (
     <div>
       <>
@@ -42,7 +45,8 @@ export function Consultations() {
                   <div className="px-2">
                     <div className="py-4">
                       <a
-                        href="#" onClick={() => navigate("/")}
+                        href="#"
+                        onClick={() => navigate("/")}
                         className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
                       >
                         <img src="../images/house-icon.svg" alt="" />
@@ -54,29 +58,20 @@ export function Consultations() {
                     <ul className="space-y-1 border-t border-gray-100 pt-4">
                       <li>
                         <a
-                          href="#" onClick={() => navigate("/forum")}
-                          className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        >
-                          <img src="../images/forum-icon.svg" alt="" />
-                          <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                            Forum
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#" onClick={() => navigate("/blogs")}
+                          href="#"
+                          onClick={() => navigate("/blogs")}
                           className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
                           <img src="../images/blogs-icon.svg" alt="" />
                           <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                            Blogs
+                            Education
                           </span>
                         </a>
                       </li>
                       <li>
                         <a
-                          href="#" onClick={() => navigate("/Ecom")}
+                          href="#"
+                          onClick={() => navigate("/Ecom")}
                           className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
                           <img src="../images/shopping-cart.svg" alt="" />
@@ -98,7 +93,8 @@ export function Consultations() {
                       </li>
                       <li>
                         <a
-                          href="#" onClick={() => navigate("/consultations")}
+                          href="#"
+                          onClick={() => navigate("/consultations")}
                           className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
                           <img src="../images/user-logo.svg" alt="" />

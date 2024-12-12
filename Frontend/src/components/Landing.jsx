@@ -88,27 +88,13 @@ export function Landing() {
                     <li>
                       <a
                         href="#"
-                        onClick={() => navigate("/forum")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="images/forum-icon.svg" alt="" />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Forum
-                        </span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
                         onClick={() => navigate("/blogs")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/blogs-icon.svg" alt="" />
 
                         <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Blogs
+                          Education
                         </span>
                       </a>
                     </li>

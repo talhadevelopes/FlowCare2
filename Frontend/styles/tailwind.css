@@ -239,6 +239,8 @@ strong {
 4. Correct the odd `em` font sizing in all browsers.
 */
 
+
+
 code,
 kbd,
 samp,
@@ -3119,7 +3121,7 @@ video {
 body {
   margin: 0;
   padding: 0;
-  background-image: url("../images/pinkish-white-bg.jpg");
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

@@ -83,6 +83,18 @@ export function Tracker() {
     setProfileImage(newImage);
   };
 
+  const [showTooltip, setShowTooltip] = useState(true);
+
+  useEffect(() => {
+    // Hide the tooltip after 3 seconds
+    const timer = setTimeout(() => {
+      setShowTooltip(false);
+    }, 30000000);
+
+    // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
+  }, []);
+
   //Calender Part
   const [currentMonth, setCurrentMonth] = useState(0);
   const [notes, setNotes] = useState({});
@@ -235,27 +247,13 @@ export function Tracker() {
                       <li>
                         <a
                           href="#"
-                          onClick={() => navigate("/forum")}
-                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        >
-                          <img src="images/forum-icon.svg" alt="" />
-
-                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                            Forum
-                          </span>
-                        </a>
-                      </li>
-
-                      <li>
-                        <a
-                          href="#"
                           onClick={() => navigate("/blogs")}
                           class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
                           <img src="images/blogs-icon.svg" alt="" />
 
                           <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                            Blogs
+                            Education
                           </span>
                         </a>
                       </li>
@@ -375,6 +373,123 @@ export function Tracker() {
           </ol>
         </nav>
         {/*----------------------MAIN SECTION---------------------------------*/}
+        <div class="flex flex-wrap justify-center mt-10 max-w-4xl mx-auto">
+          <div class="p-4 max-w-sm">
+            <div class="flex rounded-lg h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 flex-col">
+              <div class="flex items-center mb-3">
+                <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+                <h2 class="text-white text-lg font-medium">View as a Child</h2>
+              </div>
+              <div class="flex flex-col justify-between flex-grow">
+                <p class="leading-relaxed text-base text-white">
+                  Blue bottle crucifix vinyl post-ironic four dollar toast vegan
+                  taxidermy. Gastropub indxgo juice poutine.
+                </p>
+                <a
+                  href="#"
+                  class="mt-3 text-black hover:text-blue-600 inline-flex items-center"
+                >
+                  View
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    class="w-4 h-4 ml-2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 max-w-sm">
+            <div class="flex rounded-lg h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 flex-col">
+              <div class="flex items-center mb-3">
+                <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+                <h2 class="text-white text-lg font-medium">View as Parent</h2>
+              </div>
+              <div class="flex flex-col justify-between flex-grow">
+                <p class="leading-relaxed text-base text-white">
+                  Blue bottle crucifix vinyl post-ironic four dollar toast vegan
+                  taxidermy. Gastropub indxgo juice poutine.
+                </p>
+                <a
+                  href="#"
+                  class="mt-3 text-black hover:text-blue-600 inline-flex items-center"
+                >
+                  View
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    class="w-4 h-4 ml-2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*----------------------AI ChatBot --------------------------------*/}
+        <div className="relative cursor-pointer">
+          {/* Tooltip */}
+          {showTooltip && (
+            <div className="fixed mt-[23%] right-24 bg-gray-700 text-white p-2 rounded-md shadow-md">
+              Chat with AI
+            </div>
+          )}
+
+          {/* Chatbot button */}
+          <div className="ai-chatbot fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-lg overflow-hidden">
+            <img
+              src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"
+              alt="AI Chatbot"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/*----------------------MAIN_SECTION --------------------------------*/}
+        <span class="flex items-center mt-6">
+          <span class="h-px flex-1 bg-black"></span>
+          <span class="shrink-0 text-4xl px-6">
+            <h1></h1>
+          </span>
+          <span class="h-px flex-1 bg-black"></span>
+        </span>
+
         <section>
           <div className="mx-auto max-w-screen-xl px-4 py-8 mt-12 sm:px-6 sm:py-12 lg:px-8 bg-pink-50 rounded-xl">
             <div className="max-w-7xl mx-auto p-6">
@@ -556,16 +671,10 @@ export function Tracker() {
                       <p className="text-lg"></p>
                       <ul>
                         <li>
-                          <i className="fa-solid fa-square mr-3"> </i>10 Days
-                        </li>
-                        <li>
-                          <i className="fa-solid fa-square mr-3"> </i>10 Days
-                        </li>
-                        <li>
-                          <i className="fa-solid fa-square mr-3"> </i>10 Days
-                        </li>
-                        <li>
-                          <i className="fa-solid fa-square mr-3"> </i>10 Days
+                          <i className="fa-solid fa-square mr-3 text-red-400">
+                            {" "}
+                          </i>
+                          10 Days
                         </li>
                       </ul>
                       <p />
@@ -814,6 +923,7 @@ export function Tracker() {
           </div>
         </section>
         {/*----------------------FOOTER---------------------------------*/}
+
         <footer className="mt-20 xl:mt-32 mx-auto w-full relative text-center bg-pink-400 text-white">
           <div className="px-6 py-8 md:py-14 xl:pt-20 xl:pb-12">
             <h2 className="font-bold text-3xl xl:text-4xl leading-snug">

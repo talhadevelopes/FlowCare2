@@ -32,6 +32,8 @@ const symptomOptions = [
 
 const symptomSeverityOptions = ['None', 'Mild', 'Moderate', 'Severe'];
 
+const sleepQualityOptions = ['Poor', 'Fair', 'Good', 'Excellent'];
+
 export function PeriodTracker() {
   const [data, setData] = useState({
     cycleDuration: '',
@@ -43,6 +45,8 @@ export function PeriodTracker() {
     symptoms: [],
     symptomSeverities: {},
     symptomDate: format(new Date(), 'yyyy-MM-dd'),
+    sleepDuration: '',
+    sleepQuality: '',
   });
 
   const [nextPeriodPrediction, setNextPeriodPrediction] = useState('');
@@ -50,8 +54,10 @@ export function PeriodTracker() {
     cycleInfo: true,
     moodTracking: true,
     symptomTracking: true,
+    sleepTracking: true,
     healthTips: true,
   });
+  const [showHealthTips, setShowHealthTips] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -99,6 +105,7 @@ export function PeriodTracker() {
       nextPeriodPrediction,
     };
     console.log('Submission Data:', submissionData);
+    setShowHealthTips(true);
     alert('Data submitted successfully!');
   };
 
@@ -173,6 +180,22 @@ export function PeriodTracker() {
       tips.push("To improve sleep during your cycle, try to maintain a consistent sleep schedule and create a relaxing bedtime routine.");
     }
 
+    // Sleep-based tips
+    if (data.sleepDuration) {
+      const sleepDuration = parseFloat(data.sleepDuration);
+      if (sleepDuration < 7) {
+        tips.push("You might not be getting enough sleep. Aim for 7-9 hours of sleep per night for optimal health and well-being.");
+      } else if (sleepDuration > 9) {
+        tips.push("You're getting more sleep than average. While this can be normal, excessive sleep might indicate other health issues. Consider discussing with your doctor if this persists.");
+      } else {
+        tips.push("Your sleep duration is within the recommended range. Keep maintaining this healthy sleep pattern!");
+      }
+    }
+
+    if (data.sleepQuality === 'Poor' || data.sleepQuality === 'Fair') {
+      tips.push("To improve sleep quality, try establishing a consistent bedtime routine, avoiding screens before bed, and creating a comfortable sleep environment.");
+    }
+
     // General tips
     tips.push("Stay hydrated by drinking plenty of water throughout your cycle.");
     tips.push("Regular exercise can help alleviate many menstrual symptoms and improve overall well-being.");
@@ -185,7 +208,7 @@ export function PeriodTracker() {
     <div className="w-full max-w-4xl mx-auto bg-pink-50 rounded-lg shadow-lg p-8 space-y-8">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Period Tracker</h2>
-        <p className="text-gray-600">Track your cycle, moods, and symptoms</p>
+        <p className="text-gray-600">Track your cycle, moods, symptoms, and sleep</p>
       </div>
 
       {renderSection(
@@ -381,6 +404,46 @@ export function PeriodTracker() {
       )}
 
       {renderSection(
+        "Sleep Tracking",
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Sleep Duration (hours)
+            </label>
+            <input
+              type="number"
+              name="sleepDuration"
+              value={data.sleepDuration}
+              onChange={handleInputChange}
+              min="0"
+              max="24"
+              step="0.5"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Sleep Quality
+            </label>
+            <select
+              name="sleepQuality"
+              value={data.sleepQuality}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
+            >
+              <option value="">Select Sleep Quality</option>
+              {sleepQualityOptions.map((quality) => (
+                <option key={quality} value={quality}>
+                  {quality}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>,
+        "sleepTracking"
+      )}
+
+      {showHealthTips && renderSection(
         "Health Tips",
         <div className="space-y-4">
           {generateHealthTips.map((tip, index) => (

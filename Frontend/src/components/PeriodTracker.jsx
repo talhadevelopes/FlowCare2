@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { format, addDays } from 'date-fns';
-import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon } from 'lucide-react';
+import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart } from 'lucide-react';
 
 const moodOptions = [
   { name: 'Happy', icon: Smile },
@@ -32,6 +32,14 @@ const symptomOptions = [
 
 const symptomSeverityOptions = ['None', 'Mild', 'Moderate', 'Severe'];
 
+const healthTips = [
+  "Stay hydrated by drinking plenty of water throughout your cycle.",
+  "Practice gentle exercises like yoga or walking to alleviate cramps.",
+  "Maintain a balanced diet rich in iron and vitamins to support your body.",
+  "Get adequate sleep to help regulate your hormones and reduce fatigue.",
+  "Use heat therapy (like a hot water bottle) to soothe menstrual cramps.",
+];
+
 export function PeriodTracker() {
   const [data, setData] = useState({
     cycleDuration: '',
@@ -46,6 +54,12 @@ export function PeriodTracker() {
   });
 
   const [nextPeriodPrediction, setNextPeriodPrediction] = useState('');
+  const [expandedSections, setExpandedSections] = useState({
+    cycleInfo: true,
+    moodTracking: true,
+    symptomTracking: true,
+    healthTips: true,
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -96,50 +110,69 @@ export function PeriodTracker() {
     alert('Data submitted successfully!');
   };
 
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  const renderSection = (title, content, section) => (
+    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div
+        className="flex justify-between items-center cursor-pointer"
+        onClick={() => toggleSection(section)}
+      >
+        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        {expandedSections[section] ? (
+          <ChevronUp className="w-5 h-5 text-gray-500" />
+        ) : (
+          <ChevronDown className="w-5 h-5 text-gray-500" />
+        )}
+      </div>
+      {expandedSections[section] && <div className="mt-4">{content}</div>}
+    </div>
+  );
+
   return (
-    <div className="w-full max-w-2xl mx-auto bg-pink-50 rounded-lg shadow-md p-6 space-y-8">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-center text-gray-800">
-          Period Tracker
-        </h2>
-        <p className="text-gray-600 text-center">
-          Track your cycle, moods, and symptoms
-        </p>
+    <div className="w-full max-w-4xl mx-auto bg-pink-50 rounded-lg shadow-lg p-8 space-y-8">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Period Tracker</h2>
+        <p className="text-gray-600">Track your cycle, moods, and symptoms</p>
       </div>
 
-      {/* Cycle Information */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800">
-          Cycle Information
-        </h3>
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Start date of your last period
-            </label>
-            <div className="relative">
-              <input
-                type="date"
-                name="lastPeriodStart"
-                value={data.lastPeriodStart}
-                onChange={handleInputChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
-              />
-              <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+      {renderSection(
+        "Cycle Information",
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Start date of your last period
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  name="lastPeriodStart"
+                  value={data.lastPeriodStart}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
+                />
+                <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              </div>
             </div>
-          </div>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Last Period Duration (days)
-            </label>
-            <input
-              type="number"
-              name="lastPeriodDuration"
-              value={data.lastPeriodDuration}
-              onChange={handleInputChange}
-              min="1"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
-            />
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Last Period Duration (days)
+              </label>
+              <input
+                type="number"
+                name="lastPeriodDuration"
+                value={data.lastPeriodDuration}
+                onChange={handleInputChange}
+                min="1"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
+              />
+            </div>
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
@@ -152,33 +185,33 @@ export function PeriodTracker() {
               onChange={handleInputChange}
               min="21"
               max="35"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
             />
           </div>
           <button
             onClick={predictNextPeriod}
-            className="w-full bg-pink-400 hover:bg-pink-500 text-white font-medium py-2 px-4 rounded transition duration-300"
+            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-4 rounded-md transition duration-300 shadow-md"
           >
             Predict Next Period
           </button>
           {nextPeriodPrediction && (
-            <p className="text-center font-medium text-gray-700">
+            <p className="text-center font-medium text-gray-700 bg-pink-100 p-3 rounded-md">
               Predicted next period:{' '}
               {format(new Date(nextPeriodPrediction), 'MMMM d, yyyy')}
             </p>
           )}
-        </div>
-      </div>
+        </div>,
+        "cycleInfo"
+      )}
 
-      {/* Mood Tracking */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800">Mood Tracking</h3>
+      {renderSection(
+        "Mood Tracking",
         <div className="space-y-4">
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Select Mood(s)
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {moodOptions.map((mood) => (
                 <button
                   key={mood.name}
@@ -200,7 +233,7 @@ export function PeriodTracker() {
             <label className="block text-sm font-medium text-gray-700">
               Mood Severity
             </label>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4">
               {moodSeverityOptions.map((option) => (
                 <label key={option.value} className="inline-flex items-center">
                   <input
@@ -210,7 +243,7 @@ export function PeriodTracker() {
                     onChange={() =>
                       setData((prev) => ({ ...prev, moodSeverity: option.value }))
                     }
-                    className="form-radio text-pink-400"
+                    className="form-radio text-pink-500"
                   />
                   <span className="ml-2 text-gray-700">{option.name}</span>
                 </label>
@@ -228,32 +261,30 @@ export function PeriodTracker() {
                 name="moodDate"
                 value={data.moodDate}
                 onChange={handleInputChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
               />
               <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             </div>
           </div>
-        </div>
-      </div>
+        </div>,
+        "moodTracking"
+      )}
 
-      {/* Symptom Tracking */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800">
-          Symptom Tracking
-        </h3>
+      {renderSection(
+        "Symptom Tracking",
         <div className="space-y-4">
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Select Symptoms
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {symptomOptions.map((symptom) => (
                 <label key={symptom} className="inline-flex items-center">
                   <input
                     type="checkbox"
                     checked={data.symptoms.includes(symptom)}
                     onChange={() => handleSymptomChange(symptom)}
-                    className="form-checkbox text-pink-400"
+                    className="form-checkbox text-pink-500"
                   />
                   <span className="ml-2 text-gray-700">{symptom}</span>
                 </label>
@@ -271,7 +302,7 @@ export function PeriodTracker() {
                 onChange={(e) =>
                   handleSymptomSeverityChange(symptom, e.target.value)
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
               >
                 <option value="">Select Severity</option>
                 {symptomSeverityOptions.map((severity) => (
@@ -293,17 +324,32 @@ export function PeriodTracker() {
                 name="symptomDate"
                 value={data.symptomDate}
                 onChange={handleInputChange}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-300 focus:border-pink-300"
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
               />
               <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             </div>
           </div>
-        </div>
-      </div>
+        </div>,
+        "symptomTracking"
+      )}
+
+
+      {renderSection(
+        "Health Tips",
+        <div className="space-y-4">
+          {healthTips.map((tip, index) => (
+            <div key={index} className="flex items-start space-x-3 bg-white p-4 rounded-md shadow-sm">
+              <Heart className="w-6 h-6 text-pink-500 flex-shrink-0 mt-1" />
+              <p className="text-gray-700">{tip}</p>
+            </div>
+          ))}
+        </div>,
+        "healthTips"
+      )}
 
       <button
         onClick={handleSubmit}
-        className="w-full bg-pink-400 hover:bg-pink-500 text-white font-medium py-3 px-4 rounded text-lg transition duration-300"
+        className="w-full bg-pink-500 hover:bg-pink-600 text-white font-medium py-3 px-4 rounded-md text-lg transition duration-300 shadow-md"
       >
         Submit Tracking Data
       </button>

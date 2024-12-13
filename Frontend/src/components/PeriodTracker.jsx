@@ -1,20 +1,17 @@
+'use client'
+
 import React, { useState } from 'react';
 import { format, addDays } from 'date-fns';
-
-// Custom icons (you can replace these with your preferred icon library)
-const Icons = {
-  Smile: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>,
-  Frown: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>,
-  // Add more icons as needed
-};
+import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon } from 'lucide-react';
 
 const moodOptions = [
-  { name: 'Happy', icon: Icons.Smile },
-  { name: 'Sad', icon: Icons.Frown },
-  // Add more mood options
+  { name: 'Happy', icon: Smile },
+  { name: 'Sad', icon: Frown },
+  { name: 'Calm', icon: Coffee },
+  { name: 'Angry', icon: Angry },
+  { name: 'Tired', icon: Moon },
+  { name: 'Energized', icon: Zap },
 ];
-
-
 
 const moodSeverityOptions = [
   { name: 'Low', value: 'low' },
@@ -52,37 +49,40 @@ export function PeriodTracker() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setData(prev => ({ ...prev, [name]: value }));
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleMoodTypeChange = (moodName) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
       moodTypes: prev.moodTypes.includes(moodName)
-        ? prev.moodTypes.filter(mood => mood !== moodName)
-        : [...prev.moodTypes, moodName]
+        ? prev.moodTypes.filter((mood) => mood !== moodName)
+        : [...prev.moodTypes, moodName],
     }));
   };
 
   const handleSymptomChange = (symptom) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
       symptoms: prev.symptoms.includes(symptom)
-        ? prev.symptoms.filter(s => s !== symptom)
-        : [...prev.symptoms, symptom]
+        ? prev.symptoms.filter((s) => s !== symptom)
+        : [...prev.symptoms, symptom],
     }));
   };
 
   const handleSymptomSeverityChange = (symptom, severity) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
-      symptomSeverities: { ...prev.symptomSeverities, [symptom]: severity }
+      symptomSeverities: { ...prev.symptomSeverities, [symptom]: severity },
     }));
   };
 
   const predictNextPeriod = () => {
     if (data.lastPeriodStart && data.cycleDuration) {
-      const nextPeriodDate = addDays(new Date(data.lastPeriodStart), parseInt(data.cycleDuration));
+      const nextPeriodDate = addDays(
+        new Date(data.lastPeriodStart),
+        parseInt(data.cycleDuration)
+      );
       setNextPeriodPrediction(format(nextPeriodDate, 'yyyy-MM-dd'));
     }
   };
@@ -92,184 +92,224 @@ export function PeriodTracker() {
       ...data,
       nextPeriodPrediction,
     };
-
-    // Log the data to the console (for demonstration purposes)
     console.log('Submission Data:', submissionData);
-
-    // Here you would typically send the data to your backend
-    // For example: sendToBackend(submissionData);
     alert('Data submitted successfully!');
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Period Tracker</h2>
-      
-      {/* Cycle Information Section */}
-      <section className="mb-6">
-        <h3 className="text-xl font-semibold mb-4">Cycle Information</h3>
-        <div className="space-y-4">
-          <div>
-            <label className="block mb-2">Start date of your last period</label>
-            <input
-              type="date"
-              name="lastPeriodStart"
-              value={data.lastPeriodStart}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div>
-            <label className="block mb-2">Last Period Duration (days)</label>
-            <input
-              type="number"
-              name="lastPeriodDuration"
-              value={data.lastPeriodDuration}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-              min="1"
-            />
-          </div>
-          <div>
-            <label className="block mb-2">Average Cycle Duration (days)</label>
-            <input
-              type="number"
-              name="cycleDuration"
-              value={data.cycleDuration}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-              min="21"
-              max="35"
-            />
-          </div>
-          <button 
-            onClick={predictNextPeriod}
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-          >
-            Predict Next Period
-          </button>
-          {nextPeriodPrediction && (
-            <p className="mt-4 text-center font-semibold">
-              Predicted next period: {format(new Date(nextPeriodPrediction), 'MMMM d, yyyy')}
-            </p>
-          )}
+    <div className="w-full max-w-2xl mx-auto bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/95 rounded-lg shadow-md">
+      <div className="p-6 space-y-8">
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-center tracking-tight text-pink-600">
+            Period Tracker
+          </h2>
+          <p className="text-gray-600 text-center">
+            Track your cycle, moods, and symptoms
+          </p>
         </div>
-      </section>
 
-      {/* Mood Tracking Section */}
-      <section className="mb-6">
-        <h3 className="text-xl font-semibold mb-4">Mood Tracking</h3>
+        {/* Cycle Information */}
         <div className="space-y-4">
-          <div>
-            <label className="block mb-2">Select Mood(s)</label>
-            <div className="flex flex-wrap gap-2">
-              {moodOptions.map((mood) => (
-                <button
-                  key={mood.name}
-                  onClick={() => handleMoodTypeChange(mood.name)}
-                  className={`flex items-center p-2 rounded ${
-                    data.moodTypes.includes(mood.name) 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-gray-200 text-gray-700'
-                  }`}
-                >
-                  <mood.icon className="mr-2" />
-                  {mood.name}
-                </button>
-              ))}
+          <h3 className="text-lg font-semibold text-pink-600">
+            Cycle Information
+          </h3>
+          <div className="grid gap-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Start date of your last period
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  name="lastPeriodStart"
+                  value={data.lastPeriodStart}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
+                />
+                <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-pink-500" />
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <label className="block mb-2">Mood Severity</label>
-            <div className="flex space-x-4">
-              {moodSeverityOptions.map((severity) => (
-                <label key={severity.value} className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="moodSeverity"
-                    value={severity.value}
-                    checked={data.moodSeverity === severity.value}
-                    onChange={() => setData(prev => ({ ...prev, moodSeverity: severity.value }))}
-                    className="mr-2"
-                  />
-                  {severity.name}
-                </label>
-              ))}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Last Period Duration (days)
+              </label>
+              <input
+                type="number"
+                name="lastPeriodDuration"
+                value={data.lastPeriodDuration}
+                onChange={handleInputChange}
+                min="1"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
+              />
             </div>
-          </div>
-          
-          <div>
-            <label className="block mb-2">Date of Mood Log</label>
-            <input
-              type="date"
-              name="moodDate"
-              value={data.moodDate}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-            />
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Average Cycle Duration (days)
+              </label>
+              <input
+                type="number"
+                name="cycleDuration"
+                value={data.cycleDuration}
+                onChange={handleInputChange}
+                min="21"
+                max="35"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
+              />
+            </div>
+            <button
+              onClick={predictNextPeriod}
+              className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+            >
+              Predict Next Period
+            </button>
+            {nextPeriodPrediction && (
+              <p className="text-center font-medium text-pink-600">
+                Predicted next period:{' '}
+                {format(new Date(nextPeriodPrediction), 'MMMM d, yyyy')}
+              </p>
+            )}
           </div>
         </div>
-      </section>
 
-      {/* Symptom Tracking Section */}
-      <section className="mb-6">
-        <h3 className="text-xl font-semibold mb-4">Symptom Tracking</h3>
+        {/* Mood Tracking */}
         <div className="space-y-4">
-          <div>
-            <label className="block mb-2">Select Symptoms</label>
-            <div className="grid grid-cols-2 gap-2">
-              {symptomOptions.map((symptom) => (
-                <label key={symptom} className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={data.symptoms.includes(symptom)}
-                    onChange={() => handleSymptomChange(symptom)}
-                    className="mr-2"
-                  />
-                  {symptom}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {data.symptoms.map((symptom) => (
-            <div key={symptom}>
-              <label className="block mb-2">{symptom} Severity</label>
-              <select
-                value={data.symptomSeverities[symptom] || ''}
-                onChange={(e) => handleSymptomSeverityChange(symptom, e.target.value)}
-                className="w-full p-2 border rounded"
-              >
-                <option value="">Select Severity</option>
-                {symptomSeverityOptions.map((severity) => (
-                  <option key={severity} value={severity}>
-                    {severity}
-                  </option>
+          <h3 className="text-lg font-semibold text-pink-600">Mood Tracking</h3>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Select Mood(s)
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {moodOptions.map((mood) => (
+                  <button
+                    key={mood.name}
+                    onClick={() => handleMoodTypeChange(mood.name)}
+                    className={`flex items-center justify-center px-4 py-2 border rounded-md transition duration-300 ${
+                      data.moodTypes.includes(mood.name)
+                        ? 'bg-pink-600 text-white'
+                        : 'bg-white text-gray-700 hover:bg-pink-50'
+                    }`}
+                  >
+                    <mood.icon className="mr-2 h-4 w-4" />
+                    {mood.name}
+                  </button>
                 ))}
-              </select>
+              </div>
             </div>
-          ))}
 
-          <div>
-            <label className="block mb-2">Date of Symptoms</label>
-            <input
-              type="date"
-              name="symptomDate"
-              value={data.symptomDate}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-            />
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Mood Severity
+              </label>
+              <div className="flex gap-4">
+                {moodSeverityOptions.map((option) => (
+                  <label key={option.value} className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      value={option.value}
+                      checked={data.moodSeverity === option.value}
+                      onChange={() =>
+                        setData((prev) => ({ ...prev, moodSeverity: option.value }))
+                      }
+                      className="form-radio text-pink-600"
+                    />
+                    <span className="ml-2">{option.name}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Date of Mood Log
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  name="moodDate"
+                  value={data.moodDate}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
+                />
+                <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-pink-500" />
+              </div>
+            </div>
           </div>
         </div>
-      </section>
 
-      <button 
-        onClick={handleSubmit}
-        className="w-full bg-green-500 text-white p-3 rounded hover:bg-green-600 text-lg font-bold"
-      >
-        Submit Tracking Data
-      </button>
+        {/* Symptom Tracking */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-pink-600">
+            Symptom Tracking
+          </h3>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Select Symptoms
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {symptomOptions.map((symptom) => (
+                  <label key={symptom} className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={data.symptoms.includes(symptom)}
+                      onChange={() => handleSymptomChange(symptom)}
+                      className="form-checkbox text-pink-600"
+                    />
+                    <span className="ml-2">{symptom}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {data.symptoms.map((symptom) => (
+              <div key={symptom} className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  {symptom} Severity
+                </label>
+                <select
+                  value={data.symptomSeverities[symptom] || ''}
+                  onChange={(e) =>
+                    handleSymptomSeverityChange(symptom, e.target.value)
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
+                >
+                  <option value="">Select Severity</option>
+                  {symptomSeverityOptions.map((severity) => (
+                    <option key={severity} value={severity}>
+                      {severity}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Date of Symptoms
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  name="symptomDate"
+                  value={data.symptomDate}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
+                />
+                <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-pink-500" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded text-lg transition duration-300"
+        >
+          Submit Tracking Data
+        </button>
+      </div>
     </div>
   );
 }
+

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { format, addDays } from 'date-fns';
 import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart } from 'lucide-react';
 
@@ -31,14 +31,6 @@ const symptomOptions = [
 ];
 
 const symptomSeverityOptions = ['None', 'Mild', 'Moderate', 'Severe'];
-
-const healthTips = [
-  "Stay hydrated by drinking plenty of water throughout your cycle.",
-  "Practice gentle exercises like yoga or walking to alleviate cramps.",
-  "Maintain a balanced diet rich in iron and vitamins to support your body.",
-  "Get adequate sleep to help regulate your hormones and reduce fatigue.",
-  "Use heat therapy (like a hot water bottle) to soothe menstrual cramps.",
-];
 
 export function PeriodTracker() {
   const [data, setData] = useState({
@@ -133,6 +125,61 @@ export function PeriodTracker() {
       {expandedSections[section] && <div className="mt-4">{content}</div>}
     </div>
   );
+
+  const generateHealthTips = useMemo(() => {
+    const tips = [];
+
+    // Cycle duration tips
+    if (data.cycleDuration) {
+      const cycleDuration = parseInt(data.cycleDuration);
+      if (cycleDuration < 21) {
+        tips.push("Your cycle is shorter than average. Consider consulting with a healthcare professional to ensure everything is normal.");
+      } else if (cycleDuration > 35) {
+        tips.push("Your cycle is longer than average. This can be normal, but you may want to discuss it with your doctor.");
+      } else {
+        tips.push("Your cycle length is within the normal range. Keep tracking to notice any changes.");
+      }
+    }
+
+    // Period duration tips
+    if (data.lastPeriodDuration) {
+      const periodDuration = parseInt(data.lastPeriodDuration);
+      if (periodDuration > 7) {
+        tips.push("Your period duration is longer than average. If this is consistent, consider discussing it with your healthcare provider.");
+      } else if (periodDuration < 3) {
+        tips.push("Your period duration is shorter than average. This can be normal, but keep an eye on it and consult your doctor if you're concerned.");
+      }
+    }
+
+    // Mood-based tips
+    if (data.moodTypes.includes('Sad') || data.moodTypes.includes('Angry')) {
+      tips.push("Mood swings can be common during your cycle. Try relaxation techniques or gentle exercise to help manage your emotions.");
+    }
+    if (data.moodTypes.includes('Tired')) {
+      tips.push("Fatigue is common during menstruation. Ensure you're getting enough rest and consider iron-rich foods to combat tiredness.");
+    }
+
+    // Symptom-based tips
+    if (data.symptoms.includes('Lower Abdomen Cramps')) {
+      tips.push("For menstrual cramps, try using a heating pad or taking a warm bath to alleviate discomfort.");
+    }
+    if (data.symptoms.includes('Bloating')) {
+      tips.push("To reduce bloating, try to avoid salty foods and increase your water intake.");
+    }
+    if (data.symptoms.includes('Headaches')) {
+      tips.push("Headaches can be common during your cycle. Stay hydrated and consider over-the-counter pain relievers if needed.");
+    }
+    if (data.symptoms.includes('Sleep Disruption')) {
+      tips.push("To improve sleep during your cycle, try to maintain a consistent sleep schedule and create a relaxing bedtime routine.");
+    }
+
+    // General tips
+    tips.push("Stay hydrated by drinking plenty of water throughout your cycle.");
+    tips.push("Regular exercise can help alleviate many menstrual symptoms and improve overall well-being.");
+    tips.push("A balanced diet rich in fruits, vegetables, and whole grains can help support your body during your cycle.");
+
+    return tips;
+  }, [data]);
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-pink-50 rounded-lg shadow-lg p-8 space-y-8">
@@ -333,11 +380,10 @@ export function PeriodTracker() {
         "symptomTracking"
       )}
 
-
       {renderSection(
         "Health Tips",
         <div className="space-y-4">
-          {healthTips.map((tip, index) => (
+          {generateHealthTips.map((tip, index) => (
             <div key={index} className="flex items-start space-x-3 bg-white p-4 rounded-md shadow-sm">
               <Heart className="w-6 h-6 text-pink-500 flex-shrink-0 mt-1" />
               <p className="text-gray-700">{tip}</p>

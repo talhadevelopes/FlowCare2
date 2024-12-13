@@ -14,6 +14,8 @@ const moodOptions = [
   // Add more mood options
 ];
 
+
+
 const moodSeverityOptions = [
   { name: 'Low', value: 'low' },
   { name: 'Medium', value: 'medium' },

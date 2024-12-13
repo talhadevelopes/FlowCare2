@@ -12,7 +12,7 @@ import { Consultations } from "./components/Consultations";
 //idher file linking me kuch hai kya problem?
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
-import { Tracker } from "./components/Tracker";
+import { PeriodTracker } from "./components/PeriodTracker";
 import { Ecom } from "./components/Ecom";
 
 const router = createBrowserRouter([
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/tracker",
-    element: <Tracker />,
+    element: <PeriodTracker />,
   },
   {
     path: "/Ecom",

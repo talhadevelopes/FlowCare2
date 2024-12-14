@@ -61,13 +61,13 @@ export function Signup() {
 
            
             if (error.response) {
-                // The request was made and the server responded with a status code
+                
                 setError(error.response.data.message || "Signup failed. Please try again.");
             } else if (error.request) {
-                // The request was made but no response was received
+                
                 setError("No response from server. Please check your network connection.");
             } else {
-                // Something happened in setting up the request
+                
                 setError("An unexpected error occurred. Please try again.");
             }
         }

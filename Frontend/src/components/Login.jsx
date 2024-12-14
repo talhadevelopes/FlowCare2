@@ -39,9 +39,8 @@ export function Login() {
         } catch(error) {
             console.error("Login error:", error.response?.data);
             
-            // More specific error handling
+            
             if (error.response) {
-                // The request was made and the server responded with a status code
                 setError(error.response.data.message || "Login failed. Please check your credentials.");
             } else if (error.request) {
                 // The request was made but no response was received

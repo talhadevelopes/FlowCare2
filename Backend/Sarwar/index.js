@@ -4,6 +4,12 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 
+const dotenv = require("dotenv");
+dotenv.config();
+
+
+const MONGO_URL = process.env.MONGO_URL;
+
 
 const User = require("./models");
 
@@ -17,7 +23,7 @@ app.use(cors({
 }));
 
 
-mongoose.connect("mongodb+srv://mohfazam:wPlvY91k1HgmrD13@cluster0.f8f0e.mongodb.net/FlowCare")
+mongoose.connect(MONGO_URL)
   .then(() => {
     console.log("Successfully connected to MongoDB");
   })

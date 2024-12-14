@@ -18,11 +18,11 @@ export function Login() {
 
     function handlePassword(e) {
         setPassword(e.target.value);
-        setError(""); // Clear any previous errors
+        setError(""); 
     }
 
     async function handleLogin() {
-        // Basic validation
+        
         if (!email || !password) {
             setError("Please enter both email and password");
             return;
@@ -35,7 +35,7 @@ export function Login() {
             });
 
             console.log("Login successful:", response.data);
-            navigate("/"); // Assuming you want to redirect to a dashboard
+            navigate("/"); 
         } catch(error) {
             console.error("Login error:", error.response?.data);
             

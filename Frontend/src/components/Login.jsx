@@ -43,10 +43,10 @@ export function Login() {
             if (error.response) {
                 setError(error.response.data.message || "Login failed. Please check your credentials.");
             } else if (error.request) {
-                // The request was made but no response was received
+                
                 setError("No response from server. Please check your network connection.");
             } else {
-                // Something happened in setting up the request
+                
                 setError("An unexpected error occurred. Please try again.");
             }
         }

@@ -15,7 +15,7 @@ export function Signup() {
 
     function handleName(e) {
         setName(e.target.value);
-        setError(""); // Clear previous errors
+        setError(""); 
     }
 
     function handleEmail(e) {

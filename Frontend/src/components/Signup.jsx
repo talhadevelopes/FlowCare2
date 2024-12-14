@@ -29,20 +29,18 @@ export function Signup() {
     }
 
     async function handleSignup() {
-        // Basic validation
         if (!name || !email || !password) {
             setError("Please fill in all fields");
             return;
         }
 
-        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             setError("Please enter a valid email address");
             return;
         }
 
-        // Password strength validation
+        
         if (password.length < 6) {
             setError("Password must be at least 6 characters long");
             return;

@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://flow-care.vercel.app",
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -25,7 +25,7 @@ mongoose.connect("mongodb+srv://mohfazam:wPlvY91k1HgmrD13@cluster0.f8f0e.mongodb
     console.error("MongoDB connection error:", error);
   });
 
-app.post("/Signup", async(req, res) => {
+app.post("/signup", async(req, res) => {
     const { name, email, password } = req.body;
 
     if(!name || !email || !password){

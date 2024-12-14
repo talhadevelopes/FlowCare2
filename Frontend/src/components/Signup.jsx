@@ -53,13 +53,13 @@ export function Signup() {
             
             console.log("Signup successful:", response.data);
             
-            // Use response data if needed for additional processing
+            
             alert("You have signed up successfully");
             navigate("/login");
         } catch(error) {
             console.error("Signup error:", error);
 
-            // More detailed error handling
+           
             if (error.response) {
                 // The request was made and the server responded with a status code
                 setError(error.response.data.message || "Signup failed. Please try again.");

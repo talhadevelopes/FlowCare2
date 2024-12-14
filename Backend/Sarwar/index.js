@@ -17,7 +17,7 @@ app.use(cors({
 }));
 
 
-mongoose.connect("mongodb+srv://mohfazam:wPlvY91k1HgmrD13@cluster0.f8f0e.mongodb.net/users")
+mongoose.connect("mongodb+srv://mohfazam:wPlvY91k1HgmrD13@cluster0.f8f0e.mongodb.net/FlowCare")
   .then(() => {
     console.log("Successfully connected to MongoDB");
   })

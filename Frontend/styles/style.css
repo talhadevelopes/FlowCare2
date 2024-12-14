@@ -12,12 +12,13 @@
   --text-color: #000;
   --sub-heading-color: #000;
   --button-color: #000;
+  --header-font: "Homemade Apple";
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-image: url("../images/pinkish-white-bg.jpg");
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -29,6 +30,13 @@ li,
 a,
 button {
   text-decoration: none;
+}
+
+
+.special-header,
+h1,
+h2 {
+  font-family: var(--header-font);
 }
 
 header {
@@ -152,12 +160,12 @@ button:focus:before {
   margin: 15px;
 }
 
-
 span {
   color: #fc00ff;
   text-shadow: 0 0 20px #fc00ff;
   font-family: sans-serif;
 }
+
 .unique-span {
   color: #fc00ff;
   text-shadow: 0 0 20px #fc00ff;
@@ -195,6 +203,7 @@ span {
   z-index: 1000;
   height: 100%;
 }
+
 #sidebar-container .flex {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }

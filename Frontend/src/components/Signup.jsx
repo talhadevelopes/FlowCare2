@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+
 export function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -49,7 +51,7 @@ export function Signup() {
         const userData = { name, email, password };
 
         try {
-            const response = await axios.post("http://localhost:3000/signup", userData);
+            const response = await axios.post(`${server_url}signup`, userData);
             
             console.log("Signup successful:", response.data);
             

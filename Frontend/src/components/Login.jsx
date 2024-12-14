@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+
 export function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,7 +29,7 @@ export function Login() {
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/login", { 
+            const response = await axios.post(`${server_url}login`, { 
                 email, 
                 password 
             });

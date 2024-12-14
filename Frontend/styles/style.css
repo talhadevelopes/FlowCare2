@@ -12,12 +12,13 @@
   --text-color: #000;
   --sub-heading-color: #000;
   --button-color: #000;
+  --header-font: "Shadows Into Light";
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-image: url("../images/pinkish-white-bg.jpg");
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -29,6 +30,13 @@ li,
 a,
 button {
   text-decoration: none;
+}
+
+
+.special-header,
+h1,
+h2 {
+  font-family: var(--header-font);
 }
 
 header {
@@ -50,7 +58,6 @@ img {
 .nav_links a {
   font-family: Inter;
   color: var(--header-color);
-  text-shadow: 0 0 2px #b026b3;
   position: relative;
 }
 
@@ -62,7 +69,6 @@ img {
   content: "";
   height: 2px;
   width: 100%;
-  background: #b026b3;
   position: absolute;
   left: 0;
   bottom: -8px;
@@ -71,9 +77,7 @@ img {
   pointer-events: none;
 }
 
-.nav_links a:hover::after {
-  opacity: 1;
-}
+
 
 .header-button {
   font-size: 18px;
@@ -152,12 +156,11 @@ button:focus:before {
   margin: 15px;
 }
 
-
 span {
   color: #fc00ff;
-  text-shadow: 0 0 20px #fc00ff;
   font-family: sans-serif;
 }
+
 .unique-span {
   color: #fc00ff;
   text-shadow: 0 0 20px #fc00ff;
@@ -195,6 +198,7 @@ span {
   z-index: 1000;
   height: 100%;
 }
+
 #sidebar-container .flex {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }

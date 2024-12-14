@@ -9,7 +9,6 @@ import { Landing } from "./components/Landing";
 import Forum from "./components/Forum";
 import { Blogs } from "./components/Blogs";
 import { Consultations } from "./components/Consultations";
-//idher file linking me kuch hai kya problem?
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
 import { PeriodTracker } from "./components/PeriodTracker";

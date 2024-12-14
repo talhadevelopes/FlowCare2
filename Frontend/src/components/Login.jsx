@@ -13,7 +13,7 @@ export function Login() {
 
     function handleEmail(e) {
         setEmail(e.target.value);
-        setError(""); // Clear any previous errors
+        setError(""); 
     }
 
     function handlePassword(e) {

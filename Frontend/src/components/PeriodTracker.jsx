@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { format, addDays } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import {
   Calendar,
   Frown,
@@ -46,6 +47,7 @@ const symptomSeverityOptions = ["None", "Mild", "Moderate", "Severe"];
 const sleepQualityOptions = ["Poor", "Fair", "Good", "Excellent"];
 
 export function PeriodTracker() {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     cycleDuration: "",
     lastPeriodStart: "",
@@ -434,9 +436,9 @@ export function PeriodTracker() {
       </div>
       <div class="flex flex-wrap justify-center mt-10 max-w-4xl mx-auto">
         <div class="p-4 max-w-sm">
-          <div class="flex rounded-lg h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 flex-col">
+          <div class="flex rounded-lg h-full bg-pink-100 text-black p-8 flex-col">
             <div class="flex items-center mb-3">
-              <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+              <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
                 <svg
                   fill="none"
                   stroke="currentColor"
@@ -449,10 +451,10 @@ export function PeriodTracker() {
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                 </svg>
               </div>
-              <h2 class="text-white text-lg font-medium">View as a Child</h2>
+              <h2 class=" text-lg font-medium">View as a Child</h2>
             </div>
             <div class="flex flex-col justify-between flex-grow">
-              <p class="leading-relaxed text-base text-white">
+              <p class="leading-relaxed text-base">
                 Blue bottle crucifix vinyl post-ironic four dollar toast vegan
                 taxidermy. Gastropub indxgo juice poutine.
               </p>
@@ -478,9 +480,9 @@ export function PeriodTracker() {
         </div>
 
         <div class="p-4 max-w-sm">
-          <div class="flex rounded-lg h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-8 flex-col">
+          <div class="flex rounded-lg h-full bg-pink-100  p-8 flex-col">
             <div class="flex items-center mb-3">
-              <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0">
+              <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
                 <svg
                   fill="none"
                   stroke="currentColor"
@@ -493,10 +495,10 @@ export function PeriodTracker() {
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                 </svg>
               </div>
-              <h2 class="text-white text-lg font-medium">View as Parent</h2>
+              <h2 class="text-black text-lg font-medium">View as Parent</h2>
             </div>
             <div class="flex flex-col justify-between flex-grow">
-              <p class="leading-relaxed text-base text-white">
+              <p class="leading-relaxed text-base text-black">
                 Blue bottle crucifix vinyl post-ironic four dollar toast vegan
                 taxidermy. Gastropub indxgo juice poutine.
               </p>
@@ -534,7 +536,7 @@ export function PeriodTracker() {
       <div className="relative cursor-pointer">
         {/* Tooltip */}
         {showTooltip && (
-          <div className="fixed mt-[20%] right-24 bg-gray-700 text-white p-2 rounded-md shadow-md">
+          <div className="fixed mt-[20%] right-24 bg-pink-700 text-white p-2 rounded-md shadow-md">
             Chat with AI
           </div>
         )}

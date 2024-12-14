@@ -452,8 +452,8 @@ export function Blogs() {
       </div>
       -------*/}
       <div className="w-[70%] ml-[15%] mt-16 px-6 py-7 rounded-lg">
-        <h1 className="text-5xl">Period 101</h1>
-        <div className="bg-purple-500 w-1/4 rounded-md px-6 py-2 mt-14 -mb-11">
+        <h1 className="text-7xl">Period 101</h1>
+        <div className="bg-pink-200 w-1/4  rounded-md px-6 py-2 mt-14 -mb-16">
           <p>
             <i className="fa-solid fa-heart"> </i> Approved by{" "}
             <a href="" className="underline">
@@ -463,16 +463,149 @@ export function Blogs() {
         </div>
       </div>
 
-      <div className=" w-[70%] ml-[15%] mt-16 px-6 py-7 rounded-lg">
-        <h1>Header Goes Here</h1>
+      <div className=" w-[70%] ml-[15%] mt-16  px-6 py-7 rounded-lg">
+        <h1 className="text-3xl font-bold text-pink-500">
+          Welcome to Period 101, your one-stop guide for everything
+          period-related! Whether you want to know what to expect from your
+          first period, or you’re well into the swing of things but still have
+          some questions, don’t worry… we’re here to help!
+        </h1>
 
-        <p>Content 1</p>
+        <p className="text-xl mt-5">
+          In this blog we’ll cover all kinds of things! From what you period
+          actually is (the sciencey bit), to how your period can affect your
+          body, mood and feelings, and of course the question on everyone’s
+          lips…. WHAT IS NORMAL?!
+        </p>
       </div>
-      <div className=" w-[70%] ml-[15%] mt-7 px-6 py-7 rounded-lg">
-        <h1>Header Goes Here</h1>
 
-        <p>Content 2</p>
+      <div className=" w-[70%] ml-[15%] mt-1  px-6 py-7 rounded-lg">
+        <h1 className="text-4xl font-bold text-pink-500">What is a period?</h1>
+
+        <p className="text-xl mt-5">
+          <p>
+            Your period or menstruation (that’s the ‘sciencey’ name) is part of
+            your menstrual cycle. This cycle is ultimately your body’s way of
+            preparing itself for a possible pregnancy.
+          </p>{" "}
+          <br />
+          <p>
+            During your menstrual cycle, there is an increase and decrease in a
+            number of different hormones such as oestrogen and progesterone
+            which control different aspects of this cycle, you’ll be hearing a
+            lot about these hormones, so sit tight.
+          </p>{" "}
+          <br />
+          During your cycle your body releases an egg from your ovaries – we’re
+          talking teeny tiny eggs here - you can’t see them with the naked eye,
+          they’re that small! In order for the egg to be released it has to be
+          matured, which is a job for our hormones. These hormones are also
+          responsible for making the lining of your uterus thick. Should one day
+          an egg get fertilised by sperm, it would land on the thick cosy lining
+          and that’s where a pregnancy would start. However, if the egg doesn’t
+          get fertilised your body no longer needs the lining, so (here comes
+          the hormones again!) your hormones instruct your body to break the
+          lining down and remove it from the uterus via your vagina…and…Hey
+          presto - your Bloody Brilliant period has arrived! Now we know what’s
+          actually going on down there, let’s talk specifics.
+        </p>
       </div>
+
+      <div className=" w-[70%] ml-[15%] mt-4  px-6 py-7 rounded-lg">
+        <h1 className="text-3xl font-bold text-pink-500">
+          What are the signs that my period is coming?
+        </h1>
+        <p className="text-xl mt-5">
+          Your menstrual cycle takes around 28 days to complete, but this is a
+          good time to point out that EVERYONE is different! Just like your
+          fingerprints are unique, so is your bloody brilliant body and how you
+          experience periods. So, while we say 28 days it might be a little
+          longer, it might be a little shorter, there really aren’t any set
+          rules here. Of those 28 days, you could expect to bleed for anywhere
+          between 3-8 days. Again, everyone is different, and your periods are
+          likely to change. Your body can take some time to get into its own
+          flow, so cut it a bit of slack - it’s learning what to do while you’re
+          getting used to things too!
+        </p>
+        <i class="fa-solid fa-diamond-turn-right"></i>{" "}
+        <a href="" className="underline mt-2 bg-pink-100 px-2">
+          You can Keep a Track of Your Period Cycle Here
+        </a>
+      </div>
+
+      <div className=" w-[70%] ml-[15%] mt-4  px-6 py-7 rounded-lg">
+        <h1 className="text-3xl font-bold text-pink-500">
+          What are the signs that my period is coming?
+        </h1>
+
+        <p className="text-xl mt-5">
+          If you’ve never had a period before, there are some signs which might
+          indicate your period is coming and they’re all natural parts of
+          growing up. If you’ve noticed your boobs are beginning to develop, and
+          you’ve started to grow pubic hair, then you could expect to get your
+          period about two years later. A more immediate sign for some people is
+          if you notice discharge in your pants. Discharge is a white or
+          yellowish fluid which usually shows up a few months before your first
+          period. There are lots of other signs your period is coming and these
+          can be both physical and emotional. We call these signs PMS
+          (premenstrual syndrome). Not everyone gets PMS and we all experience
+          it differently. It usually happens just before and during your period,
+          and it’s basically the reason you might find yourself wanting to eat
+          your body weight in chocolate or burst into tears at the smallest of
+          things…lost sock, bad hair day, burnt toast…trust me, we all have
+          those days! PMS brings with it all kinds of symptoms such as
+          headaches, bloating, cramps, mood swings, feeling tired and having
+          trouble concentrating. We’ve got a great blog all about PMS with top
+          tips on how to help with these symptoms and many more, so go and take
+          a look. It will finally explain some of those weird and wonderful
+          feelings that you never knew were thanks to your bloody brilliant
+          period!
+        </p>
+      </div>
+
+      <div className="w-[70%] ml-[15%] mt-4 px-6 py-7 rounded-lg flex items-center">
+        <div className="w-[50%] pr-6">
+          <h1 className="text-3xl font-bold text-pink-500">
+            Let’s get to the bloody truth. How much blood do we lose?
+          </h1>
+          <p className="text-xl mt-5">
+            As we’ve already said, everyone is different, and what one person
+            considers to be a light period (not much blood) might be heavy for
+            someone else, so it’s really a case of getting to know your body in
+            the early days. On average, women, girls, and people who have
+            periods lose between 3-9 teaspoons of fluid a month (it really isn’t
+            that much when you put it that way!). But why did we just call it
+            fluid? Well, while we commonly call it blood - and yes there is
+            blood in there - there’s also other really impressive stuff in there
+            too. About half of your period is blood, but the rest is made up of
+            other things including tissue, nutrients and cervical mucus - pretty
+            amazing when
+            <b>
+              {" "}
+              you think about it! It’s important that you monitor your flow -
+              yes, go with it - but if you struggle it might be a sign that you
+              need some help. A good indicator that your flow is very heavy, is
+              if you have to change your period product every hour or two. If
+              you find this is the case
+            </b>
+            , you should speak to your doctor or nurse who will be able to help.
+            On the other hand, some women, girls, and people who have periods
+            have a light flow (they don’t lose much fluid) and that’s totally
+            normal too! Just be aware of your body and make sure you’re changing
+            your period products often enough, for some products especially
+            tampons it’s super important that you don’t leave them in too long.
+            To find out more info on period products click here.
+          </p>
+        </div>
+        <div className="w-[50%]">
+          <img
+            src="https://bloodybrilliant.wales/images/jcogs_img/cache/period-101-content-03_-_28de80_-_827094e59f9173bfae4c1e7a9446513a3715515a.webp"
+            alt=""
+            className="w-full h-auto rounded-lg"
+          />
+        </div>
+      </div>
+
       {/*----------------------Pages SECTION---------------------------------*/}
       <ol className="flex justify-center gap-1 text-xs font-medium mt-12">
         <li>

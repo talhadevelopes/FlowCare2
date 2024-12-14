@@ -12,7 +12,7 @@
   --text-color: #000;
   --sub-heading-color: #000;
   --button-color: #000;
-  --header-font: "Homemade Apple";
+  --header-font: "Shadows Into Light";
 }
 
 body {
@@ -58,7 +58,6 @@ img {
 .nav_links a {
   font-family: Inter;
   color: var(--header-color);
-  text-shadow: 0 0 2px #b026b3;
   position: relative;
 }
 
@@ -70,7 +69,6 @@ img {
   content: "";
   height: 2px;
   width: 100%;
-  background: #b026b3;
   position: absolute;
   left: 0;
   bottom: -8px;
@@ -79,9 +77,7 @@ img {
   pointer-events: none;
 }
 
-.nav_links a:hover::after {
-  opacity: 1;
-}
+
 
 .header-button {
   font-size: 18px;
@@ -162,7 +158,6 @@ button:focus:before {
 
 span {
   color: #fc00ff;
-  text-shadow: 0 0 20px #fc00ff;
   font-family: sans-serif;
 }
 

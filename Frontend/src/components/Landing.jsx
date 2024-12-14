@@ -659,6 +659,7 @@ export function Landing() {
                           <h3 class="text-lg font-semibold text-black">
                             Kanye West
                           </h3>
+                          
                           <p class="text-gray-500 text-md">
                             Rapper &amp; Entrepreneur
                           </p>

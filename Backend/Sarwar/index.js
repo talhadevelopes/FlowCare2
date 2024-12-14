@@ -25,7 +25,7 @@ mongoose.connect("mongodb+srv://mohfazam:wPlvY91k1HgmrD13@cluster0.f8f0e.mongodb
     console.error("MongoDB connection error:", error);
   });
 
-app.post("/", async(req, res) => {
+app.post("/Signup", async(req, res) => {
     const { name, email, password } = req.body;
 
     if(!name || !email || !password){

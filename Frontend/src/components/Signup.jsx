@@ -20,12 +20,12 @@ export function Signup() {
 
     function handleEmail(e) {
         setEmail(e.target.value);
-        setError(""); // Clear previous errors
+        setError(""); 
     }
 
     function handlePassword(e) {
         setPassword(e.target.value);
-        setError(""); // Clear previous errors
+        setError(""); 
     }
 
     async function handleSignup() {

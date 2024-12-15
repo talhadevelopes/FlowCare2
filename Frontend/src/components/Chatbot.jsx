@@ -92,7 +92,7 @@ export function Chatbot() {
                 <div
                   className={`max-w-[70%] p-3 rounded-lg ${
                     message.role === 'user'
-                      ? 'bg-[var(--fc-accent)] text-[var(--fc-text-primary)]'
+                      ? 'bg-[var(--fc-accent)] text-black'
                       : 'bg-[var(--fc-bg-secondary)] text-[var(--fc-text-primary)] border border-[var(--fc-accent)]'
                   }`}
                 >

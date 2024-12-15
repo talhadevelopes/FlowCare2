@@ -11,16 +11,12 @@ dotenv.config();
 const MONGO_URL = process.env.MONGO_URL;
 
 
-const User = require("./models");
+const User = require("../src/Sarwar/models");
 
 const app = express();
 app.use(express.json());
 
-app.use(cors({
-  origin: "https://flow-care.vercel.app",
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-}));
+app.use(cors())
 
 
 mongoose.connect(MONGO_URL)
@@ -54,6 +50,10 @@ app.post("/signup", async(req, res) => {
     }
 
 });
+
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+})
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;

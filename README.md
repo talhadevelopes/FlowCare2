@@ -91,3 +91,11 @@ We welcome contributions! Feel free to submit issues, feature requests, or pull 
 
 
 Let's normalize menstrual health education and create a stigma-free society together!
+
+
+
+
+
+npm i -g vercel
+vercel login
+vercel deploy --prod

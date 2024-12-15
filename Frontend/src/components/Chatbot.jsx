@@ -9,11 +9,33 @@ export function Chatbot() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (input.trim()) {
+    const trimmedInput = input.trim().toLowerCase()
+    
+    if (trimmedInput) {
+      
       setMessages([...messages, { role: 'user', content: input }])
       setInput('')
+      
+      
       setTimeout(() => {
-        setMessages(prev => [...prev, { role: 'assistant', content: 'Sarwar is Here!' }])
+        let response = ''
+        
+        
+        if (trimmedInput.includes('bulati hai') || trimmedInput.includes('Bulati hai magar?')) {
+          response = 'Bulati hai magar jaane ka nahi\nKehti hai magar sune ka nahi\nAate hai magar paas aane ka nahi\nJaane kya ye kahani hai\nKuch ishq tha kuch majboori thi\nKuch zid thi kuch majboori thi\nMohabbat mein dono haarein hain\nKuch ishq thi kuch majboori thi\nJuda hoke bhi saath hain hum\nJudaa hoke bhi saath hain hum\n'
+        } else if (trimmedInput.includes('how are you')) {
+          response = "I'm doing great, thanks to Your mom 😎"
+        } else if (trimmedInput.includes('weather')) {
+          response = "Look in your window bitch, i ain't your slave"
+        } else if (trimmedInput.includes('who are you')) {
+          response = "bache ki gee deekh ke baap ka naam bolte ham, aur hamare ku who are you puchra, hau re launde"
+        } else {
+          
+          response = "I'm not sure how to respond to that. Could you rephrase?"
+        }
+        
+        
+        setMessages(prev => [...prev, { role: 'assistant', content: response }])
       }, 1000)
     }
   }

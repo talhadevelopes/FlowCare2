@@ -13,6 +13,7 @@ import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
 import { PeriodTracker } from "./components/PeriodTracker";
 import { Ecom } from "./components/Ecom";
+import { Chatbot } from "./components/Chatbot";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <Login />,
+  },
+  {
+    path: "/ChatBot",
+    element: <Chatbot />,
   },
 ]);
 

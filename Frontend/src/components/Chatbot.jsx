@@ -1,5 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Send, Moon, Sun } from 'lucide-react'
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI("AIzaSyAIeshYE1lEJKJVHK6SFu2w6v8-NzRp7Eg");
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+
+
+
 
 export function Chatbot() {
   const [messages, setMessages] = useState([])
@@ -7,8 +15,15 @@ export function Chatbot() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const messagesEndRef = useRef(null)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const prompt = input.trim().toLowerCase();
+    const text = prompt + "Respond with a comforting, friendly, and explanatory tone specifically tailored to young girls aged 13-20, using simple language and showing empathy."
+    
+
+    const result = await model.generateContent(text);
+    console.log(result.response.text());
     const trimmedInput = input.trim().toLowerCase()
     
     if (trimmedInput) {
@@ -19,20 +34,6 @@ export function Chatbot() {
       
       setTimeout(() => {
         let response = ''
-        
-        
-        if (trimmedInput.includes('bulati hai') || trimmedInput.includes('Bulati hai magar?')) {
-          response = 'Bulati hai magar jaane ka nahi\nKehti hai magar sune ka nahi\nAate hai magar paas aane ka nahi\nJaane kya ye kahani hai\nKuch ishq tha kuch majboori thi\nKuch zid thi kuch majboori thi\nMohabbat mein dono haarein hain\nKuch ishq thi kuch majboori thi\nJuda hoke bhi saath hain hum\nJudaa hoke bhi saath hain hum\n'
-        } else if (trimmedInput.includes('how are you')) {
-          response = "I'm doing great, thanks to Your mom 😎"
-        } else if (trimmedInput.includes('weather')) {
-          response = "Look in your window bitch, i ain't your slave"
-        } else if (trimmedInput.includes('who are you')) {
-          response = "bache ki gee deekh ke baap ka naam bolte ham, aur hamare ku who are you puchra, hau re launde"
-        } else {
-          
-          response = "I'm not sure how to respond to that. Could you rephrase?"
-        }
         
         
         setMessages(prev => [...prev, { role: 'assistant', content: response }])
@@ -151,6 +152,3 @@ export function Chatbot() {
     </div>
   )
 }
-
-
-

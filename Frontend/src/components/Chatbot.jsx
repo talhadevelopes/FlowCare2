@@ -33,10 +33,7 @@ export function Chatbot() {
       
       
       setTimeout(() => {
-        let response = ''
-        
-        
-        setMessages(prev => [...prev, { role: 'assistant', content: response }])
+        setMessages(prev => [...prev, { role: 'assistant', content: result.response.text() }]);
       }, 1000)
     }
   }

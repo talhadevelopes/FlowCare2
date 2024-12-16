@@ -277,7 +277,7 @@ export function Chatbot() {
             {isTyping && (
               <div className="flex items-center text-[var(--fc-text-secondary)] message-appear">
                 <Loader className="animate-spin mr-2" size={16} />
-                <span>AI is typing...</span>
+                <span>FlowCare AI is typing...</span>
               </div>
             )}
             <div ref={messagesEndRef} />

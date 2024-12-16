@@ -88,27 +88,13 @@ export function Landing() {
                     <li>
                       <a
                         href="#"
-                        onClick={() => navigate("/forum")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="images/forum-icon.svg" alt="" />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Forum
-                        </span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
                         onClick={() => navigate("/blogs")}
                         class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/blogs-icon.svg" alt="" />
 
                         <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Blogs
+                          Education
                         </span>
                       </a>
                     </li>
@@ -154,6 +140,23 @@ export function Landing() {
                         </span>
                       </a>
                     </li>
+
+                    <li>
+                      <a
+                        href="#"
+                        onClick={() => navigate("/ChatBot")}
+                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      >
+                        <img
+                          src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"
+                          alt=""
+                        />
+
+                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                          Chat with AI
+                        </span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -161,7 +164,8 @@ export function Landing() {
 
             <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
               <form action="#">
-                <button onClick={() => navigate("/ChatBot")}
+                <button
+                  onClick={() => navigate("/ChatBot")}
                   type="submit"
                   class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
@@ -180,7 +184,7 @@ export function Landing() {
                     />
                   </svg>
 
-                  <span  class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                  <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                     Logout
                   </span>
                 </button>
@@ -220,7 +224,9 @@ export function Landing() {
             Your trusted companion on the path to better health! Explore, learn,
             and connect with a community that cares about your well-being.
           </p>
-          <button class="header-button" onClick={() => navigate("/Signup")}>Join Us!</button>
+          <button class="header-button" onClick={() => navigate("/Signup")}>
+            Join Us!
+          </button>
           <img src="../images/women.png" alt="women" class="feature-image" />
         </div>
       </main>
@@ -659,7 +665,7 @@ export function Landing() {
                           <h3 class="text-lg font-semibold text-black">
                             Kanye West
                           </h3>
-                          
+
                           <p class="text-gray-500 text-md">
                             Rapper &amp; Entrepreneur
                           </p>

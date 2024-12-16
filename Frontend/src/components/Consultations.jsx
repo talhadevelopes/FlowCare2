@@ -1,8 +1,16 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function Consultations() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState(
+    "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
+  );
+
+  const changeImage = (newImage) => {
+    setProfileImage(newImage);
+  };
   return (
     <div>
       <>
@@ -28,82 +36,147 @@ export function Consultations() {
           href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet"
         />
-        {/*----------------------SIDEBAR SECTION---------------------------------*/}
+        {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
         <div id="sidebar-container">
-          <div className="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
-            <div className="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
+          <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
+            <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
               <div>
-                <div className="inline-flex size-16 items-center justify-center">
-                  <span className="grid size-10 place-content-center rounded-lg bg-pink-50 text-xs text-gray-600">
-                    FlowCare
-                  </span>
+                <div className="py-4 px-2">
+                  <div className="group relative inline-block">
+                    {/* Profile Picture */}
+                    <div
+                      id="profilePicture"
+                      className="w-12 h-12 rounded-full bg-cover bg-center"
+                      style={{ backgroundImage: `url(${profileImage})` }}
+                    ></div>
+
+                    {/* Tooltip Container */}
+                    <div className="invisible opacity-0 ml-20 group-hover:visible group-hover:opacity-100 absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform rounded bg-gray-900 p-2 text-white transition-all duration-300">
+                      <div className="flex flex-col gap-2 whitespace-nowrap">
+                        <button
+                          className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                          onClick={() =>
+                            changeImage(
+                              "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
+                            )
+                          }
+                        >
+                          User 1
+                        </button>
+                        <button
+                          className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                          onClick={() =>
+                            changeImage(
+                              "https://media.istockphoto.com/photos/beautiful-young-muslim-woman-wearing-a-hijab-on-her-head-picture-id618035002?k=6&m=618035002&s=612x612&w=0&h=_1m2fRBf_DbVeFOZN-VwC2cW9QnV7tYerZwZo44lLjo="
+                            )
+                          }
+                        >
+                          User 2
+                        </button>
+                        <button
+                          className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
+                          onClick={() =>
+                            changeImage(
+                              "https://i.pinimg.com/originals/ab/6d/70/ab6d70b2b5ac104f4459487d3a94bec7.jpg"
+                            )
+                          }
+                        >
+                          User 3
+                        </button>
+                      </div>
+
+                      {/* Arrow */}
+                      <div className="absolute left-1/2 top-0 -mt-2 h-0 w-0 -translate-x-1/2 transform border-8 border-transparent border-b-gray-900"></div>
+                    </div>
+                  </div>
                 </div>
-                <div className="border-t border-gray-100">
-                  <div className="px-2">
-                    <div className="py-4">
+
+                <div class="border-t border-gray-100">
+                  <div class="px-2">
+                    <div class="py-4">
                       <a
-                        href="#" onClick={() => navigate("/")}
-                        className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
+                        href="#"
+                        onClick={() => navigate("/")}
+                        class="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
                       >
-                        <img src="../images/house-icon.svg" alt="" />
-                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                        <img src="images/house-icon.svg" alt="" />
+
+                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
                           Home
                         </span>
                       </a>
                     </div>
-                    <ul className="space-y-1 border-t border-gray-100 pt-4">
+
+                    <ul class="space-y-1 border-t border-gray-100 pt-4">
                       <li>
                         <a
-                          href="#" onClick={() => navigate("/forum")}
-                          className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          href="#"
+                          onClick={() => navigate("/blogs")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
-                          <img src="../images/forum-icon.svg" alt="" />
-                          <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                            Forum
+                          <img src="images/blogs-icon.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                            Education
                           </span>
                         </a>
                       </li>
+
                       <li>
                         <a
-                          href="#" onClick={() => navigate("/blogs")}
-                          className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          href="#"
+                          onClick={() => navigate("/Ecom")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
-                          <img src="../images/blogs-icon.svg" alt="" />
-                          <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                            Blogs
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#" onClick={() => navigate("/Ecom")}
-                          className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                        >
-                          <img src="../images/shopping-cart.svg" alt="" />
-                          <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                          <img src="images/shopping-cart.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
                             Shop
                           </span>
                         </a>
                       </li>
+
                       <li>
                         <a
                           href="#"
-                          className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          onClick={() => navigate("/tracker")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
-                          <img src="../images/health-logo.svg" alt="" />
-                          <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 font-sans rounded bg-gray-900 px-4 py-1.5 text-xl font-medium text-white group-hover:visible">
+                          <img src="images/health-logo.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 font-sans rounded bg-gray-900 px-4 py-1.5 text-xl font-medium text-white group-hover:visible">
                             Track Your Health Cycle
                           </span>
                         </a>
                       </li>
+
                       <li>
                         <a
-                          href="#" onClick={() => navigate("/consultations")}
-                          className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                          href="#"
+                          onClick={() => navigate("/consultations")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                         >
-                          <img src="../images/user-logo.svg" alt="" />
-                          <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                          <img src="images/user-logo.svg" alt="" />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
                             Expert Consultation
+                          </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => navigate("/ChatBot")}
+                          class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <img
+                            src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"
+                            alt=""
+                          />
+
+                          <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                            Chat with AI
                           </span>
                         </a>
                       </li>
@@ -111,27 +184,30 @@ export function Consultations() {
                   </div>
                 </div>
               </div>
-              <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+
+              <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
                 <form action="#">
                   <button
+                    onClick={() => navigate("/ChatBot")}
                     type="submit"
-                    className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                    class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="size-5 opacity-75"
+                      class="size-5 opacity-75"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      strokeWidth={2}
+                      stroke-width="2"
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                       />
                     </svg>
-                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+
+                    <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                       Logout
                     </span>
                   </button>

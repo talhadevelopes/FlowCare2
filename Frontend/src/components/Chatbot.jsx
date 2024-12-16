@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Send, Moon, Sun, Home, Trash2, Loader, Paperclip, Smile, Volume2, VolumeX, HelpCircle } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-//UI issue: Text going out og box
-//The hover effect on the top buttons is CHINDI
 
 const genAI = new GoogleGenerativeAI("AIzaSyAIeshYE1lEJKJVHK6SFu2w6v8-NzRp7Eg");
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -133,7 +131,6 @@ export function Chatbot() {
       .message-bubble {
         padding: 1rem;
         border-radius: 1rem;
-        max-width: 80%;
         line-height: 1.5;
         transition: all 0.2s;
         white-space: pre-wrap;
@@ -198,7 +195,7 @@ export function Chatbot() {
   return (
     <div className={`flowcare-chatbot ${isDarkMode ? '' : 'light'}`}>
       <div className="fixed inset-0 flex items-center justify-center bg-[var(--fc-bg-primary)] transition-colors duration-200 p-4">
-        <div className="w-full max-w-4xl mx-4 overflow-hidden rounded-lg bg-[var(--fc-bg-secondary)] shadow-xl transition-colors duration-200 flex flex-col">
+        <div className="w-full max-w-5xl mx-4 overflow-hidden rounded-lg bg-[var(--fc-bg-secondary)] shadow-xl transition-colors duration-200 flex flex-col">
           <div className="flex items-center justify-between p-4 bg-[var(--fc-accent)] shadow-md">
             <h2 style={{ fontFamily: 'Pacifico, cursive' }} className="text-2xl font-bold text-black">
               Enhanced FlowCare Chatbot
@@ -243,12 +240,12 @@ export function Chatbot() {
                 } message-appear`}
               >
                 {message.role === 'assistant' && (
-                  <div className="w-8 h-8 rounded-full bg-[var(--fc-accent)] flex items-center justify-center text-black mr-2">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-[var(--fc-accent)] flex items-center justify-center text-black mr-2 text-lg font-medium">
                     AI
                   </div>
                 )}
-                <div className="flex flex-col">
-                  <div className={`message-bubble ${
+                <div className="flex flex-col max-w-[50%]">
+                  <div className={`message-bubble inline-block whitespace-pre-line text-base ${
                     message.role === 'user'
                       ? 'bg-[var(--fc-accent)] text-black'
                       : 'bg-[var(--fc-bg-secondary)] text-[var(--fc-text-primary)] border border-[var(--fc-accent)]'
@@ -268,7 +265,7 @@ export function Chatbot() {
                   )}
                 </div>
                 {message.role === 'user' && (
-                  <div className="w-8 h-8 rounded-full bg-[var(--fc-accent-dark)] flex items-center justify-center text-black ml-2">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-[var(--fc-accent-dark)] flex items-center justify-center text-black ml-2 text-lg font-medium">
                     U
                   </div>
                 )}

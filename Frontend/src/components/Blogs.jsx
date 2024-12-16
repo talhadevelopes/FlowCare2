@@ -546,32 +546,13 @@ export function Blogs() {
             Let’s get to the bloody truth. How much blood do we lose?
           </h1>
           <p className="text-xl mt-5">
-            As we’ve already said, everyone is different, and what one person
-            considers to be a light period (not much blood) might be heavy for
-            someone else, so it’s really a case of getting to know your body in
-            the early days. On average, women, girls, and people who have
-            periods lose between 3-9 teaspoons of fluid a month (it really isn’t
-            that much when you put it that way!). But why did we just call it
-            fluid? Well, while we commonly call it blood - and yes there is
-            blood in there - there’s also other really impressive stuff in there
-            too. About half of your period is blood, but the rest is made up of
-            other things including tissue, nutrients and cervical mucus - pretty
-            amazing when
-            <b>
-              {" "}
-              you think about it! It’s important that you monitor your flow -
-              yes, go with it - but if you struggle it might be a sign that you
-              need some help. A good indicator that your flow is very heavy, is
-              if you have to change your period product every hour or two. If
-              you find this is the case
-            </b>
-            , you should speak to your doctor or nurse who will be able to help.
-            On the other hand, some women, girls, and people who have periods
-            have a light flow (they don’t lose much fluid) and that’s totally
-            normal too! Just be aware of your body and make sure you’re changing
-            your period products often enough, for some products especially
-            tampons it’s super important that you don’t leave them in too long.
-            To find out more info on period products click here.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam
+            laborum itaque aperiam et porro impedit pariatur totam, in
+            aspernatur quos, sed exercitationem maxime, officia a consequatur
+            vitae aut nisi consectetur. Iusto ex, quisquam vitae mollitia magni
+            consectetur esse libero quo, necessitatibus illum sunt officia amet
+            totam minima blanditiis modi natus iure sequi obcaecati enim, et hic
+            dolor velit harum. Autem!
           </p>
         </div>
         <div className="w-[50%]">

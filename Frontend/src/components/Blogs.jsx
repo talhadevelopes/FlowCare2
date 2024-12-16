@@ -524,7 +524,7 @@ export function Blogs() {
             <i
               key={index}
               className="fa-solid fa-trophy text-[2rem]"
-              style={{ color: isRead ? "#FFD43B" : "#fff " }}
+              style={{ color: isRead ? "#FFD43B" : "#ffff"}}
             ></i>
           ))}
         </div>

@@ -15,7 +15,6 @@ export function Signup() {
 
     const navigate = useNavigate();
 
-
     useEffect(() => {
       if (darkMode) {
         document.documentElement.classList.add('dark');
@@ -112,7 +111,13 @@ export function Signup() {
                                 name="name"
                                 type="text"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors duration-200 bg-transparent dark:bg-gray-700"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border 
+                                border-gray-300 dark:border-gray-600 
+                                text-gray-900 dark:text-white 
+                                placeholder-gray-500 dark:placeholder-gray-400 
+                                bg-white dark:bg-gray-700 
+                                focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 
+                                sm:text-sm transition-colors duration-200"
                                 placeholder="Full Name"
                                 value={name}
                                 onChange={handleName}
@@ -126,7 +131,13 @@ export function Signup() {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors duration-200 bg-transparent dark:bg-gray-700"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border 
+                                border-gray-300 dark:border-gray-600 
+                                text-gray-900 dark:text-white 
+                                placeholder-gray-500 dark:placeholder-gray-400 
+                                bg-white dark:bg-gray-700 
+                                focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 
+                                sm:text-sm transition-colors duration-200"
                                 placeholder="Email address"
                                 value={email}
                                 onChange={handleEmail}
@@ -140,7 +151,13 @@ export function Signup() {
                                 type="password"
                                 autoComplete="new-password"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors duration-200 bg-transparent dark:bg-gray-700"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border 
+                                border-gray-300 dark:border-gray-600 
+                                text-gray-900 dark:text-white 
+                                placeholder-gray-500 dark:placeholder-gray-400 
+                                bg-white dark:bg-gray-700 
+                                focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 
+                                sm:text-sm transition-colors duration-200"
                                 placeholder="Password"
                                 value={password}
                                 onChange={handlePassword}
@@ -176,4 +193,3 @@ export function Signup() {
         </div>
     );
 }
-

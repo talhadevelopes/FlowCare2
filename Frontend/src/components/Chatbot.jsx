@@ -126,14 +126,8 @@ export function Chatbot() {
 
       .header-button {
         padding: 0.5rem;
-        transition: all 0.2s;
         color: var(--fc-text-primary);
         background-color: transparent;
-      }
-
-      .header-button:hover {
-        background-color: var(--fc-accent-dark);
-        color: black;
       }
 
       .message-bubble {
@@ -142,9 +136,9 @@ export function Chatbot() {
         max-width: 80%;
         line-height: 1.5;
         transition: all 0.2s;
-        white-space: normal;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        word-break: break-word;
+        hyphens: auto;
       }
 
       .message-bubble:hover {
@@ -212,28 +206,28 @@ export function Chatbot() {
             <div className="flex space-x-3">
               <button
                 onClick={() => navigate("/")}
-                className="header-button"
+                className="p-2 text-black"
                 aria-label="Go to home"
               >
                 <Home size={20} />
               </button>
               <button
                 onClick={toggleDarkMode}
-                className="header-button"
+                className="p-2 text-black"
                 aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
               >
                 {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
               </button>
               <button
                 onClick={clearChat}
-                className="header-button"
+                className="p-2 text-black"
                 aria-label="Clear chat"
               >
                 <Trash2 size={20} />
               </button>
               <button
                 onClick={() => alert("Help: This is an AI chatbot designed to provide support and information for young girls aged 13-20.")}
-                className="header-button"
+                className="p-2 text-black"
                 aria-label="Help"
               >
                 <HelpCircle size={20} />
@@ -348,9 +342,4 @@ export function Chatbot() {
     </div>
   );
 }
-
-
-
-
-
 

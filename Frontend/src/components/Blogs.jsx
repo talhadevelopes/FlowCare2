@@ -516,16 +516,7 @@ export function Blogs() {
           What are the signs that my period is coming?
         </h1>
         <p className="text-xl mt-5">
-          Your menstrual cycle takes around 28 days to complete, but this is a
-          good time to point out that EVERYONE is different! Just like your
-          fingerprints are unique, so is your bloody brilliant body and how you
-          experience periods. So, while we say 28 days it might be a little
-          longer, it might be a little shorter, there really aren’t any set
-          rules here. Of those 28 days, you could expect to bleed for anywhere
-          between 3-8 days. Again, everyone is different, and your periods are
-          likely to change. Your body can take some time to get into its own
-          flow, so cut it a bit o  f sla- it’s learning what to do while you’re
-          getting used to things too!
+         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste a commodi voluptatem quam quibusdam dolores blanditiis eveniet recusandae libero dolorum maiores quidem, quis, neque perspiciatis saepe sapiente modi, voluptas facere.
         </p>
         <i class="fa-solid fa-diamond-turn-right"></i>{" "}
         <a href="" className="underline mt-2 bg-pink-100 px-2">

@@ -37,7 +37,7 @@ export function Consultations() {
           rel="stylesheet"
         />
         {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
-         {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
+    
         <div id="sidebar-container">
           <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
             <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">

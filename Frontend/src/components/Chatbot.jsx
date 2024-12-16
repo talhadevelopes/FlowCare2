@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Send, Moon, Sun, Home, Trash2, Loader, Paperclip, Smile, Volume2, VolumeX, HelpCircle } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Remove dotenv configuration as it's not needed in browser environment
+
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);

@@ -524,7 +524,7 @@ export function Blogs() {
           rules here. Of those 28 days, you could expect to bleed for anywhere
           between 3-8 days. Again, everyone is different, and your periods are
           likely to change. Your body can take some time to get into its own
-          flow, so cut it a bit of slack - it’s learning what to do while you’re
+          flow, so cut it a bit of sla- it’s learning what to do while you’re
           getting used to things too!
         </p>
         <i class="fa-solid fa-diamond-turn-right"></i>{" "}

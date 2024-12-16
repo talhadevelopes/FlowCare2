@@ -198,7 +198,7 @@ export function Chatbot() {
         <div className="w-full max-w-5xl mx-4 overflow-hidden rounded-lg bg-[var(--fc-bg-secondary)] shadow-xl transition-colors duration-200 flex flex-col">
           <div className="flex items-center justify-between p-4 bg-[var(--fc-accent)] shadow-md">
             <h2 style={{ fontFamily: 'Pacifico, cursive' }} className="text-2xl font-bold text-black">
-              Enhanced FlowCare Chatbot
+              FlowCare Chatbot
             </h2>
             <div className="flex space-x-3">
               <button

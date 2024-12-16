@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Send, Moon, Sun, Home, Trash2, Loader, Paperclip, Smile, Volume2, VolumeX, HelpCircle } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI("AIzaSyAIeshYE1lEJKJVHK6SFu2w6v8-NzRp7Eg");
+// Remove dotenv configuration as it's not needed in browser environment
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const popularEmojis = [

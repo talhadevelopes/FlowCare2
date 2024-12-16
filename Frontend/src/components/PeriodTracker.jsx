@@ -271,7 +271,7 @@ export function PeriodTracker() {
 
   return (
     <>
-      {/*----------------------SIDEBAR SECTION---------------------------------*/}
+      {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
       <div id="sidebar-container">
         <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
           <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
@@ -398,6 +398,23 @@ export function PeriodTracker() {
                         </span>
                       </a>
                     </li>
+
+                    <li>
+                      <a
+                        href="#"
+                        onClick={() => navigate("/ChatBot")}
+                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      >
+                        <img
+                          src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"
+                          alt=""
+                        />
+
+                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                          Chat with AI
+                        </span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -406,7 +423,7 @@ export function PeriodTracker() {
             <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
               <form action="#">
                 <button
-                  onClick={() => navigate("/Signup")}
+                  onClick={() => navigate("/ChatBot")}
                   type="submit"
                   class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
@@ -426,7 +443,7 @@ export function PeriodTracker() {
                   </svg>
 
                   <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                    SignUp
+                    Logout
                   </span>
                 </button>
               </form>

@@ -516,7 +516,10 @@ export function Blogs() {
           What are the signs that my period is coming?
         </h1>
         <p className="text-xl mt-5">
-         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste a commodi voluptatem quam quibusdam dolores blanditiis eveniet recusandae libero dolorum maiores quidem, quis, neque perspiciatis saepe sapiente modi, voluptas facere.
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste a
+          commodi voluptatem quam quibusdam dolores blanditiis eveniet
+          recusandae libero dolorum maiores quidem, quis, neque perspiciatis
+          saepe sapiente modi, voluptas facere.
         </p>
         <i class="fa-solid fa-diamond-turn-right"></i>{" "}
         <a href="" className="underline mt-2 bg-pink-100 px-2">
@@ -530,27 +533,10 @@ export function Blogs() {
         </h1>
 
         <p className="text-xl mt-5">
-          If you’ve never had a period before, there are some signs which might
-          indicate your period is coming and they’re all natural parts of
-          growing up. If you’ve noticed your boobs are beginning to develop, and
-          you’ve started to grow pubic hair, then you could expect to get your
-          period about two years later. A more immediate sign for some people is
-          if you notice discharge in your pants. Discharge is a white or
-          yellowish fluid which usually shows up a few months before your first
-          period. There are lots of other signs your period is coming and these
-          can be both physical and emotional. We call these signs PMS
-          (premenstrual syndrome). Not everyone gets PMS and we all experience
-          it differently. It usually happens just before and during your period,
-          and it’s basically the reason you might find yourself wanting to eat
-          your body weight in chocolate or burst into tears at the smallest of
-          things…lost sock, bad hair day, burnt toast…trust me, we all have
-          those days! PMS brings with it all kinds of symptoms such as
-          headaches, bloating, cramps, mood swings, feeling tired and having
-          trouble concentrating. We’ve got a great blog all about PMS with top
-          tips on how to help with these symptoms and many more, so go and take
-          a look. It will finally explain some of those weird and wonderful
-          feelings that you never knew were thanks to your bloody brilliant
-          period!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+          molestias expedita laboriosam exercitationem tempore. Commodi minima
+          officia ipsum amet odio atque illum, repudiandae harum illo dolore
+          eius magnam debitis tenetur.
         </p>
       </div>
 

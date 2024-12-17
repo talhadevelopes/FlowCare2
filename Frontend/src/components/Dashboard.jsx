@@ -1,7 +1,51 @@
 import React from 'react';
-import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart } from 'lucide-react';
+import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils } from 'lucide-react';
 
 export function Dashboard() {
+  // Simulated user inputs (in a real app, these would come from state or props)
+  const userInputs = {
+    cycleDay: 14,
+    currentPhase: 'Luteal',
+    mood: 'Happy',
+    symptoms: ['Mild Cramps', 'Fatigue'],
+    sleepQuality: 'Good',
+    sleepDuration: 7.5,
+  };
+
+  // Derived features
+  const fertileWindow = userInputs.cycleDay >= 11 && userInputs.cycleDay <= 17;
+  const pmsLikely = userInputs.currentPhase === 'Luteal' && userInputs.cycleDay > 21;
+  const wellRested = userInputs.sleepQuality === 'Good' && userInputs.sleepDuration >= 7;
+
+  // Function to get health tips based on user inputs
+  const getHealthTips = () => {
+    const tips = [];
+
+    if (fertileWindow) {
+      tips.push("You're in your fertile window. If you're trying to conceive, this is a good time.");
+    }
+
+    if (pmsLikely) {
+      tips.push("PMS symptoms may occur. Try to reduce stress and maintain a balanced diet.");
+    }
+
+    if (userInputs.symptoms.includes('Mild Cramps')) {
+      tips.push("For mild cramps, try gentle exercise or a warm compress on your lower abdomen.");
+    }
+
+    if (userInputs.symptoms.includes('Fatigue')) {
+      tips.push("Combat fatigue with regular short breaks and stay hydrated throughout the day.");
+    }
+
+    if (!wellRested) {
+      tips.push("Aim for 7-9 hours of sleep. Create a relaxing bedtime routine to improve sleep quality.");
+    }
+
+    return tips;
+  };
+
+  const healthTips = getHealthTips();
+
   return (
     <div className="flex h-screen bg-pink-50 text-gray-800 font-sans">
       {/* Sidebar */}
@@ -50,32 +94,33 @@ export function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <MetricCard
               title="Cycle Day"
-              value="14"
+              value={userInputs.cycleDay}
               subtitle="14 days until next period"
               icon={<Calendar className="h-5 w-5 text-pink-500" />}
             />
             <MetricCard
               title="Current Phase"
-              value="Luteal"
+              value={userInputs.currentPhase}
               subtitle="Next period expected on Dec 30"
-              icon={<Calendar className="h-5 w-5 text-pink-500" />}
+              icon={<Droplet className="h-5 w-5 text-pink-500" />}
             />
             <MetricCard
               title="Today's Mood"
-              value="Happy"
+              value={userInputs.mood}
               subtitle={
                 <div className="flex gap-2 mt-1">
-                  <Badge>Mild Cramps</Badge>
-                  <Badge>Fatigue</Badge>
+                  {userInputs.symptoms.map((symptom, index) => (
+                    <Badge key={index}>{symptom}</Badge>
+                  ))}
                 </div>
               }
               icon={<Heart className="h-5 w-5 text-pink-500" />}
             />
             <MetricCard
               title="Sleep Quality"
-              value="Good"
-              subtitle="7.5 hours of sleep"
-              icon={<Calendar className="h-5 w-5 text-pink-500" />}
+              value={userInputs.sleepQuality}
+              subtitle={`${userInputs.sleepDuration} hours of sleep`}
+              icon={<Moon className="h-5 w-5 text-pink-500" />}
             />
           </div>
 
@@ -127,6 +172,41 @@ export function Dashboard() {
               <span className="text-3xl font-bold text-pink-600">45 days</span>
               <span className="text-sm text-gray-500">Consistent tracking</span>
             </div>
+          </Card>
+
+          {/* Derived Features */}
+          <Card>
+            <h3 className="font-semibold mb-4">Your Health Insights</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <InsightItem
+                title="Fertility Window"
+                value={fertileWindow ? "Active" : "Inactive"}
+                icon={<Calendar className="h-5 w-5 text-pink-500" />}
+              />
+              <InsightItem
+                title="PMS Likelihood"
+                value={pmsLikely ? "High" : "Low"}
+                icon={<ActivitySquare className="h-5 w-5 text-pink-500" />}
+              />
+              <InsightItem
+                title="Rest Status"
+                value={wellRested ? "Well Rested" : "Need More Rest"}
+                icon={<Moon className="h-5 w-5 text-pink-500" />}
+              />
+            </div>
+          </Card>
+
+          {/* Health Tips */}
+          <Card>
+            <h3 className="font-semibold mb-4">Personalized Health Tips</h3>
+            <ul className="space-y-2">
+              {healthTips.map((tip, index) => (
+                <li key={index} className="flex items-start">
+                  <Utensils className="h-5 w-5 text-pink-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
           </Card>
         </div>
       </main>
@@ -203,4 +283,18 @@ const UpcomingItem = ({ title, description }) => {
     </div>
   );
 };
+
+const InsightItem = ({ title, value, icon }) => {
+  return (
+    <div className="flex items-center space-x-3">
+      {icon}
+      <div>
+        <p className="text-sm text-gray-500">{title}</p>
+        <p className="font-medium">{value}</p>
+      </div>
+    </div>
+  );
+};
+
+
 

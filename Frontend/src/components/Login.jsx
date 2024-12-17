@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Home, Moon, Sun } from 'react-feather';
 
 const server_url = import.meta.env.VITE_SERVER_URL;
-const local_url = 'http://localhost:3000/'; 
+const local_url = 'http://localhost:3000/';
 
 export function Login() {
     const [email, setEmail] = useState("");
@@ -181,6 +181,12 @@ export function Login() {
                         Don't have an account? Sign up
                     </Link>
                 </div>
+            </div>
+            <div className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+                By logging in, you agree to our{' '}
+                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Terms of Service</a>{' '}
+                and{' '}
+                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Privacy Policy</a>.
             </div>
         </div>
     );

@@ -122,7 +122,16 @@ export function PeriodTracker() {
   };
 
   const handleSubmit = async () => { 
+    
+    const userId = localStorage.getItem('userId');
+    
+    if (!userId) {
+        alert('Please log in first');
+        return;
+    }
+
     const submissionData = {
+      userId, 
       cycleDuration,
       lastPeriodStart,
       lastPeriodDuration,
@@ -138,17 +147,38 @@ export function PeriodTracker() {
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/trackerdata", submissionData);
-      console.log('Data submitted successfully:', response.data);
+      
+      try {
+        const response = await axios.post(`${server_url}trackerdata`, submissionData);
+        console.log('Data submitted successfully:', response.data);
+        setShowHealthTips(true);
+        alert('Data submitted successfully!');
+        return;
+      } catch (primaryError) {
+        console.warn('Primary server failed, attempting local fallback:', primaryError);
+      }
+
+      
+      const localResponse = await axios.post('http://localhost:3000/trackerdata', submissionData);
+      console.log('Data submitted successfully via local server:', localResponse.data);
       setShowHealthTips(true);
       alert('Data submitted successfully!');
     } catch (error) {
       console.error('Error submitting data:', error);
-      alert('Error submitting data. Please try again.');
+      
+      
+      if (error.response) {
+        
+        alert(`Error: ${error.response.data.message || 'Server error'}`);
+      } else if (error.request) {
+        
+        alert('No response from server. Please check your network connection.');
+      } else {
+        
+        alert('Error submitting data. Please try again.');
+      }
     }
-
-    // console.log(submissionData);
-  };
+};
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({

@@ -15,15 +15,7 @@ const app = express();
 app.use(express.json());
 
 
-app.use(cors({
-    origin: [
-        'http://localhost:5173', 
-        'https://flow-care-tvx9.vercel.app',
-        
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors())
 
 mongoose.connect(MONGO_URL)
   .then(() => {

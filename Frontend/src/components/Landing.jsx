@@ -24,65 +24,25 @@ export function Landing() {
   };
 
   return (
-    <div className={`flex h-screen ${darkMode ? 'dark' : ''} bg-pink-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans`}>
+    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       {/* Sidebar */}
-      <aside className="hidden md:flex w-[240px] bg-white dark:bg-gray-800 p-6 flex-col">
-        <h1 className="text-xl font-semibold text-pink-600 dark:text-pink-400 mb-6">FlowCare</h1>
-        <nav className="flex-1">
-          <ul className="space-y-2">
-            <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
-            <NavItem icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} active />
-            <NavItem icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} />
-            <NavItem icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
-            <NavItem icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
-            <NavItem icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
-            <NavItem icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
-          </ul>
-        </nav>
-        <div className="pt-6 mt-6 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-sm font-medium text-gray-600 dark:text-gray-300">
-              UN
-            </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-900 dark:text-gray-100">User Name</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Guest</p>
-            </div>
-            <ChevronRight size={16} className="ml-auto text-gray-400" />
+      <aside className="bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4">
+        <nav className="mt-8">
+          <div className="px-4 py-4 flex flex-col space-y-2">
+            <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">FlowCare</h1>
+            <SidebarLink icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
+            <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} active />
+            <SidebarLink icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} />
+            <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
+            <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
+            <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
+            <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
           </div>
-        </div>
+        </nav>
       </aside>
 
-      {/* Mobile Menu */}
-      <div className="md:hidden">
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="fixed top-4 left-4 z-20 p-2 bg-white dark:bg-gray-800 rounded-md shadow-md"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-10">
-            <div className="bg-white dark:bg-gray-800 w-64 h-full p-6">
-              <h1 className="text-xl font-semibold text-pink-600 dark:text-pink-400 mb-6">FlowCare</h1>
-              <nav>
-                <ul className="space-y-2">
-                  <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => { navigate('/dashboard'); setIsMobileMenuOpen(false); }} />
-                  <NavItem icon={<Home size={20} />} label="Home" onClick={() => { navigate('/'); setIsMobileMenuOpen(false); }} active />
-                  <NavItem icon={<GraduationCap size={20} />} label="Education" onClick={() => { navigate('/blogs'); setIsMobileMenuOpen(false); }} />
-                  <NavItem icon={<ShoppingBag size={20} />} label="Shop" onClick={() => { navigate('/Ecom'); setIsMobileMenuOpen(false); }} />
-                  <NavItem icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => { navigate('/tracker'); setIsMobileMenuOpen(false); }} />
-                  <NavItem icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => { navigate('/consultations'); setIsMobileMenuOpen(false); }} />
-                  <NavItem icon={<Bot size={20} />} label="AI Chatbot" onClick={() => { navigate('/ChatBot'); setIsMobileMenuOpen(false); }} />
-                </ul>
-              </nav>
-            </div>
-          </div>
-        )}
-      </div>
-
       {/* Main Content */}
-      <main className="flex-1 p-6 overflow-auto">
+      <main className="flex-1 p-6 overflow-auto bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Header */}
           <div className="flex justify-between items-center">
@@ -292,19 +252,19 @@ export function Landing() {
   );
 }
 
-const NavItem = ({ icon, label, onClick, active = false }) => {
+const SidebarLink = ({ icon, label, onClick, active = false }) => {
   return (
-    <li>
-      <button
-        onClick={onClick}
-        className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm w-full text-left ${
-          active ? "bg-pink-50 dark:bg-pink-900 text-pink-600 dark:text-pink-400" : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-        }`}
-      >
-        {icon}
-        {label}
-      </button>
-    </li>
+    <button
+      onClick={onClick}
+      className={`flex items-center space-x-2 w-full px-2 py-2 rounded-lg transition-colors ${
+        active
+          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
+          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
+      }`}
+    >
+      {icon}
+      <span>{label}</span>
+    </button>
   );
 };
 
@@ -316,15 +276,24 @@ const Card = ({ children }) => {
   );
 };
 
-const FeatureCard = ({ title, description, icon, onClick }) => {
+const FeatureOverview = ({ icon, title, description }) => {
   return (
-    <Card>
-      <div className="flex flex-col items-center text-center cursor-pointer" onClick={onClick}>
-        <div className="mb-4">{icon}</div>
-        <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h3>
+    <div className="flex items-start space-x-4">
+      <div className="flex-shrink-0">{icon}</div>
+      <div>
+        <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
         <p className="text-gray-800 dark:text-gray-200">{description}</p>
       </div>
-    </Card>
+    </div>
+  );
+};
+
+const BenefitItem = ({ title, description }) => {
+  return (
+    <div className="border-l-4 border-pink-500 pl-4">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
+    </div>
   );
 };
 
@@ -372,27 +341,6 @@ const FAQItem = ({ question, answer }) => {
         <span>{isOpen ? '-' : '+'}</span>
       </button>
       {isOpen && <p className="mt-2 text-gray-800 dark:text-gray-200">{answer}</p>}
-    </div>
-  );
-};
-
-const FeatureOverview = ({ icon, title, description }) => {
-  return (
-    <div className="flex items-start space-x-4">
-      <div className="flex-shrink-0">{icon}</div>
-      <div>
-        <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-        <p className="text-gray-800 dark:text-gray-200">{description}</p>
-      </div>
-    </div>
-  );
-};
-
-const BenefitItem = ({ title, description }) => {
-  return (
-    <div className="border-l-4 border-pink-500 pl-4">
-      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-800 dark:text-gray-200">{description}</p>
     </div>
   );
 };

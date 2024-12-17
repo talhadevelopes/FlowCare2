@@ -98,7 +98,7 @@ export function Landing() {
           {/* Hero Section */}
           <Card>
             <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2">
+              <div className="w-full">
                 <h1 className="text-4xl font-bold mb-4">Your Trusted Companion for Better Health</h1>
                 <p className="text-lg mb-6">Explore, learn, and connect with a community that cares about your well-being.</p>
                 <button 
@@ -108,51 +108,45 @@ export function Landing() {
                   Join Us!
                 </button>
               </div>
-              <div className="md:w-1/2 mt-6 md:mt-0">
-                <img src="/placeholder.svg?height=300&width=400" alt="Women's Health" className="rounded-lg shadow-md" />
-              </div>
             </div>
           </Card>
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <FeatureCard
-              title="Explore Blogs"
-              description="Stay informed with our latest articles on women's health and wellness."
-              icon={<GraduationCap className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
-              onClick={() => navigate('/blogs')}
-            />
-            <FeatureCard
-              title="Track Your Health"
-              description="Monitor your cycle, symptoms, and overall well-being with our easy-to-use tools."
-              icon={<ActivitySquare className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
-              onClick={() => navigate('/tracker')}
-            />
-            <FeatureCard
-              title="Connect with People"
-              description="Join our supportive community and share experiences with others."
-              icon={<Heart className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
-              onClick={() => navigate('/community')}
-            />
-            <FeatureCard
-              title="Shop Products"
-              description="Discover curated products for your health and wellness needs."
-              icon={<ShoppingBag className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
-              onClick={() => navigate('/Ecom')}
-            />
-            <FeatureCard
-              title="Expert Consultation"
-              description="Get personalized advice from our network of healthcare professionals."
-              icon={<Stethoscope className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
-              onClick={() => navigate('/consultations')}
-            />
-            <FeatureCard
-              title="AI Chatbot"
-              description="Get instant answers to your health questions with our AI-powered chatbot."
-              icon={<Bot className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
-              onClick={() => navigate('/ChatBot')}
-            />
-          </div>
+          {/* Features Overview */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6">Comprehensive Health Management</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <FeatureOverview
+                icon={<LayoutDashboard className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Personalized Dashboard"
+                description="Get a quick overview of your health status and upcoming activities."
+              />
+              <FeatureOverview
+                icon={<GraduationCap className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Educational Resources"
+                description="Access a wealth of articles and videos on women's health topics."
+              />
+              <FeatureOverview
+                icon={<ShoppingBag className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Curated Shop"
+                description="Find health and wellness products tailored to your needs."
+              />
+              <FeatureOverview
+                icon={<ActivitySquare className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Health Tracking"
+                description="Monitor your cycle, symptoms, and overall well-being with easy-to-use tools."
+              />
+              <FeatureOverview
+                icon={<Stethoscope className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Expert Consultations"
+                description="Connect with healthcare professionals for personalized advice."
+              />
+              <FeatureOverview
+                icon={<Bot className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="AI-Powered Chatbot"
+                description="Get instant answers to your health questions anytime, anywhere."
+              />
+            </div>
+          </Card>
 
           {/* How It Works Section */}
           <Card>
@@ -257,7 +251,7 @@ const NavItem = ({ icon, label, onClick, active = false }) => {
       <button
         onClick={onClick}
         className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm w-full text-left ${
-          active ? "bg-pink-50 dark:bg-pink-900 text-pink-600 dark:text-pink-400" : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+          active ? "bg-pink-50 dark:bg-pink-900 text-pink-600 dark:text-pink-400" : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
         }`}
       >
         {icon}
@@ -281,7 +275,7 @@ const FeatureCard = ({ title, description, icon, onClick }) => {
       <div className="flex flex-col items-center text-center cursor-pointer" onClick={onClick}>
         <div className="mb-4">{icon}</div>
         <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 dark:text-gray-300">{description}</p>
+        <p className="text-gray-700 dark:text-gray-300">{description}</p>
       </div>
     </Card>
   );
@@ -289,13 +283,12 @@ const FeatureCard = ({ title, description, icon, onClick }) => {
 
 const StepCard = ({ number, title, description }) => {
   return (
-    <div className="flex flex-col items-center
- text-center">
+    <div className="flex flex-col items-center text-center">
       <div className="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mb-4">
         <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">{number}</span>
       </div>
       <h4 className="text-lg font-semibold mb-2">{title}</h4>
-      <p className="text-gray-600 dark:text-gray-300">{description}</p>
+      <p className="text-gray-700 dark:text-gray-300">{description}</p>
     </div>
   );
 };
@@ -313,7 +306,7 @@ const BlogPostCard = ({ title, excerpt, date }) => {
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
       <h4 className="text-lg font-semibold mb-2">{title}</h4>
-      <p className="text-gray-600 dark:text-gray-300 mb-2">{excerpt}</p>
+      <p className="text-gray-700 dark:text-gray-300 mb-2">{excerpt}</p>
       <p className="text-sm text-gray-500 dark:text-gray-400">{date}</p>
     </div>
   );
@@ -331,7 +324,19 @@ const FAQItem = ({ question, answer }) => {
         <span className="font-semibold">{question}</span>
         <span>{isOpen ? '-' : '+'}</span>
       </button>
-      {isOpen && <p className="mt-2 text-gray-600 dark:text-gray-300">{answer}</p>}
+      {isOpen && <p className="mt-2 text-gray-700 dark:text-gray-300">{answer}</p>}
+    </div>
+  );
+};
+
+const FeatureOverview = ({ icon, title, description }) => {
+  return (
+    <div className="flex items-start space-x-4">
+      <div className="flex-shrink-0">{icon}</div>
+      <div>
+        <h4 className="text-lg font-semibold mb-2">{title}</h4>
+        <p className="text-gray-700 dark:text-gray-300">{description}</p>
+      </div>
     </div>
   );
 };

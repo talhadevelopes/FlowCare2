@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart } from 'lucide-react';
+import axios from 'axios'; 
 
 const moodOptions = [
   { name: "Happy", icon: Smile },
@@ -46,9 +47,6 @@ export function PeriodTracker() {
   const [symptomDate, setSymptomDate] = useState(format(new Date(), "yyyy-MM-dd"));
   const [sleepDuration, setSleepDuration] = useState("");
   const [sleepQuality, setSleepQuality] = useState("");
-  const [profileImage, setProfileImage] = useState(
-    "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
-  );
   const [nextPeriodPrediction, setNextPeriodPrediction] = useState("");
   const [expandedSections, setExpandedSections] = useState({
     cycleInfo: true,
@@ -121,7 +119,7 @@ export function PeriodTracker() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => { 
     const submissionData = {
       cycleDuration,
       lastPeriodStart,
@@ -136,9 +134,16 @@ export function PeriodTracker() {
       sleepQuality,
       nextPeriodPrediction,
     };
-    console.log("Submission Data:", submissionData);
-    setShowHealthTips(true);
-    alert("Data submitted successfully!");
+
+    try {
+      const response = await axios.post('/api/period-tracker', submissionData);
+      console.log('Data submitted successfully:', response.data);
+      setShowHealthTips(true);
+      alert('Data submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      alert('Error submitting data. Please try again.');
+    }
   };
 
   const toggleSection = (section) => {
@@ -186,7 +191,7 @@ export function PeriodTracker() {
       }
     }
 
-    // Period duration tips
+    
     if (lastPeriodDuration) {
       const periodDuration = parseInt(lastPeriodDuration);
       if (periodDuration > 7) {
@@ -200,7 +205,7 @@ export function PeriodTracker() {
       }
     }
 
-    // Mood-based tips
+    
     if (moodTypes.includes("Sad") || moodTypes.includes("Angry")) {
       tips.push(
         "Mood swings can be common during your cycle. Try relaxation techniques or gentle exercise to help manage your emotions."
@@ -212,7 +217,7 @@ export function PeriodTracker() {
       );
     }
 
-    // Symptom-based tips
+    
     if (symptoms.includes("Lower Abdomen Cramps")) {
       tips.push(
         "For menstrual cramps, try using a heating pad or taking a warm bath to alleviate discomfort."
@@ -258,7 +263,7 @@ export function PeriodTracker() {
       );
     }
 
-    // General tips
+    
     tips.push(
       "Stay hydrated by drinking plenty of water throughout your cycle."
     );
@@ -287,87 +292,37 @@ export function PeriodTracker() {
 
   return (
     <>
-      {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
+      
       <div id="sidebar-container">
-        <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
-          <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
+        <div className="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
+          <div className="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
             <div>
-              <div className="py-4 px-2">
-                <div className="group relative inline-block">
-                  {/* Profile Picture */}
-                  <div
-                    id="profilePicture"
-                    className="w-12 h-12 rounded-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${profileImage})` }}
-                  ></div>
-
-                  {/* Tooltip Container */}
-                  <div className="invisible opacity-0 ml-20 group-hover:visible group-hover:opacity-100 absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform rounded bg-gray-900 p-2 text-white transition-all duration-300">
-                    <div className="flex flex-col gap-2 whitespace-nowrap">
-                      <button
-                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                        onClick={() =>
-                          changeImage(
-                            "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
-                          )
-                        }
-                      >
-                        User 1
-                      </button>
-                      <button
-                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                        onClick={() =>
-                          changeImage(
-                            "https://media.istockphoto.com/photos/beautiful-young-muslim-woman-wearing-a-hijab-on-her-head-picture-id618035002?k=6&m=618035002&s=612x612&w=0&h=_1m2fRBf_DbVeFOZN-VwC2cW9QnV7tYerZwZo44lLjo="
-                          )
-                        }
-                      >
-                        User 2
-                      </button>
-                      <button
-                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                        onClick={() =>
-                          changeImage(
-                            "https://i.pinimg.com/originals/ab/6d/70/ab6d70b2b5ac104f4459487d3a94bec7.jpg"
-                          )
-                        }
-                      >
-                        User 3
-                      </button>
-                    </div>
-
-                    {/* Arrow */}
-                    <div className="absolute left-1/2 top-0 -mt-2 h-0 w-0 -translate-x-1/2 transform border-8 border-transparent border-b-gray-900"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="border-t border-gray-100">
-                <div class="px-2">
-                  <div class="py-4">
+              <div className="border-t border-gray-100">
+                <div className="px-2">
+                  <div className="py-4">
                     <a
                       href="#"
                       onClick={() => navigate("/")}
-                      class="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
+                      className="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
                     >
                       <img src="images/house-icon.svg" alt="" />
 
-                      <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                      <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
                         Home
                       </span>
                     </a>
                   </div>
 
-                  <ul class="space-y-1 border-t border-gray-100 pt-4">
+                  <ul className="space-y-1 border-t border-gray-100 pt-4">
                     <li>
                       <a
                         href="#"
                         onClick={() => navigate("/blogs")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/blogs-icon.svg" alt="" />
 
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
                           Education
                         </span>
                       </a>
@@ -377,11 +332,11 @@ export function PeriodTracker() {
                       <a
                         href="#"
                         onClick={() => navigate("/Ecom")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/shopping-cart.svg" alt="" />
 
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
                           Shop
                         </span>
                       </a>
@@ -391,11 +346,11 @@ export function PeriodTracker() {
                       <a
                         href="#"
                         onClick={() => navigate("/tracker")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/health-logo.svg" alt="" />
 
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 font-sans rounded bg-gray-900 px-4 py-1.5 text-xl font-medium text-white group-hover:visible">
+                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 font-sans rounded bg-gray-900 px-4 py-1.5 text-xl font-medium text-white group-hover:visible">
                           Track Your Health Cycle
                         </span>
                       </a>
@@ -405,29 +360,12 @@ export function PeriodTracker() {
                       <a
                         href="#"
                         onClick={() => navigate("/consultations")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <img src="images/user-logo.svg" alt="" />
 
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                        <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
                           Expert Consultation
-                        </span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => navigate("/ChatBot")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img
-                          src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"
-                          alt=""
-                        />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Chat with AI
                         </span>
                       </a>
                     </li>
@@ -436,30 +374,30 @@ export function PeriodTracker() {
               </div>
             </div>
 
-            <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+            <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
               <form action="#">
                 <button
-                  onClick={() => navigate("/ChatBot")}
+                  onClick={() => navigate("/Signup")}
                   type="submit"
-                  class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="size-5 opacity-75"
+                    className="size-5 opacity-75"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                     />
                   </svg>
 
-                  <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                    Logout
+                  <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    SignUp
                   </span>
                 </button>
               </form>
@@ -467,42 +405,42 @@ export function PeriodTracker() {
           </div>
         </div>
       </div>
-      <div class="flex flex-wrap justify-center mt-10 max-w-4xl mx-auto">
-        <div class="p-4 max-w-sm">
-          <div class="flex rounded-lg h-full bg-pink-100 text-black p-8 flex-col">
-            <div class="flex items-center mb-3">
-              <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
+      <div className="flex flex-wrap justify-center mt-10 max-w-4xl mx-auto">
+        <div className="p-4 max-w-sm">
+          <div className="flex rounded-lg h-full bg-pink-100 text-black p-8 flex-col">
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-5 h-5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className="w-5 h-5"
                   viewBox="0 0 24 24"
                 >
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                 </svg>
               </div>
-              <h2 class=" text-lg font-medium">View as a Child</h2>
+              <h2 className=" text-lg font-medium">View as a Child</h2>
             </div>
-            <div class="flex flex-col justify-between flex-grow">
-              <p class="leading-relaxed text-base">
+            <div className="flex flex-col justify-between flex-grow">
+              <p className="leading-relaxed text-base">
                 Blue bottle crucifix vinyl post-ironic four dollar toast vegan
                 taxidermy. Gastropub indxgo juice poutine.
               </p>
               <a
                 href="#"
-                class="mt-3 text-black hover:text-blue-600 inline-flex items-center"
+                className="mt-3 text-black hover:text-blue-600 inline-flex items-center"
               >
                 View
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className="w-4 h-4 ml-2"
                   viewBox="0 0 24 24"
                 >
                   <path d="M5 12h14M12 5l7 7-7 7"></path>
@@ -512,41 +450,41 @@ export function PeriodTracker() {
           </div>
         </div>
 
-        <div class="p-4 max-w-sm">
-          <div class="flex rounded-lg h-full bg-pink-100  p-8 flex-col">
-            <div class="flex items-center mb-3">
-              <div class="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
+        <div className="p-4 max-w-sm">
+          <div className="flex rounded-lg h-full bg-pink-100  p-8 flex-col">
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-5 h-5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className="w-5 h-5"
                   viewBox="0 0 24 24"
                 >
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                 </svg>
               </div>
-              <h2 class="text-black text-lg font-medium">View as Parent</h2>
+              <h2 className="text-black text-lg font-medium">View as Parent</h2>
             </div>
-            <div class="flex flex-col justify-between flex-grow">
-              <p class="leading-relaxed text-base text-black">
+            <div className="flex flex-col justify-between flex-grow">
+              <p className="leading-relaxed text-base text-black">
                 Blue bottle crucifix vinyl post-ironic four dollar toast vegan
                 taxidermy. Gastropub indxgo juice poutine.
               </p>
               <a
                 href="#"
-                class="mt-3 text-black hover:text-blue-600 inline-flex items-center"
+                className="mt-3 text-black hover:text-blue-600 inline-flex items-center"
               >
                 View
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  class="w-4 h-4 ml-2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className="w-4 h-4 ml-2"
                   viewBox="0 0 24 24"
                 >
                   <path d="M5 12h14M12 5l7 7-7 7"></path>
@@ -557,24 +495,24 @@ export function PeriodTracker() {
         </div>
       </div>
 
-      <span class="relative flex justify-center mt-11 mb-11">
-        <div class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"></div>
+      <span className="relative flex justify-center mt-11 mb-11">
+        <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"></div>
 
-        <span class="relative z-10 bg-white px-6 text-4xl ">
+        <span className="relative z-10 bg-white px-6 text-4xl ">
           <h1>Period Tracker</h1>
         </span>
       </span>
 
-      {/*----------------------AI ChatBot --------------------------------*/}
+      
       <div className="relative cursor-pointer">
-        {/* Tooltip */}
+        
         {showTooltip && (
           <div className="fixed mt-[20%] right-24 bg-pink-700 text-white p-2 rounded-md shadow-md">
             Chat with AI
           </div>
         )}
 
-        {/* Chatbot button */}
+        
         <div className="ai-chatbot fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-lg overflow-hidden">
           <img
             src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"

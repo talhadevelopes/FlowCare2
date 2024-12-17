@@ -69,9 +69,9 @@ export function Landing() {
                   Join Us!
                 </button>
               </div>
-              <div className="w-full md:w-1/2 mt-8 md:mt-0">
+              {/* <div className="w-full md:w-1/2 mt-8 md:mt-0">
                 <img src="/placeholder.svg?height=300&width=400" alt="FlowCare App" className="rounded-lg shadow-lg" />
-              </div>
+              </div> */}
             </div>
           </Card>
 

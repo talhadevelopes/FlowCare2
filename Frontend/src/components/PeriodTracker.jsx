@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart } from 'lucide-react';
-import axios from 'axios'; // Added import for axios
+import axios from 'axios'; 
 
 const moodOptions = [
   { name: "Happy", icon: Smile },

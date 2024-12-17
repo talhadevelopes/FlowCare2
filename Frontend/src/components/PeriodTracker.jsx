@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart } from 'lucide-react';
 import axios from 'axios'; 
 
+const server_url = import.meta.env.VITE_SERVER_URL;
+
 const moodOptions = [
   { name: "Happy", icon: Smile },
   { name: "Sad", icon: Frown },
@@ -136,7 +138,7 @@ export function PeriodTracker() {
     };
 
     try {
-      const response = await axios.post('/api/period-tracker', submissionData);
+      const response = await axios.post("http://localhost:3000/trackerdata", submissionData);
       console.log('Data submitted successfully:', response.data);
       setShowHealthTips(true);
       alert('Data submitted successfully!');
@@ -144,6 +146,8 @@ export function PeriodTracker() {
       console.error('Error submitting data:', error);
       alert('Error submitting data. Please try again.');
     }
+
+    // console.log(submissionData);
   };
 
   const toggleSection = (section) => {

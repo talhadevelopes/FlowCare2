@@ -51,8 +51,9 @@ app.post("/signup", async(req, res) => {
 
 });
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+app.post("/trackerdata", (req, res) => {
+    console.log("Tracker data submitted:", req.body);
+    res.status(200).json({Message: `Tracker data : ${req.body}`});
 })
 
 app.post("/login", async (req, res) => {

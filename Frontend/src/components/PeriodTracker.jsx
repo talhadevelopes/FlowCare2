@@ -1,20 +1,7 @@
-"use client";
-
 import React, { useState, useMemo, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import {
-  Calendar,
-  Frown,
-  Smile,
-  Angry,
-  Coffee,
-  Zap,
-  Moon,
-  ChevronDown,
-  ChevronUp,
-  Heart,
-} from "lucide-react";
+import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart } from 'lucide-react';
 
 const moodOptions = [
   { name: "Happy", icon: Smile },
@@ -48,20 +35,17 @@ const sleepQualityOptions = ["Poor", "Fair", "Good", "Excellent"];
 
 export function PeriodTracker() {
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    cycleDuration: "",
-    lastPeriodStart: "",
-    lastPeriodDuration: "",
-    moodTypes: [],
-    moodSeverity: "",
-    moodDate: format(new Date(), "yyyy-MM-dd"),
-    symptoms: [],
-    symptomSeverities: {},
-    symptomDate: format(new Date(), "yyyy-MM-dd"),
-    sleepDuration: "",
-    sleepQuality: "",
-  });
-
+  const [cycleDuration, setCycleDuration] = useState("");
+  const [lastPeriodStart, setLastPeriodStart] = useState("");
+  const [lastPeriodDuration, setLastPeriodDuration] = useState("");
+  const [moodTypes, setMoodTypes] = useState([]);
+  const [moodSeverity, setMoodSeverity] = useState("");
+  const [moodDate, setMoodDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [symptoms, setSymptoms] = useState([]);
+  const [symptomSeverities, setSymptomSeverities] = useState({});
+  const [symptomDate, setSymptomDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [sleepDuration, setSleepDuration] = useState("");
+  const [sleepQuality, setSleepQuality] = useState("");
   const [profileImage, setProfileImage] = useState(
     "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
   );
@@ -77,39 +61,61 @@ export function PeriodTracker() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => ({ ...prev, [name]: value }));
+    switch (name) {
+      case "cycleDuration":
+        setCycleDuration(value);
+        break;
+      case "lastPeriodStart":
+        setLastPeriodStart(value);
+        break;
+      case "lastPeriodDuration":
+        setLastPeriodDuration(value);
+        break;
+      case "moodDate":
+        setMoodDate(value);
+        break;
+      case "symptomDate":
+        setSymptomDate(value);
+        break;
+      case "sleepDuration":
+        setSleepDuration(value);
+        break;
+      case "sleepQuality":
+        setSleepQuality(value);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleMoodTypeChange = (moodName) => {
-    setData((prev) => ({
-      ...prev,
-      moodTypes: prev.moodTypes.includes(moodName)
-        ? prev.moodTypes.filter((mood) => mood !== moodName)
-        : [...prev.moodTypes, moodName],
-    }));
+    setMoodTypes((prev) =>
+      prev.includes(moodName)
+        ? prev.filter((mood) => mood !== moodName)
+        : [...prev, moodName]
+    );
   };
 
   const handleSymptomChange = (symptom) => {
-    setData((prev) => ({
-      ...prev,
-      symptoms: prev.symptoms.includes(symptom)
-        ? prev.symptoms.filter((s) => s !== symptom)
-        : [...prev.symptoms, symptom],
-    }));
+    setSymptoms((prev) =>
+      prev.includes(symptom)
+        ? prev.filter((s) => s !== symptom)
+        : [...prev, symptom]
+    );
   };
 
   const handleSymptomSeverityChange = (symptom, severity) => {
-    setData((prev) => ({
+    setSymptomSeverities((prev) => ({
       ...prev,
-      symptomSeverities: { ...prev.symptomSeverities, [symptom]: severity },
+      [symptom]: severity,
     }));
   };
 
   const predictNextPeriod = () => {
-    if (data.lastPeriodStart && data.cycleDuration) {
+    if (lastPeriodStart && cycleDuration) {
       const nextPeriodDate = addDays(
-        new Date(data.lastPeriodStart),
-        parseInt(data.cycleDuration)
+        new Date(lastPeriodStart),
+        parseInt(cycleDuration)
       );
       setNextPeriodPrediction(format(nextPeriodDate, "yyyy-MM-dd"));
     }
@@ -117,7 +123,17 @@ export function PeriodTracker() {
 
   const handleSubmit = () => {
     const submissionData = {
-      ...data,
+      cycleDuration,
+      lastPeriodStart,
+      lastPeriodDuration,
+      moodTypes,
+      moodSeverity,
+      moodDate,
+      symptoms,
+      symptomSeverities,
+      symptomDate,
+      sleepDuration,
+      sleepQuality,
       nextPeriodPrediction,
     };
     console.log("Submission Data:", submissionData);
@@ -153,13 +169,13 @@ export function PeriodTracker() {
     const tips = [];
 
     // Cycle duration tips
-    if (data.cycleDuration) {
-      const cycleDuration = parseInt(data.cycleDuration);
-      if (cycleDuration < 21) {
+    if (cycleDuration) {
+      const cycleDurationInt = parseInt(cycleDuration);
+      if (cycleDurationInt < 21) {
         tips.push(
           "Your cycle is shorter than average. Consider consulting with a healthcare professional to ensure everything is normal."
         );
-      } else if (cycleDuration > 35) {
+      } else if (cycleDurationInt > 35) {
         tips.push(
           "Your cycle is longer than average. This can be normal, but you may want to discuss it with your doctor."
         );
@@ -171,8 +187,8 @@ export function PeriodTracker() {
     }
 
     // Period duration tips
-    if (data.lastPeriodDuration) {
-      const periodDuration = parseInt(data.lastPeriodDuration);
+    if (lastPeriodDuration) {
+      const periodDuration = parseInt(lastPeriodDuration);
       if (periodDuration > 7) {
         tips.push(
           "Your period duration is longer than average. If this is consistent, consider discussing it with your healthcare provider."
@@ -185,47 +201,47 @@ export function PeriodTracker() {
     }
 
     // Mood-based tips
-    if (data.moodTypes.includes("Sad") || data.moodTypes.includes("Angry")) {
+    if (moodTypes.includes("Sad") || moodTypes.includes("Angry")) {
       tips.push(
         "Mood swings can be common during your cycle. Try relaxation techniques or gentle exercise to help manage your emotions."
       );
     }
-    if (data.moodTypes.includes("Tired")) {
+    if (moodTypes.includes("Tired")) {
       tips.push(
         "Fatigue is common during menstruation. Ensure you're getting enough rest and consider iron-rich foods to combat tiredness."
       );
     }
 
     // Symptom-based tips
-    if (data.symptoms.includes("Lower Abdomen Cramps")) {
+    if (symptoms.includes("Lower Abdomen Cramps")) {
       tips.push(
         "For menstrual cramps, try using a heating pad or taking a warm bath to alleviate discomfort."
       );
     }
-    if (data.symptoms.includes("Bloating")) {
+    if (symptoms.includes("Bloating")) {
       tips.push(
         "To reduce bloating, try to avoid salty foods and increase your water intake."
       );
     }
-    if (data.symptoms.includes("Headaches")) {
+    if (symptoms.includes("Headaches")) {
       tips.push(
         "Headaches can be common during your cycle. Stay hydrated and consider over-the-counter pain relievers if needed."
       );
     }
-    if (data.symptoms.includes("Sleep Disruption")) {
+    if (symptoms.includes("Sleep Disruption")) {
       tips.push(
         "To improve sleep during your cycle, try to maintain a consistent sleep schedule and create a relaxing bedtime routine."
       );
     }
 
     // Sleep-based tips
-    if (data.sleepDuration) {
-      const sleepDuration = parseFloat(data.sleepDuration);
-      if (sleepDuration < 7) {
+    if (sleepDuration) {
+      const sleepDurationInt = parseFloat(sleepDuration);
+      if (sleepDurationInt < 7) {
         tips.push(
           "You might not be getting enough sleep. Aim for 7-9 hours of sleep per night for optimal health and well-being."
         );
-      } else if (sleepDuration > 9) {
+      } else if (sleepDurationInt > 9) {
         tips.push(
           "You're getting more sleep than average. While this can be normal, excessive sleep might indicate other health issues. Consider discussing with your doctor if this persists."
         );
@@ -236,7 +252,7 @@ export function PeriodTracker() {
       }
     }
 
-    if (data.sleepQuality === "Poor" || data.sleepQuality === "Fair") {
+    if (sleepQuality === "Poor" || sleepQuality === "Fair") {
       tips.push(
         "To improve sleep quality, try establishing a consistent bedtime routine, avoiding screens before bed, and creating a comfortable sleep environment."
       );
@@ -254,7 +270,7 @@ export function PeriodTracker() {
     );
 
     return tips;
-  }, [data]);
+  }, [cycleDuration, lastPeriodDuration, moodTypes, sleepDuration, sleepQuality, symptoms]);
 
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -570,7 +586,7 @@ export function PeriodTracker() {
                   <input
                     type="date"
                     name="lastPeriodStart"
-                    value={data.lastPeriodStart}
+                    value={lastPeriodStart}
                     onChange={handleInputChange}
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
                   />
@@ -584,7 +600,7 @@ export function PeriodTracker() {
                 <input
                   type="number"
                   name="lastPeriodDuration"
-                  value={data.lastPeriodDuration}
+                  value={lastPeriodDuration}
                   onChange={handleInputChange}
                   min="1"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
@@ -598,7 +614,7 @@ export function PeriodTracker() {
               <input
                 type="number"
                 name="cycleDuration"
-                value={data.cycleDuration}
+                value={cycleDuration}
                 onChange={handleInputChange}
                 min="21"
                 max="35"
@@ -634,7 +650,7 @@ export function PeriodTracker() {
                     key={mood.name}
                     onClick={() => handleMoodTypeChange(mood.name)}
                     className={`flex items-center justify-center px-4 py-2 border rounded-md transition duration-300 ${
-                      data.moodTypes.includes(mood.name)
+                      moodTypes.includes(mood.name)
                         ? "bg-pink-200 text-gray-800 border-pink-300"
                         : "bg-white text-gray-600 border-gray-300 hover:bg-pink-50"
                     }`}
@@ -659,13 +675,8 @@ export function PeriodTracker() {
                     <input
                       type="radio"
                       value={option.value}
-                      checked={data.moodSeverity === option.value}
-                      onChange={() =>
-                        setData((prev) => ({
-                          ...prev,
-                          moodSeverity: option.value,
-                        }))
-                      }
+                      checked={moodSeverity === option.value}
+                      onChange={() => setMoodSeverity(option.value)}
                       className="form-radio text-pink-500"
                     />
                     <span className="ml-2 text-gray-700">{option.name}</span>
@@ -682,7 +693,7 @@ export function PeriodTracker() {
                 <input
                   type="date"
                   name="moodDate"
-                  value={data.moodDate}
+                  value={moodDate}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
                 />
@@ -705,7 +716,7 @@ export function PeriodTracker() {
                   <label key={symptom} className="inline-flex items-center">
                     <input
                       type="checkbox"
-                      checked={data.symptoms.includes(symptom)}
+                      checked={symptoms.includes(symptom)}
                       onChange={() => handleSymptomChange(symptom)}
                       className="form-checkbox text-pink-500"
                     />
@@ -715,13 +726,13 @@ export function PeriodTracker() {
               </div>
             </div>
 
-            {data.symptoms.map((symptom) => (
+            {symptoms.map((symptom) => (
               <div key={symptom} className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   {symptom} Severity
                 </label>
                 <select
-                  value={data.symptomSeverities[symptom] || ""}
+                  value={symptomSeverities[symptom] || ""}
                   onChange={(e) =>
                     handleSymptomSeverityChange(symptom, e.target.value)
                   }
@@ -745,7 +756,7 @@ export function PeriodTracker() {
                 <input
                   type="date"
                   name="symptomDate"
-                  value={data.symptomDate}
+                  value={symptomDate}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
                 />
@@ -766,7 +777,7 @@ export function PeriodTracker() {
               <input
                 type="number"
                 name="sleepDuration"
-                value={data.sleepDuration}
+                value={sleepDuration}
                 onChange={handleInputChange}
                 min="0"
                 max="24"
@@ -780,7 +791,7 @@ export function PeriodTracker() {
               </label>
               <select
                 name="sleepQuality"
-                value={data.sleepQuality}
+                value={sleepQuality}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300"
               >
@@ -823,3 +834,4 @@ export function PeriodTracker() {
     </>
   );
 }
+

@@ -7,6 +7,40 @@ export function Blogs() {
   const [profileImage, setProfileImage] = useState(
     "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
   );
+
+  const [activeItem, setActiveItem] = useState(null);
+  const [readSections, setReadSections] = useState([false, false, false]); // Tracks read status for each section
+
+  const toggleAccordion = (id) => {
+    setActiveItem((prev) => (prev === id ? null : id));
+  };
+
+  const handleRead = (index) => {
+    const updatedReadSections = [...readSections];
+    updatedReadSections[index] = true; // Mark the section as read
+    setReadSections(updatedReadSections);
+  };
+
+  const accordionData = [
+    {
+      id: 1,
+      question: "What is a period?",
+      answer:
+        " Your period or menstruation (that’s the ‘sciencey’ name) is part of your menstrual cycle. This cycle is ultimately your body’s way of preparing itself for a possible pregnancy.",
+    },
+    {
+      id: 2,
+      question: "What are the signs that my period is coming?",
+      answer:
+        "For large products, we deliver your product via a third party logistics company offering you the 'room of choice' scheduled delivery service. For small products, we offer free parcel delivery.",
+    },
+    {
+      id: 3,
+      question: "Let’s get to the bloody truth. How much blood do we lose?",
+      answer:
+        "Scheduled delivery orders can be cancelled 72 hours prior to your selected delivery date for a full refund.",
+    },
+  ];
   return (
     <>
       <meta charSet="UTF-8" />
@@ -27,7 +61,7 @@ export function Blogs() {
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet"
       />
-      {/*----------------------SIDEBAR SECTION---------------------------------*/}
+      {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
       <div id="sidebar-container">
         <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
           <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
@@ -154,6 +188,23 @@ export function Blogs() {
                         </span>
                       </a>
                     </li>
+
+                    <li>
+                      <a
+                        href="#"
+                        onClick={() => navigate("/ChatBot")}
+                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      >
+                        <img
+                          src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"
+                          alt=""
+                        />
+
+                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
+                          Chat with AI
+                        </span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -162,7 +213,7 @@ export function Blogs() {
             <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
               <form action="#">
                 <button
-                  onClick={() => navigate("/Signup")}
+                  onClick={() => navigate("/ChatBot")}
                   type="submit"
                   class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
@@ -182,7 +233,7 @@ export function Blogs() {
                   </svg>
 
                   <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                    SignUp
+                    Logout
                   </span>
                 </button>
               </form>
@@ -463,6 +514,22 @@ export function Blogs() {
         </div>
       </div>
 
+      <div className="w-[70%] flex flex-col content-center items-center text-center px-7 py-10 ml-[15%] bg-pink-200 rounded-xl mt-24">
+        <h1 className="text-2xl text-pink-700  font-semibold mb-4">
+          You can read the modules to earn rewards and unlock exciting new
+          features.
+        </h1>
+        <div className="flex gap-4 flex-row">
+          {readSections.map((isRead, index) => (
+            <i
+              key={index}
+              className="fa-solid fa-trophy text-[2rem]"
+              style={{ color: isRead ? "#FFD43B" : "#fff " }}
+            ></i>
+          ))}
+        </div>
+      </div>
+
       <div className=" w-[70%] ml-[15%] mt-16  px-6 py-7 rounded-lg">
         <h1 className="text-3xl font-bold text-pink-500">
           Welcome to Period 101, your one-stop guide for everything
@@ -479,90 +546,78 @@ export function Blogs() {
         </p>
       </div>
 
-      <div className=" w-[70%] ml-[15%] mt-1  px-6 py-7 rounded-lg">
-        <h1 className="text-4xl font-bold text-pink-500">What is a period?</h1>
+      <div>
+        <div className="accordion accordion-shadow mt-12 ml-[15%] w-5/5 mr-[15%]">
+          {accordionData.map(({ id, question, answer }, index) => (
+            <div
+              key={id}
+              className={`accordion-item bg-pink-50 transition-transform ease-in duration-300 mb-4 ${
+                activeItem === id ? "accordion-item-active" : ""
+              }`}
+              id={id}
+            >
+              <button
+                className="accordion-toggle inline-flex items-center justify-between gap-x-7 px-5 py-4 text-start w-full"
+                aria-controls={`${id}-collapse`}
+                aria-expanded={activeItem === id}
+                onClick={() => toggleAccordion(id)}
+              >
+                <div className="inline-flex items-center gap-x-4">
+                  <i className="fa-solid fa-star" style={{ color: "pink" }}></i>
 
-        <p className="text-xl mt-5">
-          <p>
-            Your period or menstruation (that’s the ‘sciencey’ name) is part of
-            your menstrual cycle. This cycle is ultimately your body’s way of
-            preparing itself for a possible pregnancy.
-          </p>{" "}
-          <br />
-          <p>
-            During your menstrual cycle, there is an increase and decrease in a
-            number of different hormones such as oestrogen and progesterone
-            which control different aspects of this cycle, you’ll be hearing a
-            lot about these hormones, so sit tight.
-          </p>{" "}
-          <br />
-          During your cycle your body releases an egg from your ovaries – we’re
-          talking teeny tiny eggs here - you can’t see them with the naked eye,
-          they’re that small! In order for the egg to be released it has to be
-          matured, which is a job for our hormones. These hormones are also
-          responsible for making the lining of your uterus thick. Should one day
-          an egg get fertilised by sperm, it would land on the thick cosy lining
-          and that’s where a pregnancy would start. However, if the egg doesn’t
-          get fertilised your body no longer needs the lining, so (here comes
-          the hormones again!) your hormones instruct your body to break the
-          lining down and remove it from the uterus via your vagina…and…Hey
-          presto - your Bloody Brilliant period has arrived! Now we know what’s
-          actually going on down there, let’s talk specifics.
-        </p>
+                  <span
+                    className={`icon-[tabler--plus] ${
+                      activeItem === id ? "hidden" : "block"
+                    } text-base-content size-4.5 shrink-0`}
+                  ></span>
+                  <span
+                    className={`icon-[tabler--minus] ${
+                      activeItem === id ? "block" : "hidden"
+                    } text-base-content size-4.5 shrink-0`}
+                  ></span>
+                  <h1 className="text-2xl text-pink-700 font-semibold text-base-content">
+                    {question}
+                  </h1>
+                </div>
+                <i
+                  className={`fa-solid ${
+                    activeItem === id ? "fa-minus" : "fa-plus"
+                  } text-lg text-base-content`}
+                ></i>
+              </button>
+              <div
+                id={`${id}-collapse`}
+                className={`accordion-content w-full overflow-hidden transition-[height] duration-300 ${
+                  activeItem === id ? "" : "hidden"
+                }`}
+                aria-labelledby={id}
+                role="region"
+              >
+                <div className="px-5 pb-4">
+                  <p className="text-base-content/80 font-normal">{answer}</p>
+                  {/* Radio Input */}
+                  <div className="mt-4">
+                    <label className="flex items-center gap-2 text-base-content">
+                      <input
+                        type="radio"
+                        name={`read-${id}`}
+                        className="radio"
+                        onClick={() => handleRead(index)}
+                        disabled={readSections[index]} // Prevents re-clicking
+                      />
+                      I have read
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Awards Section */}
       </div>
 
-      <div className=" w-[70%] ml-[15%] mt-4  px-6 py-7 rounded-lg">
-        <h1 className="text-3xl font-bold text-pink-500">
-          What are the signs that my period is coming?
-        </h1>
-        <p className="text-xl mt-5">
-          Your menstrual cycle takes around 28 days to complete, but this is a
-          good time to point out that EVERYONE is different! Just like your
-          fingerprints are unique, so is your bloody brilliant body and how you
-          experience periods. So, while we say 28 days it might be a little
-          longer, it might be a little shorter, there really aren’t any set
-          rules here. Of those 28 days, you could expect to bleed for anywhere
-          between 3-8 days. Again, everyone is different, and your periods are
-          likely to change. Your body can take some time to get into its own
-          flow, so cut it a bit of slack - it’s learning what to do while you’re
-          getting used to things too!
-        </p>
-        <i class="fa-solid fa-diamond-turn-right"></i>{" "}
-        <a href="" className="underline mt-2 bg-pink-100 px-2">
-          You can Keep a Track of Your Period Cycle Here
-        </a>
-      </div>
-
-      <div className=" w-[70%] ml-[15%] mt-4  px-6 py-7 rounded-lg">
-        <h1 className="text-3xl font-bold text-pink-500">
-          What are the signs that my period is coming?
-        </h1>
-
-        <p className="text-xl mt-5">
-          If you’ve never had a period before, there are some signs which might
-          indicate your period is coming and they’re all natural parts of
-          growing up. If you’ve noticed your boobs are beginning to develop, and
-          you’ve started to grow pubic hair, then you could expect to get your
-          period about two years later. A more immediate sign for some people is
-          if you notice discharge in your pants. Discharge is a white or
-          yellowish fluid which usually shows up a few months before your first
-          period. There are lots of other signs your period is coming and these
-          can be both physical and emotional. We call these signs PMS
-          (premenstrual syndrome). Not everyone gets PMS and we all experience
-          it differently. It usually happens just before and during your period,
-          and it’s basically the reason you might find yourself wanting to eat
-          your body weight in chocolate or burst into tears at the smallest of
-          things…lost sock, bad hair day, burnt toast…trust me, we all have
-          those days! PMS brings with it all kinds of symptoms such as
-          headaches, bloating, cramps, mood swings, feeling tired and having
-          trouble concentrating. We’ve got a great blog all about PMS with top
-          tips on how to help with these symptoms and many more, so go and take
-          a look. It will finally explain some of those weird and wonderful
-          feelings that you never knew were thanks to your bloody brilliant
-          period!
-        </p>
-      </div>
-
+      {/*----------------------Pages SECTION---------------------------
       <div className="w-[70%] ml-[15%] mt-4 px-6 py-7 rounded-lg flex items-center">
         <div className="w-[50%] pr-6">
           <h1 className="text-3xl font-bold text-pink-500">
@@ -605,6 +660,7 @@ export function Blogs() {
           />
         </div>
       </div>
+      ------*/}
 
       {/*----------------------Pages SECTION---------------------------------*/}
       <ol className="flex justify-center gap-1 text-xs font-medium mt-12">

@@ -99,8 +99,9 @@ export function Landing() {
           <Card>
             <div className="flex flex-col md:flex-row items-center">
               <div className="w-full">
-                <h1 className="text-4xl font-bold mb-4">Your Trusted Companion for Better Health</h1>
-                <p className="text-lg mb-6">Explore, learn, and connect with a community that cares about your well-being.</p>
+                <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">Your Trusted Companion for Better Health</h1>
+                <p className="text-xl mb-4 text-gray-800 dark:text-gray-200">Empowering women through personalized health tracking and education.</p>
+                <p className="text-lg mb-6 text-gray-800 dark:text-gray-200">Explore, learn, and connect with a community that cares about your well-being.</p>
                 <button 
                   onClick={() => navigate('/Signup')}
                   className="bg-pink-600 dark:bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
@@ -113,7 +114,7 @@ export function Landing() {
 
           {/* Features Overview */}
           <Card>
-            <h3 className="text-2xl font-semibold mb-6">Comprehensive Health Management</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Comprehensive Health Management</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <FeatureOverview
                 icon={<LayoutDashboard className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
@@ -148,9 +149,43 @@ export function Landing() {
             </div>
           </Card>
 
+          {/* Key Benefits Section */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Key Benefits of Using FlowCare</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <BenefitItem
+                title="Personalized Insights"
+                description="Receive tailored health recommendations based on your unique data and patterns."
+              />
+              <BenefitItem
+                title="Holistic Approach"
+                description="Address all aspects of your health: physical, mental, and emotional well-being."
+              />
+              <BenefitItem
+                title="Expert-Backed Content"
+                description="Access reliable, up-to-date information curated by healthcare professionals."
+              />
+              <BenefitItem
+                title="Community Support"
+                description="Connect with others, share experiences, and find support in our inclusive community."
+              />
+            </div>
+          </Card>
+
+          {/* Our Mission Section */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Our Mission</h3>
+            <p className="text-lg mb-4 text-gray-800 dark:text-gray-200">
+              At FlowCare, we're committed to revolutionizing women's health management. Our mission is to empower women with the knowledge, tools, and support they need to take control of their health and well-being.
+            </p>
+            <p className="text-lg text-gray-800 dark:text-gray-200">
+              We believe that every woman deserves access to personalized health insights, expert guidance, and a supportive community. Through innovation and compassion, we're building a future where women's health is understood, prioritized, and optimized.
+            </p>
+          </Card>
+
           {/* How It Works Section */}
           <Card>
-            <h3 className="text-2xl font-semibold mb-6">How FlowCare Works</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">How FlowCare Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <StepCard
                 number={1}
@@ -172,7 +207,7 @@ export function Landing() {
 
           {/* Testimonials */}
           <Card>
-            <h3 className="text-2xl font-semibold mb-6">What Our Users Say</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">What Our Users Say</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <TestimonialCard
                 quote="FlowCare has completely changed how I manage my health. It's like having a personal health assistant!"
@@ -187,7 +222,7 @@ export function Landing() {
 
           {/* Latest Blog Posts */}
           <Card>
-            <h3 className="text-2xl font-semibold mb-6">Latest from Our Blog</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Latest from Our Blog</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <BlogPostCard
                 title="Understanding Your Menstrual Cycle"
@@ -209,7 +244,7 @@ export function Landing() {
 
           {/* FAQ Section */}
           <Card>
-            <h3 className="text-2xl font-semibold mb-6">Frequently Asked Questions</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Frequently Asked Questions</h3>
             <div className="space-y-4">
               <FAQItem
                 question="Is my data safe and private?"
@@ -223,14 +258,26 @@ export function Landing() {
                 question="How often should I log my symptoms?"
                 answer="For the best results, we recommend logging your symptoms daily. However, even logging a few times a week can provide valuable insights."
               />
+              <FAQItem
+                question="How does FlowCare protect my privacy?"
+                answer="We use state-of-the-art encryption and follow strict data protection protocols. Your personal information is never sold or shared with third parties without your explicit consent."
+              />
+              <FAQItem
+                question="Can I use FlowCare if I'm not menstruating?"
+                answer="FlowCare offers features for all aspects of women's health, including general wellness tracking, nutritional guidance, and mental health support."
+              />
+              <FAQItem
+                question="Are the health articles on FlowCare written by professionals?"
+                answer="Yes, all our educational content is created or reviewed by qualified healthcare professionals to ensure accuracy and relevance."
+              />
             </div>
           </Card>
 
           {/* CTA */}
           <Card>
             <div className="text-center">
-              <h3 className="text-2xl font-semibold mb-4">Ready to Take Control of Your Health?</h3>
-              <p className="mb-6">Join FlowCare today and start your journey to better health and wellness.</p>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Ready to Take Control of Your Health?</h3>
+              <p className="mb-6 text-gray-800 dark:text-gray-200">Join FlowCare today and start your journey to better health and wellness.</p>
               <button 
                 onClick={() => navigate('/Signup')}
                 className="bg-pink-600 dark:bg-pink-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
@@ -274,8 +321,8 @@ const FeatureCard = ({ title, description, icon, onClick }) => {
     <Card>
       <div className="flex flex-col items-center text-center cursor-pointer" onClick={onClick}>
         <div className="mb-4">{icon}</div>
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-700 dark:text-gray-300">{description}</p>
+        <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h3>
+        <p className="text-gray-800 dark:text-gray-200">{description}</p>
       </div>
     </Card>
   );
@@ -287,8 +334,8 @@ const StepCard = ({ number, title, description }) => {
       <div className="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mb-4">
         <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">{number}</span>
       </div>
-      <h4 className="text-lg font-semibold mb-2">{title}</h4>
-      <p className="text-gray-700 dark:text-gray-300">{description}</p>
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
     </div>
   );
 };
@@ -296,8 +343,8 @@ const StepCard = ({ number, title, description }) => {
 const TestimonialCard = ({ quote, author }) => {
   return (
     <div className="bg-pink-50 dark:bg-pink-900 p-4 rounded-lg">
-      <p className="italic mb-2">"{quote}"</p>
-      <p className="font-semibold text-right">- {author}</p>
+      <p className="italic mb-2 text-gray-800 dark:text-gray-200">"{quote}"</p>
+      <p className="font-semibold text-right text-gray-900 dark:text-gray-100">- {author}</p>
     </div>
   );
 };
@@ -305,9 +352,9 @@ const TestimonialCard = ({ quote, author }) => {
 const BlogPostCard = ({ title, excerpt, date }) => {
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-      <h4 className="text-lg font-semibold mb-2">{title}</h4>
-      <p className="text-gray-700 dark:text-gray-300 mb-2">{excerpt}</p>
-      <p className="text-sm text-gray-500 dark:text-gray-400">{date}</p>
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200 mb-2">{excerpt}</p>
+      <p className="text-sm text-gray-700 dark:text-gray-300">{date}</p>
     </div>
   );
 };
@@ -321,10 +368,10 @@ const FAQItem = ({ question, answer }) => {
         className="flex justify-between items-center w-full text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-semibold">{question}</span>
+        <span className="font-semibold text-gray-900 dark:text-gray-100">{question}</span>
         <span>{isOpen ? '-' : '+'}</span>
       </button>
-      {isOpen && <p className="mt-2 text-gray-700 dark:text-gray-300">{answer}</p>}
+      {isOpen && <p className="mt-2 text-gray-800 dark:text-gray-200">{answer}</p>}
     </div>
   );
 };
@@ -334,9 +381,18 @@ const FeatureOverview = ({ icon, title, description }) => {
     <div className="flex items-start space-x-4">
       <div className="flex-shrink-0">{icon}</div>
       <div>
-        <h4 className="text-lg font-semibold mb-2">{title}</h4>
-        <p className="text-gray-700 dark:text-gray-300">{description}</p>
+        <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+        <p className="text-gray-800 dark:text-gray-200">{description}</p>
       </div>
+    </div>
+  );
+};
+
+const BenefitItem = ({ title, description }) => {
+  return (
+    <div className="border-l-4 border-pink-500 pl-4">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
     </div>
   );
 };

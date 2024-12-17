@@ -2,7 +2,7 @@ import React from 'react';
 import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils } from 'lucide-react';
 
 export function Dashboard() {
-  // Simulated user inputs (in a real app, these would come from state or props)
+  
   const userInputs = {
     cycleDay: 14,
     currentPhase: 'Luteal',
@@ -12,12 +12,12 @@ export function Dashboard() {
     sleepDuration: 7.5,
   };
 
-  // Derived features
+  
   const fertileWindow = userInputs.cycleDay >= 11 && userInputs.cycleDay <= 17;
   const pmsLikely = userInputs.currentPhase === 'Luteal' && userInputs.cycleDay > 21;
   const wellRested = userInputs.sleepQuality === 'Good' && userInputs.sleepDuration >= 7;
 
-  // Function to get health tips based on user inputs
+  
   const getHealthTips = () => {
     const tips = [];
 
@@ -48,7 +48,7 @@ export function Dashboard() {
 
   return (
     <div className="flex h-screen bg-pink-50 text-gray-800 font-sans">
-      {/* Sidebar */}
+      
       <aside className="w-[240px] bg-white p-6 flex flex-col">
         <h1 className="text-xl font-semibold text-pink-600 mb-6">FlowCare</h1>
         <nav className="flex-1">
@@ -76,10 +76,10 @@ export function Dashboard() {
         </div>
       </aside>
 
-      {/* Main Content */}
+      
       <main className="flex-1 p-6 overflow-auto">
         <div className="max-w-6xl mx-auto space-y-6">
-          {/* Header */}
+          
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Dashboard</h2>
             <div className="flex items-center gap-4">
@@ -90,7 +90,7 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* Metrics Grid */}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <MetricCard
               title="Cycle Day"
@@ -124,7 +124,7 @@ export function Dashboard() {
             />
           </div>
 
-          {/* Activity and Upcoming */}
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <h3 className="font-semibold mb-1">Recent Activity</h3>
@@ -164,7 +164,7 @@ export function Dashboard() {
             </Card>
           </div>
 
-          {/* Tracking Streak */}
+          
           <Card>
             <h3 className="font-semibold mb-1">Tracking Streak</h3>
             <p className="text-sm text-gray-500 mb-2">Keep up the good work!</p>
@@ -174,7 +174,7 @@ export function Dashboard() {
             </div>
           </Card>
 
-          {/* Derived Features */}
+          
           <Card>
             <h3 className="font-semibold mb-4">Your Health Insights</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -196,7 +196,7 @@ export function Dashboard() {
             </div>
           </Card>
 
-          {/* Health Tips */}
+          
           <Card>
             <h3 className="font-semibold mb-4">Personalized Health Tips</h3>
             <ul className="space-y-2">

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils } from 'lucide-react';
+import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun } from 'lucide-react';
 
-export function Dashboard () {
+export function Dashboard  ()  {
   const [darkMode, setDarkMode] = useState(false);
+  const [cycleDay, setCycleDay] = useState(14);
 
   useEffect(() => {
     if (darkMode) {
@@ -12,60 +13,60 @@ export function Dashboard () {
     }
   }, [darkMode]);
 
-  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCycleDay((prevDay) => (prevDay % 28) + 1);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const userInputs = {
-    cycleDay: 14,
+    cycleDay,
     currentPhase: 'Luteal',
+    cycleDuration: 28,
     mood: 'Happy',
     symptoms: ['Mild Cramps', 'Fatigue'],
     sleepQuality: 'Good',
     sleepDuration: 7.5,
   };
 
-  
   const fertileWindow = userInputs.cycleDay >= 11 && userInputs.cycleDay <= 17;
   const pmsLikely = userInputs.currentPhase === 'Luteal' && userInputs.cycleDay > 21;
   const wellRested = userInputs.sleepQuality === 'Good' && userInputs.sleepDuration >= 7;
 
-  
   const getHealthTips = () => {
-    const tips = [];
-
-    if (fertileWindow) {
-      tips.push("You're in your fertile window. If you're trying to conceive, this is a good time.");
-    }
-
-    if (pmsLikely) {
-      tips.push("PMS symptoms may occur. Try to reduce stress and maintain a balanced diet.");
-    }
-
-    if (userInputs.symptoms.includes('Mild Cramps')) {
-      tips.push("For mild cramps, try gentle exercise or a warm compress on your lower abdomen.");
-    }
-
-    if (userInputs.symptoms.includes('Fatigue')) {
-      tips.push("Combat fatigue with regular short breaks and stay hydrated throughout the day.");
-    }
-
-    if (!wellRested) {
-      tips.push("Aim for 7-9 hours of sleep. Create a relaxing bedtime routine to improve sleep quality.");
-    }
-
-    return tips;
+    const tips = [
+      "Stay hydrated! Aim for 8 glasses of water a day.",
+      "Practice deep breathing exercises for stress relief.",
+      "Incorporate more leafy greens into your diet for iron.",
+      "Try a warm compress for cramp relief.",
+      "Get moving with light exercise like yoga or walking.",
+    ];
+    return tips.slice(0, 3);
   };
 
   const healthTips = getHealthTips();
 
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
-      <style jsx>{`
+      <style jsx global>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
         :root {
           --background: 255, 255, 255;
           --foreground: 0, 0, 0;
-          --primary: 255, 192, 203;
+          --primary: 255, 105, 180;
           --primary-foreground: 0, 0, 0;
           --card: 255, 255, 255;
           --card-foreground: 0, 0, 0;
+          --muted: 240, 240, 240;
+          --muted-foreground: 100, 100, 100;
         }
         .dark {
           --background: 23, 23, 23;
@@ -74,13 +75,14 @@ export function Dashboard () {
           --primary-foreground: 255, 255, 255;
           --card: 38, 38, 38;
           --card-foreground: 255, 255, 255;
+          --muted: 50, 50, 50;
+          --muted-foreground: 150, 150, 150;
         }
         body {
           background-color: rgb(var(--background));
           color: rgb(var(--foreground));
         }
       `}</style>
-      
       <aside className="w-[240px] bg-[rgb(var(--card))] p-6 flex flex-col">
         <h1 className="text-xl font-semibold text-[rgb(var(--primary))] mb-6">FlowCare</h1>
         <nav className="flex-1">
@@ -108,113 +110,43 @@ export function Dashboard () {
         </div>
       </aside>
 
-      
       <main className="flex-1 p-6 overflow-auto bg-[rgb(var(--background))]">
         <div className="max-w-6xl mx-auto space-y-6">
-          
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Dashboard</h2>
             <div className="flex items-center gap-4">
               <Bell className="h-5 w-5 text-[rgba(var(--foreground),0.6)]" />
-              <select className="border rounded-md px-2 py-1 text-sm bg-[rgb(var(--card))] text-[rgb(var(--card-foreground))]">
-                <option>This Month</option>
-              </select>
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="p-2 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))]"
+                className="p-2 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))] transition-transform hover:scale-110"
               >
                 {darkMode ? <Sun size={20} /> : <Moon size={20} />}
               </button>
             </div>
           </div>
 
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <MetricCard
-              title="Cycle Day"
-              value={userInputs.cycleDay}
-              subtitle="14 days until next period"
-              icon={<Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />}
-            />
-            <MetricCard
-              title="Current Phase"
-              value={userInputs.currentPhase}
-              subtitle="Next period expected on Dec 30"
-              icon={<Droplet className="h-5 w-5 text-[rgb(var(--primary))]" />}
-            />
-            <MetricCard
-              title="Today's Mood"
-              value={userInputs.mood}
-              subtitle={
-                <div className="flex gap-2 mt-1">
-                  {userInputs.symptoms.map((symptom, index) => (
-                    <Badge key={index}>{symptom}</Badge>
-                  ))}
-                </div>
-              }
-              icon={<Heart className="h-5 w-5 text-[rgb(var(--primary))]" />}
-            />
-            <MetricCard
-              title="Sleep Quality"
-              value={userInputs.sleepQuality}
-              subtitle={`${userInputs.sleepDuration} hours of sleep`}
-              icon={<Moon className="h-5 w-5 text-[rgb(var(--primary))]" />}
-            />
-          </div>
-
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <h3 className="font-semibold mb-1">Recent Activity</h3>
-              <p className="text-sm text-[rgba(var(--foreground),0.6)] mb-4">Your health tracking history</p>
-              <div className="space-y-6">
-                <ActivityItem
-                  title="Mood Log"
-                  description="Feeling energetic"
-                  time="2 hours ago"
-                />
-                <ActivityItem
-                  title="Symptom"
-                  description="Mild headache noted"
-                  time="5 hours ago"
-                />
-                <ActivityItem
-                  title="Sleep"
-                  description="8 hours logged"
-                  time="8 hours ago"
-                />
+          <Card className="overflow-hidden">
+            <div className="relative h-32 bg-gradient-to-r from-pink-300 to-purple-400 dark:from-pink-600 dark:to-purple-700">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <h3 className="text-3xl font-bold text-white">Cycle Day {userInputs.cycleDay}</h3>
               </div>
-            </Card>
-
-            <Card>
-              <h3 className="font-semibold mb-1">Upcoming</h3>
-              <p className="text-sm text-[rgba(var(--foreground),0.6)] mb-4">Events and reminders</p>
-              <div className="space-y-6">
-                <UpcomingItem
-                  title="Doctor's Appointment"
-                  description="Tomorrow, 10:00 AM"
-                />
-                <UpcomingItem
-                  title="Period Expected"
-                  description="Dec 30, 2024"
-                />
-              </div>
-            </Card>
-          </div>
-
-          
-          <Card>
-            <h3 className="font-semibold mb-1">Tracking Streak</h3>
-            <p className="text-sm text-[rgba(var(--foreground),0.6)] mb-2">Keep up the good work!</p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-[rgb(var(--primary))]">45 days</span>
-              <span className="text-sm text-[rgba(var(--foreground),0.6)]">Consistent tracking</span>
+            </div>
+            <div className="p-6">
+              <p className="text-lg font-semibold mb-2">Current Phase: {userInputs.currentPhase}</p>
+              <p className="text-sm text-[rgba(var(--foreground),0.6)]">
+                {userInputs.cycleDuration - userInputs.cycleDay} days until next period
+              </p>
             </div>
           </Card>
 
-          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <AnimatedCard title="Mood" value={userInputs.mood} icon={getMoodIcon(userInputs.mood)} />
+            <AnimatedCard title="Sleep Quality" value={userInputs.sleepQuality} icon={<Moon className="h-6 w-6" />} />
+            <AnimatedCard title="Active Symptoms" value={userInputs.symptoms.length} icon={<ThermometerSun className="h-6 w-6" />} />
+          </div>
+
           <Card>
-            <h3 className="font-semibold mb-4">Your Health Insights</h3>
+            <h3 className="font-semibold mb-4">Health Insights</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <InsightItem
                 title="Fertility Window"
@@ -234,12 +166,11 @@ export function Dashboard () {
             </div>
           </Card>
 
-          
           <Card>
-            <h3 className="font-semibold mb-4">Personalized Health Tips</h3>
+            <h3 className="font-semibold mb-4">Daily Health Tips</h3>
             <ul className="space-y-2">
               {healthTips.map((tip, index) => (
-                <li key={index} className="flex items-start">
+                <li key={index} className="flex items-start animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
                   <Utensils className="h-5 w-5 text-[rgb(var(--primary))] mr-2 mt-0.5 flex-shrink-0" />
                   <span>{tip}</span>
                 </li>
@@ -257,7 +188,7 @@ const NavItem = ({ icon, label, active = false }) => {
     <li>
       <a
         href="#"
-        className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
+        className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
           active ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]" : "text-[rgba(var(--foreground),0.7)] hover:bg-[rgba(var(--foreground),0.05)]"
         }`}
       >
@@ -268,63 +199,44 @@ const NavItem = ({ icon, label, active = false }) => {
   );
 };
 
-const MetricCard = ({ title, value, subtitle, icon }) => {
+const Card = ({ children, className = "" }) => {
   return (
-    <div className="bg-[rgb(var(--card))] rounded-lg p-6 shadow-sm">
+    <div className={`bg-[rgb(var(--card))] rounded-lg p-6 shadow-sm ${className}`}>
+      {children}
+    </div>
+  );
+};
+
+const AnimatedCard = ({ title, value, icon }) => {
+  return (
+    <Card className="transition-all duration-300 hover:shadow-md hover:scale-105">
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
           <h3 className="text-2xl font-semibold mt-1">{value}</h3>
         </div>
-        {icon}
+        <div className="p-2 bg-[rgba(var(--primary),0.1)] rounded-full">
+          {icon}
+        </div>
       </div>
-      <div className="mt-2 text-sm text-[rgba(var(--foreground),0.6)]">
-        {subtitle}
-      </div>
-    </div>
+    </Card>
   );
 };
 
-const Card = ({ children }) => {
-  return (
-    <div className="bg-[rgb(var(--card))] rounded-lg p-6 shadow-sm">
-      {children}
-    </div>
-  );
-};
-
-const Badge = ({ children }) => {
-  return (
-    <span className="px-2 py-1 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))] text-xs font-medium">
-      {children}
-    </span>
-  );
-};
-
-const ActivityItem = ({ title, description, time }) => {
-  return (
-    <div className="flex justify-between items-start">
-      <div>
-        <p className="font-medium">{title}</p>
-        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{description}</p>
-      </div>
-      <span className="text-sm text-[rgba(var(--foreground),0.6)]">{time}</span>
-    </div>
-  );
-};
-
-const UpcomingItem = ({ title, description }) => {
-  return (
-    <div>
-      <p className="font-medium">{title}</p>
-      <p className="text-sm text-[rgba(var(--foreground),0.6)]">{description}</p>
-    </div>
-  );
+const getMoodIcon = (mood) => {
+  switch (mood.toLowerCase()) {
+    case 'happy':
+      return <Smile className="h-6 w-6 text-green-500" />;
+    case 'sad':
+      return <Frown className="h-6 w-6 text-blue-500" />;
+    default:
+      return <Meh className="h-6 w-6 text-yellow-500" />;
+  }
 };
 
 const InsightItem = ({ title, value, icon }) => {
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center space-x-3 p-3 bg-[rgba(var(--primary),0.1)] rounded-lg transition-all duration-300 hover:bg-[rgba(var(--primary),0.2)]">
       {icon}
       <div>
         <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
@@ -333,5 +245,4 @@ const InsightItem = ({ title, value, icon }) => {
     </div>
   );
 };
-
 

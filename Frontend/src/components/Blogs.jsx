@@ -268,7 +268,7 @@ export function Blogs() {
           {/* Content */}
           <div className="w-[70%] ml-[15%] mt-16 px-6 py-7 rounded-lg">
             <h1 className="text-7xl">Period 101</h1>
-            <div className="bg-pink-200 w-1/4  rounded-md px-6 py-2 mt-14 -mb-16">
+            <div className="bg-pink-200 w-1/4  rounded px-6 py-2 mt-14 -mb-16">
               <p>
                 <i className="fa-solid fa-heart"> </i> Approved by{" "}
                 <a href="" className="underline">
@@ -277,7 +277,7 @@ export function Blogs() {
               </p>
             </div>
           </div>
-          <div className="w-[70%] flex flex-col content-center items-center text-center px-7 py-10 ml-[15%] bg-pink-200 rounded-xl mt-24">
+          <div className="w-[70%] flex flex-col content-center items-center text-center px-7 py-10 ml-[15%] bg-pink-200 rounded-md mt-24">
             <h1 className="text-2xl text-pink-700  font-semibold mb-4">
               You can read the modules to earn rewards and unlock exciting new
               features.

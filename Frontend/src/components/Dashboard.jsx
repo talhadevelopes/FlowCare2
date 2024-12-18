@@ -1,14 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X } from 'lucide-react';
+import axios from 'axios';
 
-export function Dashboard () {
+export function Dashboard() {
   const [darkMode, setDarkMode] = useState(false);
-  const [cycleDay, setCycleDay] = useState(14);
   const [waterIntake, setWaterIntake] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [showMythModal, setShowMythModal] = useState(false);
   const [currentMyth, setCurrentMyth] = useState(null);
+  const [periodData, setPeriodData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  
+  const sampleData = {
+    cycleDay: 14,
+    currentPhase: 'Luteal',
+    cycleDuration: 28,
+    lastPeriodStart: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    lastPeriodDuration: 5,
+    moodTypes: ['Happy', 'Anxious', 'Irritable'],
+    moodSeverity: 'Moderate',
+    moodDate: new Date().toISOString(),
+    symptoms: ['Cramps', 'Bloating', 'Headache'],
+    symptomSeverities: {
+      Cramps: 'Severe',
+      Bloating: 'Moderate',
+      Headache: 'Mild'
+    },
+    symptomDate: new Date().toISOString(),
+    sleepDuration: 7.5,
+    sleepQuality: 'Good',
+    nextPeriodPrediction: new Date(Date.now() + 13 * 24 * 60 * 60 * 1000).toISOString()
+  };
+
+  useEffect(() => {
+    const fetchPeriodData = async () => {
+      setLoading(true);
+      try {
+        
+        const userId = localStorage.getItem('userId');
+        const response = await axios.get(`http://localhost:3000/periodtracking/${userId}`);
+        setPeriodData(response.data);
+      } catch (err) {
+        console.error("Error fetching period data:", err);
+        setError("Failed to fetch period data. Using sample data.");
+        setPeriodData(sampleData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPeriodData();
+  }, []);
 
   useEffect(() => {
     if (darkMode) {
@@ -19,48 +64,12 @@ export function Dashboard () {
   }, [darkMode]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCycleDay((prevDay) => (prevDay % 28) + 1);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     const notificationInterval = setInterval(() => {
       setShowNotification(true);
       setTimeout(() => setShowNotification(false), 5000);
     }, 30000);
     return () => clearInterval(notificationInterval);
   }, []);
-
-  const userInputs = {
-    cycleDay,
-    currentPhase: 'Luteal',
-    cycleDuration: 28,
-    mood: 'Happy',
-    symptoms: ['Mild Cramps', 'Fatigue'],
-    sleepQuality: 'Good',
-    sleepDuration: 7.5,
-    energy: 'Moderate',
-    stress: 'Low',
-  };
-
-  const fertileWindow = userInputs.cycleDay >= 11 && userInputs.cycleDay <= 17;
-  const pmsLikely = userInputs.currentPhase === 'Luteal' && userInputs.cycleDay > 21;
-  const wellRested = userInputs.sleepQuality === 'Good' && userInputs.sleepDuration >= 7;
-
-  const getHealthTips = () => {
-    const tips = [
-      "Stay hydrated! Aim for 8 glasses of water a day.",
-      "Practice deep breathing exercises for stress relief.",
-      "Incorporate more leafy greens into your diet for iron.",
-      "Try a warm compress for cramp relief.",
-      "Get moving with light exercise like yoga or walking.",
-    ];
-    return tips.slice(0, 3);
-  };
-
-  const healthTips = getHealthTips();
 
   const handleWaterIntake = () => {
     setWaterIntake((prev) => Math.min(prev + 1, 8));
@@ -93,6 +102,35 @@ export function Dashboard () {
     setCurrentMyth(myth);
     setShowMythModal(true);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    console.warn(error);
+  }
+
+  const data = periodData || sampleData;
+
+  const cycleDay = Math.floor((new Date() - new Date(data.lastPeriodStart)) / (1000 * 60 * 60 * 24)) % data.cycleDuration + 1;
+  const daysUntilNextPeriod = data.cycleDuration - cycleDay;
+  const fertileWindow = cycleDay >= 11 && cycleDay <= 17;
+  const pmsLikely = data.currentPhase === 'Luteal' && cycleDay > 21;
+  const wellRested = data.sleepQuality === 'Good' && data.sleepDuration >= 7;
+
+  const getHealthTips = () => {
+    const tips = [
+      "Stay hydrated! Aim for 8 glasses of water a day.",
+      "Practice deep breathing exercises for stress relief.",
+      "Incorporate more leafy greens into your diet for iron.",
+      "Try a warm compress for cramp relief.",
+      "Get moving with light exercise like yoga or walking.",
+    ];
+    return tips.slice(0, 3);
+  };
+
+  const healthTips = getHealthTips();
 
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
@@ -201,27 +239,27 @@ export function Dashboard () {
               <Card className="overflow-hidden">
                 <div className="relative h-32 bg-gradient-to-r from-pink-300 to-purple-400 dark:from-pink-600 dark:to-purple-700">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="text-3xl font-bold text-white">Cycle Day {userInputs.cycleDay}</h3>
+                    <h3 className="text-3xl font-bold text-white">Cycle Day {cycleDay}</h3>
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-lg font-semibold mb-2">Current Phase: {userInputs.currentPhase}</p>
+                  <p className="text-lg font-semibold mb-2">Current Phase: {data.currentPhase}</p>
                   <p className="text-sm text-[rgba(var(--foreground),0.6)]">
-                    {userInputs.cycleDuration - userInputs.cycleDay} days until next period
+                    {daysUntilNextPeriod} days until next period
                   </p>
                   <div className="mt-4 h-2 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden">
                     <div 
                       className="h-full bg-[rgb(var(--primary))]" 
-                      style={{ width: `${(userInputs.cycleDay / userInputs.cycleDuration) * 100}%` }}
+                      style={{ width: `${(cycleDay / data.cycleDuration) * 100}%` }}
                     ></div>
                   </div>
                 </div>
               </Card>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <AnimatedCard title="Mood" value={userInputs.mood} icon={getMoodIcon(userInputs.mood)} />
-                <AnimatedCard title="Sleep Quality" value={userInputs.sleepQuality} icon={<Moon className="h-6 w-6" />} />
-                <AnimatedCard title="Active Symptoms" value={userInputs.symptoms.length} icon={<ThermometerSun className="h-6 w-6" />} />
+                <AnimatedCard title="Mood" value={data.moodTypes[0]} icon={getMoodIcon(data.moodTypes[0])} />
+                <AnimatedCard title="Sleep Quality" value={data.sleepQuality} icon={<Moon className="h-6 w-6" />} />
+                <AnimatedCard title="Active Symptoms" value={data.symptoms.length} icon={<ThermometerSun className="h-6 w-6" />} />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -260,8 +298,8 @@ export function Dashboard () {
               <Card>
                 <h3 className="font-semibold mb-4">Wellness Tracker</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <WellnessItem title="Energy" value={userInputs.energy} icon={<Zap className="h-5 w-5" />} />
-                  <WellnessItem title="Stress" value={userInputs.stress} icon={<Coffee className="h-5 w-5" />} />
+                  <WellnessItem title="Energy" value={data.moodSeverity} icon={<Zap className="h-5 w-5" />} />
+                  <WellnessItem title="Stress" value={data.moodSeverity === 'Moderate' ? 'Low' : 'Moderate'} icon={<Coffee className="h-5 w-5" />} />
                   <WellnessItem title="Exercise" value="30 min" icon={<Dumbbell className="h-5 w-5" />} />
                 </div>
               </Card>
@@ -271,7 +309,7 @@ export function Dashboard () {
                 <ul className="space-y-2">
                   <EventItem title="Doctor's Appointment" date="Tomorrow, 10:00 AM" />
                   <EventItem title="Yoga Class" date="Wednesday, 6:00 PM" />
-                  <EventItem title="Period Start Date" date="In 14 days" />
+                  <EventItem title="Period Start Date" date={`In ${daysUntilNextPeriod} days`} />
                 </ul>
               </Card>
             </>
@@ -303,20 +341,20 @@ export function Dashboard () {
               <Card>
                 <h3 className="font-semibold mb-4">Cycle Analysis</h3>
                 <div className="space-y-4">
-                  <p>Your cycle length: {userInputs.cycleDuration} days</p>
+                  <p>Your cycle length: {data.cycleDuration} days</p>
                   <p>Average cycle length: 28 days</p>
-                  <p>Your current phase: {userInputs.currentPhase}</p>
-                  <p>Days until next period: {userInputs.cycleDuration - userInputs.cycleDay}</p>
+                  <p>Your current phase: {data.currentPhase}</p>
+                  <p>Days until next period: {daysUntilNextPeriod}</p>
                 </div>
               </Card>
 
               <Card>
                 <h3 className="font-semibold mb-4">Symptom Trends</h3>
                 <ul className="space-y-2">
-                  {userInputs.symptoms.map((symptom, index) => (
+                  {data.symptoms.map((symptom, index) => (
                     <li key={index} className="flex items-center justify-between">
                       <span>{symptom}</span>
-                      <span className="text-[rgba(var(--foreground),0.6)]">Mild</span>
+                      <span className="text-[rgba(var(--foreground),0.6)]">{data.symptomSeverities[symptom]}</span>
                     </li>
                   ))}
                 </ul>
@@ -472,4 +510,6 @@ const TabButton = ({ children, active, onClick }) => {
     </button>
   );
 };
+
+
 

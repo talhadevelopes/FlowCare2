@@ -14,7 +14,6 @@ const { User, PeriodTracking } = require("../src/Sarwar/models");
 const app = express();
 app.use(express.json());
 
-
 app.use(cors())
 
 mongoose.connect(MONGO_URL)
@@ -106,6 +105,27 @@ app.post("/login", async (req, res) => {
     } catch (error) {
         console.error("Login error:", error);
         res.status(500).json({ message: "Server error. Please try again later." });
+    }
+});
+
+
+app.get("/periodtracking/:userId", async (req, res) => {
+    const { userId } = req.params;
+
+    if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+    }
+
+    try {
+        const periodTrackingData = await PeriodTracking.findOne({ user: userId }).sort({ date: -1 });
+        if (!periodTrackingData) {
+            return res.status(404).json({ message: "No period tracking data found for this user" });
+        }
+
+        res.status(200).json(periodTrackingData);
+    } catch (error) {
+        console.error("Error fetching period tracking data:", error);
+        res.status(500).json({ message: "Error fetching period tracking data", error: error.message });
     }
 });
 

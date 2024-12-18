@@ -39,7 +39,7 @@ export function Dashboard () {
     const fetchPeriodData = async () => {
       setLoading(true);
       try {
-        // Replace 'userId' with the actual user ID, possibly stored in local storage or context
+        
         const userId = localStorage.getItem('userId');
         const response = await axios.get(`http://localhost:3000/periodtracking/${userId}`);
         setPeriodData(response.data);

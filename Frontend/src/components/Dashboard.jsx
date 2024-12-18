@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell } from 'lucide-react';
+import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X } from 'lucide-react';
 
-export function Dashboard (){
+export function Dashboard () {
   const [darkMode, setDarkMode] = useState(false);
   const [cycleDay, setCycleDay] = useState(14);
   const [waterIntake, setWaterIntake] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [showMythModal, setShowMythModal] = useState(false);
+  const [currentMyth, setCurrentMyth] = useState(null);
 
   useEffect(() => {
     if (darkMode) {
@@ -63,6 +66,34 @@ export function Dashboard (){
     setWaterIntake((prev) => Math.min(prev + 1, 8));
   };
 
+  const myths = [
+    {
+      myth: "You can't get pregnant during your period.",
+      fact: "While it's less likely, you can still get pregnant during your period, especially if you have a shorter menstrual cycle.",
+    },
+    {
+      myth: "PMS is all in your head.",
+      fact: "PMS is a real medical condition caused by hormonal changes during the menstrual cycle.",
+    },
+    {
+      myth: "Irregular periods always indicate a serious problem.",
+      fact: "While irregular periods can sometimes signal health issues, they can also be caused by stress, diet, or exercise changes.",
+    },
+    {
+      myth: "You shouldn't exercise during your period.",
+      fact: "Exercise can actually help alleviate period symptoms like cramps and mood swings.",
+    },
+    {
+      myth: "Using tampons can cause you to lose your virginity.",
+      fact: "Using tampons does not affect virginity, which is about sexual intercourse, not physical changes to the body.",
+    },
+  ];
+
+  const openMythModal = (myth) => {
+    setCurrentMyth(myth);
+    setShowMythModal(true);
+  };
+
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       <style jsx global>{`
@@ -81,6 +112,10 @@ export function Dashboard (){
         @keyframes slideOut {
           from { transform: translateY(0); }
           to { transform: translateY(-100%); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
         :root {
           --background: 255, 255, 255;
@@ -149,109 +184,185 @@ export function Dashboard (){
             </div>
           </div>
 
-          <Card className="overflow-hidden">
-            <div className="relative h-32 bg-gradient-to-r from-pink-300 to-purple-400 dark:from-pink-600 dark:to-purple-700">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <h3 className="text-3xl font-bold text-white">Cycle Day {userInputs.cycleDay}</h3>
-              </div>
-            </div>
-            <div className="p-6">
-              <p className="text-lg font-semibold mb-2">Current Phase: {userInputs.currentPhase}</p>
-              <p className="text-sm text-[rgba(var(--foreground),0.6)]">
-                {userInputs.cycleDuration - userInputs.cycleDay} days until next period
-              </p>
-              <div className="mt-4 h-2 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-[rgb(var(--primary))]" 
-                  style={{ width: `${(userInputs.cycleDay / userInputs.cycleDuration) * 100}%` }}
-                ></div>
-              </div>
-            </div>
-          </Card>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <AnimatedCard title="Mood" value={userInputs.mood} icon={getMoodIcon(userInputs.mood)} />
-            <AnimatedCard title="Sleep Quality" value={userInputs.sleepQuality} icon={<Moon className="h-6 w-6" />} />
-            <AnimatedCard title="Active Symptoms" value={userInputs.symptoms.length} icon={<ThermometerSun className="h-6 w-6" />} />
+          <div className="flex space-x-2 mb-4">
+            <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')}>
+              Overview
+            </TabButton>
+            <TabButton active={activeTab === 'insights'} onClick={() => setActiveTab('insights')}>
+              Insights
+            </TabButton>
+            <TabButton active={activeTab === 'mythbusters'} onClick={() => setActiveTab('mythbusters')}>
+              MythBusters
+            </TabButton>
           </div>
 
-          <Card>
-            <h3 className="font-semibold mb-4">Health Insights</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <InsightItem
-                title="Fertility Window"
-                value={fertileWindow ? "Active" : "Inactive"}
-                icon={<Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />}
-              />
-              <InsightItem
-                title="PMS Likelihood"
-                value={pmsLikely ? "High" : "Low"}
-                icon={<ActivitySquare className="h-5 w-5 text-[rgb(var(--primary))]" />}
-              />
-              <InsightItem
-                title="Rest Status"
-                value={wellRested ? "Well Rested" : "Need More Rest"}
-                icon={<Moon className="h-5 w-5 text-[rgb(var(--primary))]" />}
-              />
-            </div>
-          </Card>
+          {activeTab === 'overview' && (
+            <>
+              <Card className="overflow-hidden">
+                <div className="relative h-32 bg-gradient-to-r from-pink-300 to-purple-400 dark:from-pink-600 dark:to-purple-700">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <h3 className="text-3xl font-bold text-white">Cycle Day {userInputs.cycleDay}</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-lg font-semibold mb-2">Current Phase: {userInputs.currentPhase}</p>
+                  <p className="text-sm text-[rgba(var(--foreground),0.6)]">
+                    {userInputs.cycleDuration - userInputs.cycleDay} days until next period
+                  </p>
+                  <div className="mt-4 h-2 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-[rgb(var(--primary))]" 
+                      style={{ width: `${(userInputs.cycleDay / userInputs.cycleDuration) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </Card>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <AnimatedCard title="Mood" value={userInputs.mood} icon={getMoodIcon(userInputs.mood)} />
+                <AnimatedCard title="Sleep Quality" value={userInputs.sleepQuality} icon={<Moon className="h-6 w-6" />} />
+                <AnimatedCard title="Active Symptoms" value={userInputs.symptoms.length} icon={<ThermometerSun className="h-6 w-6" />} />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card>
+                  <h3 className="font-semibold mb-4">Daily Health Tips</h3>
+                  <ul className="space-y-2">
+                    {healthTips.map((tip, index) => (
+                      <li key={index} className="flex items-start animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
+                        <Utensils className="h-5 w-5 text-[rgb(var(--primary))] mr-2 mt-0.5 flex-shrink-0" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+                <Card>
+                  <h3 className="font-semibold mb-4">Water Intake Tracker</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <span>Goal: 8 glasses</span>
+                    <span>{waterIntake} / 8</span>
+                  </div>
+                  <div className="h-4 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden mb-4">
+                    <div 
+                      className="h-full bg-[rgb(var(--primary))]" 
+                      style={{ width: `${(waterIntake / 8) * 100}%` }}
+                    ></div>
+                  </div>
+                  <button
+                    onClick={handleWaterIntake}
+                    className="w-full py-2 px-4 bg-[rgb(var(--primary))] text-white rounded-md hover:bg-[rgba(var(--primary),0.8)] transition-colors"
+                  >
+                    Log Water Intake
+                  </button>
+                </Card>
+              </div>
+
+              <Card>
+                <h3 className="font-semibold mb-4">Wellness Tracker</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <WellnessItem title="Energy" value={userInputs.energy} icon={<Zap className="h-5 w-5" />} />
+                  <WellnessItem title="Stress" value={userInputs.stress} icon={<Coffee className="h-5 w-5" />} />
+                  <WellnessItem title="Exercise" value="30 min" icon={<Dumbbell className="h-5 w-5" />} />
+                </div>
+              </Card>
+
+              <Card>
+                <h3 className="font-semibold mb-4">Upcoming Events</h3>
+                <ul className="space-y-2">
+                  <EventItem title="Doctor's Appointment" date="Tomorrow, 10:00 AM" />
+                  <EventItem title="Yoga Class" date="Wednesday, 6:00 PM" />
+                  <EventItem title="Period Start Date" date="In 14 days" />
+                </ul>
+              </Card>
+            </>
+          )}
+
+          {activeTab === 'insights' && (
+            <>
+              <Card>
+                <h3 className="font-semibold mb-4">Health Insights</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <InsightItem
+                    title="Fertility Window"
+                    value={fertileWindow ? "Active" : "Inactive"}
+                    icon={<Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />}
+                  />
+                  <InsightItem
+                    title="PMS Likelihood"
+                    value={pmsLikely ? "High" : "Low"}
+                    icon={<ActivitySquare className="h-5 w-5 text-[rgb(var(--primary))]" />}
+                  />
+                  <InsightItem
+                    title="Rest Status"
+                    value={wellRested ? "Well Rested" : "Need More Rest"}
+                    icon={<Moon className="h-5 w-5 text-[rgb(var(--primary))]" />}
+                  />
+                </div>
+              </Card>
+
+              <Card>
+                <h3 className="font-semibold mb-4">Cycle Analysis</h3>
+                <div className="space-y-4">
+                  <p>Your cycle length: {userInputs.cycleDuration} days</p>
+                  <p>Average cycle length: 28 days</p>
+                  <p>Your current phase: {userInputs.currentPhase}</p>
+                  <p>Days until next period: {userInputs.cycleDuration - userInputs.cycleDay}</p>
+                </div>
+              </Card>
+
+              <Card>
+                <h3 className="font-semibold mb-4">Symptom Trends</h3>
+                <ul className="space-y-2">
+                  {userInputs.symptoms.map((symptom, index) => (
+                    <li key={index} className="flex items-center justify-between">
+                      <span>{symptom}</span>
+                      <span className="text-[rgba(var(--foreground),0.6)]">Mild</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </>
+          )}
+
+          {activeTab === 'mythbusters' && (
             <Card>
-              <h3 className="font-semibold mb-4">Daily Health Tips</h3>
-              <ul className="space-y-2">
-                {healthTips.map((tip, index) => (
-                  <li key={index} className="flex items-start animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
-                    <Utensils className="h-5 w-5 text-[rgb(var(--primary))] mr-2 mt-0.5 flex-shrink-0" />
-                    <span>{tip}</span>
-                  </li>
+              <h3 className="font-semibold mb-4">Menstrual Health MythBusters</h3>
+              <div className="space-y-4">
+                {myths.map((myth, index) => (
+                  <div key={index} className="p-4 bg-[rgba(var(--primary),0.1)] rounded-lg">
+                    <p className="font-medium mb-2">{myth.myth}</p>
+                    <button
+                      onClick={() => openMythModal(myth)}
+                      className="text-[rgb(var(--primary))] hover:underline"
+                    >
+                      Reveal the truth
+                    </button>
+                  </div>
                 ))}
-              </ul>
-            </Card>
-            <Card>
-              <h3 className="font-semibold mb-4">Water Intake Tracker</h3>
-              <div className="flex items-center justify-between mb-2">
-                <span>Goal: 8 glasses</span>
-                <span>{waterIntake} / 8</span>
               </div>
-              <div className="h-4 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden mb-4">
-                <div 
-                  className="h-full bg-[rgb(var(--primary))]" 
-                  style={{ width: `${(waterIntake / 8) * 100}%` }}
-                ></div>
-              </div>
-              <button
-                onClick={handleWaterIntake}
-                className="w-full py-2 px-4 bg-[rgb(var(--primary))] text-white rounded-md hover:bg-[rgba(var(--primary),0.8)] transition-colors"
-              >
-                Log Water Intake
-              </button>
             </Card>
-          </div>
-
-          <Card>
-            <h3 className="font-semibold mb-4">Wellness Tracker</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <WellnessItem title="Energy" value={userInputs.energy} icon={<Zap className="h-5 w-5" />} />
-              <WellnessItem title="Stress" value={userInputs.stress} icon={<Coffee className="h-5 w-5" />} />
-              <WellnessItem title="Exercise" value="30 min" icon={<Dumbbell className="h-5 w-5" />} />
-            </div>
-          </Card>
-
-          <Card>
-            <h3 className="font-semibold mb-4">Upcoming Events</h3>
-            <ul className="space-y-2">
-              <EventItem title="Doctor's Appointment" date="Tomorrow, 10:00 AM" />
-              <EventItem title="Yoga Class" date="Wednesday, 6:00 PM" />
-              <EventItem title="Period Start Date" date="In 14 days" />
-            </ul>
-          </Card>
+          )}
         </div>
       </main>
 
       {showNotification && (
         <div className="fixed top-0 left-1/2 transform -translate-x-1/2 bg-[rgb(var(--primary))] text-white p-4 rounded-b-lg shadow-lg animate-slideIn">
           Don't forget to log your symptoms today!
+        </div>
+      )}
+
+      {showMythModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 animate-fadeIn">
+          <div className="bg-[rgb(var(--card))] p-6 rounded-lg max-w-md w-full">
+            <h4 className="font-semibold mb-2">Myth: {currentMyth.myth}</h4>
+            <p className="mb-4">Fact: {currentMyth.fact}</p>
+            <button
+              onClick={() => setShowMythModal(false)}
+              className="w-full py-2 px-4 bg-[rgb(var(--primary))] text-white rounded-md hover:bg-[rgba(var(--primary),0.8)] transition-colors"
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -347,4 +458,18 @@ const EventItem = ({ title, date }) => {
   );
 };
 
+const TabButton = ({ children, active, onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 rounded-md transition-colors ${
+        active
+          ? "bg-[rgb(var(--primary))] text-white"
+          : "bg-[rgba(var(--foreground),0.1)] text-[rgba(var(--foreground),0.7)] hover:bg-[rgba(var(--foreground),0.2)]"
+      }`}
+    >
+      {children}
+    </button>
+  );
+};
 

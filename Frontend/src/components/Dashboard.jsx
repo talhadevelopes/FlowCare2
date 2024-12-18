@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X } from 'lucide-react';
 import axios from 'axios';
 
-export function Dashboard () {
+export function Dashboard (){
   const [darkMode, setDarkMode] = useState(false);
   const [waterIntake, setWaterIntake] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
@@ -12,8 +12,9 @@ export function Dashboard () {
   const [periodData, setPeriodData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
-  
+  // Sample data as fallback
   const sampleData = {
     cycleDay: 14,
     currentPhase: 'Luteal',
@@ -39,7 +40,7 @@ export function Dashboard () {
     const fetchPeriodData = async () => {
       setLoading(true);
       try {
-        
+        // Replace 'userId' with the actual user ID, possibly stored in local storage or context
         const userId = localStorage.getItem('userId');
         const response = await axios.get(`http://localhost:3000/periodtracking/${userId}`);
         setPeriodData(response.data);
@@ -73,6 +74,10 @@ export function Dashboard () {
 
   const handleWaterIntake = () => {
     setWaterIntake((prev) => Math.min(prev + 1, 8));
+  };
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
   };
 
   const myths = [
@@ -180,7 +185,7 @@ export function Dashboard () {
           color: rgb(var(--foreground));
         }
       `}</style>
-      <aside className="w-[240px] bg-[rgb(var(--card))] p-6 flex flex-col">
+      <aside className={`w-[240px] bg-[rgb(var(--card))] p-6 flex flex-col transition-all duration-300 ease-in-out ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}`}>
         <h1 className="text-xl font-semibold text-[rgb(var(--primary))] mb-6">FlowCare</h1>
         <nav className="flex-1">
           <ul className="space-y-2">
@@ -207,7 +212,18 @@ export function Dashboard () {
         </div>
       </aside>
 
-      <main className="flex-1 p-6 overflow-auto bg-[rgb(var(--background))]">
+      <button
+        onClick={toggleSidebar}
+        className="fixed left-0 top-4 z-10 p-2 bg-[rgb(var(--primary))] text-white rounded-r-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:ring-opacity-50"
+        style={{
+          transform: sidebarVisible ? 'translateX(240px)' : 'translateX(0)',
+        }}
+        aria-label={sidebarVisible ? 'Hide sidebar' : 'Show sidebar'}
+      >
+        <ChevronRight size={24} className={`transition-transform duration-300 ${sidebarVisible ? 'rotate-180' : 'rotate-0'}`} />
+      </button>
+
+      <main className={`flex-1 p-6 overflow-auto bg-[rgb(var(--background))] transition-all duration-300 ease-in-out ${sidebarVisible ? 'ml-[240px]' : 'ml-0'}`}>
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Dashboard</h2>
@@ -510,5 +526,3 @@ const TabButton = ({ children, active, onClick }) => {
     </button>
   );
 };
-
-

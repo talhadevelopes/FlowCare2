@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun } from 'lucide-react';
+import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell } from 'lucide-react';
 
-export function Dashboard  ()  {
+export function Dashboard (){
   const [darkMode, setDarkMode] = useState(false);
   const [cycleDay, setCycleDay] = useState(14);
+  const [waterIntake, setWaterIntake] = useState(0);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -20,6 +22,14 @@ export function Dashboard  ()  {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const notificationInterval = setInterval(() => {
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 5000);
+    }, 30000);
+    return () => clearInterval(notificationInterval);
+  }, []);
+
   const userInputs = {
     cycleDay,
     currentPhase: 'Luteal',
@@ -28,6 +38,8 @@ export function Dashboard  ()  {
     symptoms: ['Mild Cramps', 'Fatigue'],
     sleepQuality: 'Good',
     sleepDuration: 7.5,
+    energy: 'Moderate',
+    stress: 'Low',
   };
 
   const fertileWindow = userInputs.cycleDay >= 11 && userInputs.cycleDay <= 17;
@@ -47,6 +59,10 @@ export function Dashboard  ()  {
 
   const healthTips = getHealthTips();
 
+  const handleWaterIntake = () => {
+    setWaterIntake((prev) => Math.min(prev + 1, 8));
+  };
+
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       <style jsx global>{`
@@ -57,6 +73,14 @@ export function Dashboard  ()  {
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
+        }
+        @keyframes slideIn {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(0); }
+        }
+        @keyframes slideOut {
+          from { transform: translateY(0); }
+          to { transform: translateY(-100%); }
         }
         :root {
           --background: 255, 255, 255;
@@ -136,6 +160,12 @@ export function Dashboard  ()  {
               <p className="text-sm text-[rgba(var(--foreground),0.6)]">
                 {userInputs.cycleDuration - userInputs.cycleDay} days until next period
               </p>
+              <div className="mt-4 h-2 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-[rgb(var(--primary))]" 
+                  style={{ width: `${(userInputs.cycleDay / userInputs.cycleDuration) * 100}%` }}
+                ></div>
+              </div>
             </div>
           </Card>
 
@@ -166,19 +196,64 @@ export function Dashboard  ()  {
             </div>
           </Card>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <h3 className="font-semibold mb-4">Daily Health Tips</h3>
+              <ul className="space-y-2">
+                {healthTips.map((tip, index) => (
+                  <li key={index} className="flex items-start animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
+                    <Utensils className="h-5 w-5 text-[rgb(var(--primary))] mr-2 mt-0.5 flex-shrink-0" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+            <Card>
+              <h3 className="font-semibold mb-4">Water Intake Tracker</h3>
+              <div className="flex items-center justify-between mb-2">
+                <span>Goal: 8 glasses</span>
+                <span>{waterIntake} / 8</span>
+              </div>
+              <div className="h-4 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden mb-4">
+                <div 
+                  className="h-full bg-[rgb(var(--primary))]" 
+                  style={{ width: `${(waterIntake / 8) * 100}%` }}
+                ></div>
+              </div>
+              <button
+                onClick={handleWaterIntake}
+                className="w-full py-2 px-4 bg-[rgb(var(--primary))] text-white rounded-md hover:bg-[rgba(var(--primary),0.8)] transition-colors"
+              >
+                Log Water Intake
+              </button>
+            </Card>
+          </div>
+
           <Card>
-            <h3 className="font-semibold mb-4">Daily Health Tips</h3>
+            <h3 className="font-semibold mb-4">Wellness Tracker</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <WellnessItem title="Energy" value={userInputs.energy} icon={<Zap className="h-5 w-5" />} />
+              <WellnessItem title="Stress" value={userInputs.stress} icon={<Coffee className="h-5 w-5" />} />
+              <WellnessItem title="Exercise" value="30 min" icon={<Dumbbell className="h-5 w-5" />} />
+            </div>
+          </Card>
+
+          <Card>
+            <h3 className="font-semibold mb-4">Upcoming Events</h3>
             <ul className="space-y-2">
-              {healthTips.map((tip, index) => (
-                <li key={index} className="flex items-start animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
-                  <Utensils className="h-5 w-5 text-[rgb(var(--primary))] mr-2 mt-0.5 flex-shrink-0" />
-                  <span>{tip}</span>
-                </li>
-              ))}
+              <EventItem title="Doctor's Appointment" date="Tomorrow, 10:00 AM" />
+              <EventItem title="Yoga Class" date="Wednesday, 6:00 PM" />
+              <EventItem title="Period Start Date" date="In 14 days" />
             </ul>
           </Card>
         </div>
       </main>
+
+      {showNotification && (
+        <div className="fixed top-0 left-1/2 transform -translate-x-1/2 bg-[rgb(var(--primary))] text-white p-4 rounded-b-lg shadow-lg animate-slideIn">
+          Don't forget to log your symptoms today!
+        </div>
+      )}
     </div>
   );
 };
@@ -245,4 +320,31 @@ const InsightItem = ({ title, value, icon }) => {
     </div>
   );
 };
+
+const WellnessItem = ({ title, value, icon }) => {
+  return (
+    <div className="flex items-center space-x-3 p-3 bg-[rgba(var(--primary),0.1)] rounded-lg">
+      <div className="p-2 bg-[rgba(var(--primary),0.2)] rounded-full">
+        {icon}
+      </div>
+      <div>
+        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
+        <p className="font-medium">{value}</p>
+      </div>
+    </div>
+  );
+};
+
+const EventItem = ({ title, date }) => {
+  return (
+    <li className="flex items-center space-x-3">
+      <Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />
+      <div>
+        <p className="font-medium">{title}</p>
+        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{date}</p>
+      </div>
+    </li>
+  );
+};
+
 

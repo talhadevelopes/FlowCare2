@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X } from 'lucide-react';
 import axios from 'axios';
 
-export function Dashboard() {
+export function Dashboard () {
   const [darkMode, setDarkMode] = useState(false);
   const [waterIntake, setWaterIntake] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
@@ -39,7 +39,7 @@ export function Dashboard() {
     const fetchPeriodData = async () => {
       setLoading(true);
       try {
-        
+        // Replace 'userId' with the actual user ID, possibly stored in local storage or context
         const userId = localStorage.getItem('userId');
         const response = await axios.get(`http://localhost:3000/periodtracking/${userId}`);
         setPeriodData(response.data);
@@ -510,6 +510,5 @@ const TabButton = ({ children, active, onClick }) => {
     </button>
   );
 };
-
 
 

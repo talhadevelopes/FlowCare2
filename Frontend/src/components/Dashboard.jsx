@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils } from 'lucide-react';
 
-export function Dashboard() {
+export function Dashboard () {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   
   const userInputs = {
     cycleDay: 14,
@@ -47,10 +57,32 @@ export function Dashboard() {
   const healthTips = getHealthTips();
 
   return (
-    <div className="flex h-screen bg-pink-50 text-gray-800 font-sans">
+    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
+      <style jsx>{`
+        :root {
+          --background: 255, 255, 255;
+          --foreground: 0, 0, 0;
+          --primary: 255, 192, 203;
+          --primary-foreground: 0, 0, 0;
+          --card: 255, 255, 255;
+          --card-foreground: 0, 0, 0;
+        }
+        .dark {
+          --background: 23, 23, 23;
+          --foreground: 255, 255, 255;
+          --primary: 255, 105, 180;
+          --primary-foreground: 255, 255, 255;
+          --card: 38, 38, 38;
+          --card-foreground: 255, 255, 255;
+        }
+        body {
+          background-color: rgb(var(--background));
+          color: rgb(var(--foreground));
+        }
+      `}</style>
       
-      <aside className="w-[240px] bg-white p-6 flex flex-col">
-        <h1 className="text-xl font-semibold text-pink-600 mb-6">FlowCare</h1>
+      <aside className="w-[240px] bg-[rgb(var(--card))] p-6 flex flex-col">
+        <h1 className="text-xl font-semibold text-[rgb(var(--primary))] mb-6">FlowCare</h1>
         <nav className="flex-1">
           <ul className="space-y-2">
             <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active />
@@ -62,31 +94,37 @@ export function Dashboard() {
             <NavItem icon={<Bot size={20} />} label="AI Chatbot" />
           </ul>
         </nav>
-        <div className="pt-6 mt-6 border-t border-gray-200">
+        <div className="pt-6 mt-6 border-t border-[rgba(var(--foreground),0.1)]">
           <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-medium text-gray-600">
+            <div className="w-8 h-8 rounded-full bg-[rgba(var(--foreground),0.1)] flex items-center justify-center text-sm font-medium">
               UN
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-900">User Name</p>
-              <p className="text-xs text-gray-500">Premium Member</p>
+              <p className="text-sm font-medium">User Name</p>
+              <p className="text-xs text-[rgba(var(--foreground),0.6)]">Premium Member</p>
             </div>
-            <ChevronRight size={16} className="ml-auto text-gray-400" />
+            <ChevronRight size={16} className="ml-auto text-[rgba(var(--foreground),0.4)]" />
           </div>
         </div>
       </aside>
 
       
-      <main className="flex-1 p-6 overflow-auto">
+      <main className="flex-1 p-6 overflow-auto bg-[rgb(var(--background))]">
         <div className="max-w-6xl mx-auto space-y-6">
           
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Dashboard</h2>
             <div className="flex items-center gap-4">
-              <Bell className="h-5 w-5 text-gray-500" />
-              <select className="border rounded-md px-2 py-1 text-sm bg-white">
+              <Bell className="h-5 w-5 text-[rgba(var(--foreground),0.6)]" />
+              <select className="border rounded-md px-2 py-1 text-sm bg-[rgb(var(--card))] text-[rgb(var(--card-foreground))]">
                 <option>This Month</option>
               </select>
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))]"
+              >
+                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
             </div>
           </div>
 
@@ -96,13 +134,13 @@ export function Dashboard() {
               title="Cycle Day"
               value={userInputs.cycleDay}
               subtitle="14 days until next period"
-              icon={<Calendar className="h-5 w-5 text-pink-500" />}
+              icon={<Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />}
             />
             <MetricCard
               title="Current Phase"
               value={userInputs.currentPhase}
               subtitle="Next period expected on Dec 30"
-              icon={<Droplet className="h-5 w-5 text-pink-500" />}
+              icon={<Droplet className="h-5 w-5 text-[rgb(var(--primary))]" />}
             />
             <MetricCard
               title="Today's Mood"
@@ -114,13 +152,13 @@ export function Dashboard() {
                   ))}
                 </div>
               }
-              icon={<Heart className="h-5 w-5 text-pink-500" />}
+              icon={<Heart className="h-5 w-5 text-[rgb(var(--primary))]" />}
             />
             <MetricCard
               title="Sleep Quality"
               value={userInputs.sleepQuality}
               subtitle={`${userInputs.sleepDuration} hours of sleep`}
-              icon={<Moon className="h-5 w-5 text-pink-500" />}
+              icon={<Moon className="h-5 w-5 text-[rgb(var(--primary))]" />}
             />
           </div>
 
@@ -128,7 +166,7 @@ export function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <h3 className="font-semibold mb-1">Recent Activity</h3>
-              <p className="text-sm text-gray-500 mb-4">Your health tracking history</p>
+              <p className="text-sm text-[rgba(var(--foreground),0.6)] mb-4">Your health tracking history</p>
               <div className="space-y-6">
                 <ActivityItem
                   title="Mood Log"
@@ -150,7 +188,7 @@ export function Dashboard() {
 
             <Card>
               <h3 className="font-semibold mb-1">Upcoming</h3>
-              <p className="text-sm text-gray-500 mb-4">Events and reminders</p>
+              <p className="text-sm text-[rgba(var(--foreground),0.6)] mb-4">Events and reminders</p>
               <div className="space-y-6">
                 <UpcomingItem
                   title="Doctor's Appointment"
@@ -167,10 +205,10 @@ export function Dashboard() {
           
           <Card>
             <h3 className="font-semibold mb-1">Tracking Streak</h3>
-            <p className="text-sm text-gray-500 mb-2">Keep up the good work!</p>
+            <p className="text-sm text-[rgba(var(--foreground),0.6)] mb-2">Keep up the good work!</p>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-pink-600">45 days</span>
-              <span className="text-sm text-gray-500">Consistent tracking</span>
+              <span className="text-3xl font-bold text-[rgb(var(--primary))]">45 days</span>
+              <span className="text-sm text-[rgba(var(--foreground),0.6)]">Consistent tracking</span>
             </div>
           </Card>
 
@@ -181,17 +219,17 @@ export function Dashboard() {
               <InsightItem
                 title="Fertility Window"
                 value={fertileWindow ? "Active" : "Inactive"}
-                icon={<Calendar className="h-5 w-5 text-pink-500" />}
+                icon={<Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />}
               />
               <InsightItem
                 title="PMS Likelihood"
                 value={pmsLikely ? "High" : "Low"}
-                icon={<ActivitySquare className="h-5 w-5 text-pink-500" />}
+                icon={<ActivitySquare className="h-5 w-5 text-[rgb(var(--primary))]" />}
               />
               <InsightItem
                 title="Rest Status"
                 value={wellRested ? "Well Rested" : "Need More Rest"}
-                icon={<Moon className="h-5 w-5 text-pink-500" />}
+                icon={<Moon className="h-5 w-5 text-[rgb(var(--primary))]" />}
               />
             </div>
           </Card>
@@ -202,7 +240,7 @@ export function Dashboard() {
             <ul className="space-y-2">
               {healthTips.map((tip, index) => (
                 <li key={index} className="flex items-start">
-                  <Utensils className="h-5 w-5 text-pink-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <Utensils className="h-5 w-5 text-[rgb(var(--primary))] mr-2 mt-0.5 flex-shrink-0" />
                   <span>{tip}</span>
                 </li>
               ))}
@@ -220,7 +258,7 @@ const NavItem = ({ icon, label, active = false }) => {
       <a
         href="#"
         className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-          active ? "bg-pink-50 text-pink-600" : "text-gray-600 hover:bg-gray-50"
+          active ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]" : "text-[rgba(var(--foreground),0.7)] hover:bg-[rgba(var(--foreground),0.05)]"
         }`}
       >
         {icon}
@@ -232,15 +270,15 @@ const NavItem = ({ icon, label, active = false }) => {
 
 const MetricCard = ({ title, value, subtitle, icon }) => {
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm">
+    <div className="bg-[rgb(var(--card))] rounded-lg p-6 shadow-sm">
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-sm text-gray-500">{title}</p>
+          <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
           <h3 className="text-2xl font-semibold mt-1">{value}</h3>
         </div>
         {icon}
       </div>
-      <div className="mt-2 text-sm text-gray-500">
+      <div className="mt-2 text-sm text-[rgba(var(--foreground),0.6)]">
         {subtitle}
       </div>
     </div>
@@ -249,7 +287,7 @@ const MetricCard = ({ title, value, subtitle, icon }) => {
 
 const Card = ({ children }) => {
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm">
+    <div className="bg-[rgb(var(--card))] rounded-lg p-6 shadow-sm">
       {children}
     </div>
   );
@@ -257,7 +295,7 @@ const Card = ({ children }) => {
 
 const Badge = ({ children }) => {
   return (
-    <span className="px-2 py-1 rounded-full bg-gray-200 text-gray-800 text-xs font-medium">
+    <span className="px-2 py-1 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))] text-xs font-medium">
       {children}
     </span>
   );
@@ -268,9 +306,9 @@ const ActivityItem = ({ title, description, time }) => {
     <div className="flex justify-between items-start">
       <div>
         <p className="font-medium">{title}</p>
-        <p className="text-sm text-gray-500">{description}</p>
+        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{description}</p>
       </div>
-      <span className="text-sm text-gray-500">{time}</span>
+      <span className="text-sm text-[rgba(var(--foreground),0.6)]">{time}</span>
     </div>
   );
 };
@@ -279,7 +317,7 @@ const UpcomingItem = ({ title, description }) => {
   return (
     <div>
       <p className="font-medium">{title}</p>
-      <p className="text-sm text-gray-500">{description}</p>
+      <p className="text-sm text-[rgba(var(--foreground),0.6)]">{description}</p>
     </div>
   );
 };
@@ -289,12 +327,11 @@ const InsightItem = ({ title, value, icon }) => {
     <div className="flex items-center space-x-3">
       {icon}
       <div>
-        <p className="text-sm text-gray-500">{title}</p>
+        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
         <p className="font-medium">{value}</p>
       </div>
     </div>
   );
 };
-
 
 

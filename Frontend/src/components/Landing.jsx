@@ -1,997 +1,536 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Calendar, Heart, Moon, Sun, Droplet, Utensils, Menu, X, Check, Star, Users, ArrowRight } from 'lucide-react';
 
 export function Landing() {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState(
-    "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
-  );
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
 
-  const changeImage = (newImage) => {
-    setProfileImage(newImage);
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(prevMode => {
+      const newMode = !prevMode;
+      localStorage.setItem('darkMode', newMode.toString());
+      return newMode;
+    });
   };
+
   return (
-    <div>
-      {/* <!------------------------SIDEBAR SECTION-----------------------------------> */}
-      <div id="sidebar-container">
-        <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
-          <div class="flex h-screen w-16 flex-col justify-between border-e bg-pink-100">
-            <div>
-              <div className="py-4 px-2">
-                <div className="group relative inline-block">
-                  {/* Profile Picture */}
-                  <div
-                    id="profilePicture"
-                    className="w-12 h-12 rounded-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${profileImage})` }}
-                  ></div>
-
-                  {/* Tooltip Container */}
-                  <div className="invisible opacity-0 ml-20 group-hover:visible group-hover:opacity-100 absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform rounded bg-gray-900 p-2 text-white transition-all duration-300">
-                    <div className="flex flex-col gap-2 whitespace-nowrap">
-                      <button
-                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                        onClick={() =>
-                          changeImage(
-                            "https://img.freepik.com/premium-photo/beautiful-woman-wearing-white-hijab-elegant-hijab_608068-34215.jpg"
-                          )
-                        }
-                      >
-                        User 1
-                      </button>
-                      <button
-                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                        onClick={() =>
-                          changeImage(
-                            "https://media.istockphoto.com/photos/beautiful-young-muslim-woman-wearing-a-hijab-on-her-head-picture-id618035002?k=6&m=618035002&s=612x612&w=0&h=_1m2fRBf_DbVeFOZN-VwC2cW9QnV7tYerZwZo44lLjo="
-                          )
-                        }
-                      >
-                        User 2
-                      </button>
-                      <button
-                        className="block px-4 py-1 text-sm bg-pink-500 rounded hover:bg-pink-600"
-                        onClick={() =>
-                          changeImage(
-                            "https://i.pinimg.com/originals/ab/6d/70/ab6d70b2b5ac104f4459487d3a94bec7.jpg"
-                          )
-                        }
-                      >
-                        User 3
-                      </button>
-                    </div>
-
-                    {/* Arrow */}
-                    <div className="absolute left-1/2 top-0 -mt-2 h-0 w-0 -translate-x-1/2 transform border-8 border-transparent border-b-gray-900"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="border-t border-gray-100">
-                <div class="px-2">
-                  <div class="py-4">
-                    <a
-                      href="#"
-                      onClick={() => navigate("/")}
-                      class="t group relative flex justify-center rounded bg-blue-50 px-2 py-1.5 text-pink-700"
-                    >
-                      <img src="images/house-icon.svg" alt="" />
-
-                      <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                        Home
-                      </span>
-                    </a>
-                  </div>
-
-                  <ul class="space-y-1 border-t border-gray-100 pt-4">
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => navigate("/blogs")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="images/blogs-icon.svg" alt="" />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Education
-                        </span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => navigate("/Ecom")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="images/shopping-cart.svg" alt="" />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Shop
-                        </span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => navigate("/tracker")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="images/health-logo.svg" alt="" />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 font-sans rounded bg-gray-900 px-4 py-1.5 text-xl font-medium text-white group-hover:visible">
-                          Track Your Health Cycle
-                        </span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => navigate("/consultations")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img src="images/user-logo.svg" alt="" />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Expert Consultation
-                        </span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => navigate("/ChatBot")}
-                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      >
-                        <img
-                          src="https://m.media-amazon.com/images/I/51nSQGduJWL._AC_SL1500_.jpg"
-                          alt=""
-                        />
-
-                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-2xl font-sans font-medium text-white group-hover:visible">
-                          Chat with AI
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
-              <form action="#">
-                <button
-                  onClick={() => navigate("/ChatBot")}
-                  type="submit"
-                  class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5 opacity-75"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
-
-                  <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                    Logout
-                  </span>
-                </button>
-              </form>
-            </div>
+    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
+      {/* Sidebar */}
+      <aside className="bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4">
+        <nav className="mt-8">
+          <div className="px-4 py-4 flex flex-col space-y-2">
+            <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">FlowCare</h1>
+            <SidebarLink icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
+            <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} active />
+            <SidebarLink icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} />
+            <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
+            <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
+            <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
+            <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
           </div>
-        </div>
-      </div>
-      {/* <!------------------------HEADER SECTION-----------------------------------> */}
-      <header>
-        <img src="./images/flowcare.png" alt="instagram" />
-        <nav>
-          <ul class="nav_links">
-            <li>
-              <a href="">Home</a>
-            </li>
-            <li>
-              <a href="">Resources</a>
-            </li>
-            <li>
-              <a href="">Community</a>
-            </li>
-          </ul>
         </nav>
-        <a class="ata" href="#">
-          <button class="header-button">Contact</button>
-        </a>
-      </header>
+      </aside>
 
-      <main>
-        <div class="content">
-          <h1>
-            Welcome to <br />
-            <span>FlowCare</span>!
-          </h1>
-          <p>
-            Your trusted companion on the path to better health! Explore, learn,
-            and connect with a community that cares about your well-being.
-          </p>
-          <button class="header-button" onClick={() => navigate("/Signup")}>
-            Join Us!
-          </button>
-          <img src="../images/women.png" alt="women" class="feature-image" />
+      {/* Main Content */}
+      <main className="flex-1 p-6 overflow-auto bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto space-y-12">
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <h2 className="text-3xl font-bold text-pink-600 dark:text-pink-400">Welcome to FlowCare</h2>
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700"
+            >
+              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+          </div>
+
+          {/* Hero Section */}
+          <Card>
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="w-full md:w-1/2 pr-8">
+                <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">Your Trusted Companion for Better Health</h1>
+                <p className="text-xl mb-4 text-gray-800 dark:text-gray-200">Empowering women through personalized health tracking and education.</p>
+                <p className="text-lg mb-6 text-gray-800 dark:text-gray-200">Explore, learn, and connect with a community that cares about your well-being.</p>
+                <button 
+                  onClick={() => navigate('/Signup')}
+                  className="bg-pink-600 dark:bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
+                >
+                  Join Us!
+                </button>
+              </div>
+              {/* <div className="w-full md:w-1/2 mt-8 md:mt-0">
+                <img src="/placeholder.svg?height=300&width=400" alt="FlowCare App" className="rounded-lg shadow-lg" />
+              </div> */}
+            </div>
+          </Card>
+
+          {/* Features Overview */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Comprehensive Health Management</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <FeatureOverview
+                icon={<LayoutDashboard className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Personalized Dashboard"
+                description="Get a quick overview of your health status and upcoming activities."
+              />
+              <FeatureOverview
+                icon={<GraduationCap className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Educational Resources"
+                description="Access a wealth of articles and videos on women's health topics."
+              />
+              <FeatureOverview
+                icon={<ShoppingBag className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Curated Shop"
+                description="Find health and wellness products tailored to your needs."
+              />
+              <FeatureOverview
+                icon={<ActivitySquare className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Health Tracking"
+                description="Monitor your cycle, symptoms, and overall well-being with easy-to-use tools."
+              />
+              <FeatureOverview
+                icon={<Stethoscope className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="Expert Consultations"
+                description="Connect with healthcare professionals for personalized advice."
+              />
+              <FeatureOverview
+                icon={<Bot className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                title="AI-Powered Chatbot"
+                description="Get instant answers to your health questions anytime, anywhere."
+              />
+            </div>
+          </Card>
+
+          {/* Key Benefits Section */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Key Benefits of Using FlowCare</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <BenefitItem
+                title="Personalized Insights"
+                description="Receive tailored health recommendations based on your unique data and patterns."
+              />
+              <BenefitItem
+                title="Holistic Approach"
+                description="Address all aspects of your health: physical, mental, and emotional well-being."
+              />
+              <BenefitItem
+                title="Expert-Backed Content"
+                description="Access reliable, up-to-date information curated by healthcare professionals."
+              />
+              <BenefitItem
+                title="Community Support"
+                description="Connect with others, share experiences, and find support in our inclusive community."
+              />
+            </div>
+          </Card>
+
+          {/* Our Mission Section */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Our Mission</h3>
+            <p className="text-lg mb-4 text-gray-800 dark:text-gray-200">
+              At FlowCare, we're committed to revolutionizing women's health management. Our mission is to empower women with the knowledge, tools, and support they need to take control of their health and well-being.
+            </p>
+            <p className="text-lg text-gray-800 dark:text-gray-200">
+              We believe that every woman deserves access to personalized health insights, expert guidance, and a supportive community. Through innovation and compassion, we're building a future where women's health is understood, prioritized, and optimized.
+            </p>
+          </Card>
+
+          {/* How It Works Section */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">How FlowCare Works</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <StepCard
+                number={1}
+                title="Sign Up"
+                description="Create your account and set up your profile with basic health information."
+              />
+              <StepCard
+                number={2}
+                title="Track Your Health"
+                description="Log your symptoms, cycle, and wellness data regularly for personalized insights."
+              />
+              <StepCard
+                number={3}
+                title="Get Insights"
+                description="Receive tailored recommendations and connect with experts for better health management."
+              />
+            </div>
+          </Card>
+
+          {/* Testimonials */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">What Our Users Say</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <TestimonialCard
+                quote="FlowCare has completely changed how I manage my health. It's like having a personal health assistant!"
+                author="Sarah J."
+              />
+              <TestimonialCard
+                quote="The community here is so supportive. I've learned so much and feel empowered to take control of my well-being."
+                author="Emily R."
+              />
+            </div>
+          </Card>
+
+          {/* Latest Blog Posts */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Latest from Our Blog</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <BlogPostCard
+                title="Understanding Your Menstrual Cycle"
+                excerpt="Learn about the four phases of the menstrual cycle and how they affect your body and mood."
+                date="May 15, 2023"
+              />
+              <BlogPostCard
+                title="Nutrition Tips for Hormonal Balance"
+                excerpt="Discover the foods that can help regulate your hormones and improve your overall health."
+                date="May 10, 2023"
+              />
+              <BlogPostCard
+                title="Stress Management Techniques"
+                excerpt="Explore effective ways to manage stress and its impact on your menstrual health."
+                date="May 5, 2023"
+              />
+            </div>
+          </Card>
+
+          {/* New Section: Success Stories */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Success Stories</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <SuccessStoryCard
+                name="Jessica M."
+                story="After struggling with irregular cycles for years, FlowCare helped me understand my body better. Within 3 months, I could predict my cycle accurately!"
+                improvement="Cycle Regularity"
+              />
+              <SuccessStoryCard
+                name="Olivia T."
+                story="The nutritional guidance on FlowCare transformed my diet. My energy levels have improved, and I've noticed a significant reduction in PMS symptoms."
+                improvement="Overall Well-being"
+              />
+            </div>
+          </Card>
+
+          {/* New Section: Expert Insights */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Expert Insights</h3>
+            <div className="space-y-6">
+              <ExpertInsightCard
+                expert="Dr. Amanda Lee, OB/GYN"
+                insight="Regular tracking of menstrual cycles can lead to early detection of various health issues. FlowCare's comprehensive tracking features make this process easy and insightful for users."
+              />
+              <ExpertInsightCard
+                expert="Samantha Wong, Nutritionist"
+                insight="The personalized nutritional recommendations provided by FlowCare are based on solid scientific research. They can significantly improve hormonal balance and overall health."
+              />
+            </div>
+          </Card>
+
+          {/* New Section: Community Highlights */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Community Highlights</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <CommunityHighlightCard
+                title="Monthly Wellness Challenges"
+                description="Join our community-wide challenges focused on different aspects of women's health each month."
+              />
+              <CommunityHighlightCard
+                title="Support Groups"
+                description="Connect with women facing similar health challenges in our moderated support groups."
+              />
+              <CommunityHighlightCard
+                title="Expert Q&A Sessions"
+                description="Participate in live Q&A sessions with health experts and get your questions answered."
+              />
+            </div>
+          </Card>
+
+          {/* FAQ Section */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Frequently Asked Questions</h3>
+            <div className="space-y-4">
+              <FAQItem
+                question="Is my data safe and private?"
+                answer="Yes, we take your privacy seriously. All your data is encrypted and we never share your personal information with third parties."
+              />
+              <FAQItem
+                question="Can I use FlowCare if I have irregular cycles?"
+                answer="FlowCare is designed to accommodate all types of cycles, including irregular ones. Our AI adapts to your unique patterns over time."
+              />
+              <FAQItem
+                question="How often should I log my symptoms?"
+                answer="For the best results, we recommend logging your symptoms daily. However, even logging a few times a week can provide valuable insights."
+              />
+              <FAQItem
+                question="How does FlowCare protect my privacy?"
+                answer="We use state-of-the-art encryption and follow strict data protection protocols. Your personal information is never sold or shared with third parties without your explicit consent."
+              />
+              <FAQItem
+                question="Can I use FlowCare if I'm not menstruating?"
+                answer="FlowCare offers features for all aspects of women's health, including general wellness tracking, nutritional guidance, and mental health support."
+              />
+              <FAQItem
+                question="Are the health articles on FlowCare written by professionals?"
+                answer="Yes, all our educational content is created or reviewed by qualified healthcare professionals to ensure accuracy and relevance."
+              />
+            </div>
+          </Card>
+
+          {/* New Section: App Features Showcase */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">App Features Showcase</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <AppFeatureCard
+                title="Cycle Prediction"
+                description="Our AI-powered algorithm learns from your data to provide accurate cycle predictions."
+                icon={<Calendar className="h-8 w-8 text-pink-500" />}
+              />
+              <AppFeatureCard
+                title="Symptom Tracking"
+                description="Log and monitor various symptoms to gain insights into your health patterns."
+                icon={<ActivitySquare className="h-8 w-8 text-pink-500" />}
+              />
+              <AppFeatureCard
+                title="Nutrition Guide"
+                description="Get personalized nutrition advice based on your cycle phase and health goals."
+                icon={<Utensils className="h-8 w-8 text-pink-500" />}
+              />
+              <AppFeatureCard
+                title="Mood Tracking"
+                description="Track your emotional well-being and identify patterns related to your cycle."
+                icon={<Heart className="h-8 w-8 text-pink-500" />}
+              />
+            </div>
+          </Card>
+
+          {/* New Section: Partnerships */}
+          <Card>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Our Trusted Partners</h3>
+            <p className="text-lg mb-6 text-gray-800 dark:text-gray-200">
+              We collaborate with leading healthcare providers, research institutions, and wellness brands to bring you the best in women's health care.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <PartnerLogo name="HealthTech Inc." />
+              <PartnerLogo name="WomenWell Research" />
+              <PartnerLogo name="NutriBalance" />
+              <PartnerLogo name="MindfulHer" />
+            </div>
+          </Card>
+
+          {/* CTA */}
+          <Card>
+            <div className="text-center">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Ready to Take Control of Your Health?</h3>
+              <p className="mb-6 text-gray-800 dark:text-gray-200">Join FlowCare today and start your journey to better health and wellness.</p>
+              <button 
+                onClick={() => navigate('/Signup')}
+                className="bg-pink-600 dark:bg-pink-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
+              >
+                Sign Up Now
+              </button>
+            </div>
+          </Card>
+
+          {/* Footer */}
+          <footer className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company</h4>
+                <ul className="space-y-2">
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Careers</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Press</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Resources</h4>
+                <ul className="space-y-2">
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Blog</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Help Center</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Community</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Legal</h4>
+                <ul className="space-y-2">
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Privacy Policy</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Terms of Service</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Cookie Policy</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Connect</h4>
+                <ul className="space-y-2">
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Twitter</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Facebook</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Instagram</a></li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
+              <p className="text-gray-600 dark:text-gray-400">&copy; 2023 FlowCare. All rights reserved.</p>
+            </div>
+          </footer>
         </div>
       </main>
-
-      <div class="mx-auto max-w-screen-xl mt-36 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <div class="mx-auto max-w-3xl text-center">
-          <h2 class="text-3xl font-bold text-pink-600 sm:text-4xl">
-            Trusted by Many
-          </h2>
-
-          <p class="mt-4 text-gray-500 sm:text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            dolores laborum labore provident impedit esse recusandae facere
-            libero harum sequi.
-          </p>
-        </div>
-
-        <dl class="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div class="flex flex-col rounded-lg bg-pink-100 px-4 py-8 text-center">
-            <dt class="order-last text-lg font-medium text-gray-500">
-              Total Visitors
-            </dt>
-
-            <dd class="text-4xl font-extrabold text-pink-600 md:text-5xl">
-              10k+
-            </dd>
-          </div>
-
-          <div class="flex flex-col rounded-lg bg-pink-100 px-4 py-8 text-center">
-            <dt class="order-last text-lg font-medium text-gray-500">
-              Total Users
-            </dt>
-
-            <dd class="text-4xl font-extrabold text-pink-600 md:text-5xl">
-              9k+
-            </dd>
-          </div>
-
-          <div class="flex flex-col rounded-lg bg-pink-100 px-4 py-8 text-center">
-            <dt class="order-last text-lg font-medium text-gray-500">
-              Reviews
-            </dt>
-
-            <dd class="text-4xl font-extrabold text-pink-600 md:text-5xl">
-              5٭
-            </dd>
-          </div>
-
-          <div class="flex flex-col rounded-lg bg-pink-100 px-4 py-8 text-center">
-            <dt class="order-last text-lg font-medium text-gray-500">
-              Top Consultants
-            </dt>
-
-            <dd class="text-4xl font-extrabold text-pink-600 md:text-5xl">
-              100+
-            </dd>
-          </div>
-        </dl>
-      </div>
-      {/* <!---------------------------SERVICES-START-------------------------------> */}
-
-      <span class="flex items-center mt-36">
-        <span class="h-px flex-1 bg-black"></span>
-        <span class="shrink-0 text-4xl px-6">One Stop For You</span>
-        <span class="h-px flex-1 bg-black"></span>
-      </span>
-
-      <div class="container relative flex flex-col justify-between h-full max-w-6xl px-10 mx-auto xl:px-0 mt-5">
-        <h2 class="mb-1 text-3xl font-extrabold leading-tight text-gray-900">
-          Services
-        </h2>
-        <p class="mb-12 text-lg text-gray-500">
-          Here is a few of the awesome Services we provide.
-        </p>
-        <div class="w-full">
-          <div class="flex flex-col w-full mb-10 sm:flex-row">
-            <div class="w-full mb-10 sm:mb-0 sm:w-1/2">
-              <div class="relative h-full ml-0 mr-0 sm:mr-10">
-                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-indigo-500 rounded-lg"></span>
-                <div class="relative h-full p-5 bg-white border-2 border-indigo-500 rounded-lg">
-                  <div class="flex items-center -mt-1">
-                    <img src="images/news.svg" class="h-6 ml-16" alt="" />
-                    <h3 class="my-2 ml- absolute text-lg font-bold text-gray-800">
-                      Explore Blogs
-                    </h3>
-                  </div>
-                  <p class="mt-3 mb-1 text-xs font-medium text-indigo-500 uppercase">
-                    ------------
-                  </p>
-                  <p class="mb-2 text-gray-600">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatibus architecto praesentium, cupiditate voluptates
-                    recusandae consequatur aliquid molestias nam, ad, voluptate
-                    cum inventore quibusdam assumenda odit deleniti aliquam in
-                    ullam incidunt.
-                  </p>
-                  <button
-                    type="button"
-                    class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  >
-                    Explore blogs here
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="w-full sm:w-1/2">
-              <div class="relative h-full ml-0 md:mr-10">
-                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-purple-500 rounded-lg"></span>
-                <div class="relative h-full p-5 bg-white border-2 border-purple-500 rounded-lg">
-                  <div class="flex items-center -mt-1">
-                    <img
-                      src="images/health-notes.svg"
-                      class="h-6 ml-24"
-                      alt=""
-                    />
-                    <h3 class="my-2 ml- absolute text-lg font-bold text-gray-800">
-                      Track Your Health
-                    </h3>
-                  </div>
-                  <p class="mt-3 mb-1 text-xs font-medium text-purple-500 uppercase">
-                    ------------
-                  </p>
-                  <p class="mb-2 text-gray-600">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Eligendi veritatis, ipsum quae quia minima animi dolorum ad
-                    perferendis dignissimos fugit expedita neque laudantium
-                    minus? Dolorum totam minus dolore quis eos?
-                  </p>
-                  <button
-                    type="button"
-                    class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  >
-                    Track your Health Here
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-col w-full mb-5 sm:flex-row">
-            <div class="w-full mb-10 sm:mb-0 sm:w-1/2">
-              <div class="relative h-full ml-0 mr-0 sm:mr-10">
-                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-blue-400 rounded-lg"></span>
-                <div class="relative h-full p-5 bg-white border-2 border-blue-400 rounded-lg">
-                  <div class="flex items-center -mt-1">
-                    <img src="images/globe.svg" class="h-6 ml-32" alt="" />
-                    <h3 class="my-2 ml- absolute text-lg font-bold text-gray-800">
-                      Connect with People
-                    </h3>
-                  </div>
-                  <p class="mt-3 mb-1 text-xs font-medium text-blue-400 uppercase">
-                    ------------
-                  </p>
-                  <p class="mb-2 text-gray-600">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Vero possimus quia ipsam mollitia aperiam vitae distinctio
-                    sint, laborum, ad facere sequi officiis dignissimos suscipit
-                    minima, maxime hic dolores non placeat.
-                  </p>
-                  <button
-                    type="button"
-                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  >
-                    Connect
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="w-full mb-10 sm:mb-0 sm:w-1/2">
-              <div class="relative h-full ml-0 mr-0 sm:mr-10">
-                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-purple-500 rounded-lg"></span>
-                <div class="relative h-full p-5 bg-white border-2 border-purple-200 rounded-lg">
-                  <div class="flex items-center -mt-1">
-                    <img
-                      src="images/shopping-cart.svg"
-                      class="h-6 ml-24"
-                      alt=""
-                    />
-                    <h3 class="my-2 ml- absolute text-lg font-bold text-gray-800">
-                      Explore Products
-                    </h3>
-                  </div>
-                  <p class="mt-3 mb-1 text-xs font-medium text-yellow-400 uppercase">
-                    ------------
-                  </p>
-                  <p class="mb-2 text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Eius ea ab voluptates fuga soluta veniam nostrum magnam
-                    beatae rem quod veritatis nisi, inventore expedita nihil
-                    dolorum laborum ullam eveniet aperiam.
-                  </p>
-                  <button
-                    type="button"
-                    class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  >
-                    Explore Products
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="w-full sm:w-1/2">
-              <div class="relative h-full ml-0 md:mr-10">
-                <span class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-pink-300 rounded-lg"></span>
-                <div class="relative h-full p-5 bg-white border-2 border-pink-200 rounded-lg">
-                  <div class="flex items-center -mt-1">
-                    <img src="images/user-logo.svg" class="h-6 ml-24" alt="" />
-                    <h3 class="my-2 ml- absolute text-lg font-bold text-gray-800">
-                      Consult an Expert
-                    </h3>
-                  </div>
-                  <p class="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
-                    ------------
-                  </p>
-                  <p class="mb-2 text-gray-600">
-                    Bot development frameworks were created as advanced software
-                    tools that eliminate a large amount of manual work and
-                    accelerate the development process.
-                  </p>
-                  <button
-                    type="button"
-                    class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                  >
-                    Help others
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* <!------------------------FAQ SECTION START-----------------------------------> */}
-
-      <div class="ml-[20%] mt-5 w-1/2">
-        <details
-          class="group border-s-4 border-pink-200 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden"
-          open
-        >
-          <summary class="flex cursor-pointer items-center justify-between gap-1.5">
-            <h2 class="text-lg font-medium text-gray-900">
-              Why This Platform?
-            </h2>
-
-            <span class="shrink-0 rounded-full bg-white p-1.5 text-gray-900 sm:p-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="size-5 shrink-0 transition duration-300 group-open:-rotate-45"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </span>
-          </summary>
-
-          <p class="mt-4 leading-relaxed text-gray-700">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic
-            veritatis molestias culpa in, recusandae laboriosam neque aliquid
-            libero nesciunt voluptate dicta quo officiis explicabo consequuntur
-            distinctio corporis earum similique!
-          </p>
-        </details>
-
-        <details class="group border-s-4 mt-5 border-pink-400 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
-          <summary class="flex cursor-pointer items-center justify-between gap-1.5">
-            <h2 class="text-lg font-medium text-gray-900">
-              is it Safe for me?
-            </h2>
-
-            <span class="shrink-0 rounded-full bg-white p-1.5 text-gray-900 sm:p-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="size-5 shrink-0 transition duration-300 group-open:-rotate-45"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </span>
-          </summary>
-
-          <p class="mt-4 leading-relaxed text-gray-700">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic
-            veritatis molestias culpa in, recusandae laboriosam neque aliquid
-            libero nesciunt voluptate dicta quo officiis explicabo consequuntur
-            distinctio corporis earum similique!
-          </p>
-        </details>
-      </div>
-
-      {/* <!------------------------EDUCATION SECTION-START-----------------------------------> */}
-      <span class="flex items-center mt-11">
-        <span class="pr-6 text-4xl ml-28">Explore Blogs</span>
-        <span class="h-px flex-1 bg-black"></span>
-      </span>
-
-      <article class="flex bg-white transition hover:shadow-xl mt-8 w-1/3 ml-[30%]">
-        <div class="rotate-180 p-2 [writing-mode:_vertical-lr]">
-          <time
-            datetime="2022-10-10"
-            class="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900"
-          >
-            <span>2022</span>
-            <span class="w-px flex-1 bg-gray-900/10"></span>
-            <span>Oct 10</span>
-          </time>
-        </div>
-
-        <div class="hidden sm:block sm:basis-56">
-          <img
-            alt=""
-            src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-            class="aspect-square h-full w-full object-cover"
-          />
-        </div>
-
-        <div class="flex flex-1 flex-col justify-between">
-          <div class="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
-            <a href="#">
-              <h3 class="font-bold uppercase text-gray-900">
-                Finding the right guitar for your style - 5 tips
-              </h3>
-            </a>
-
-            <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Recusandae dolores, possimus pariatur animi temporibus nesciunt
-              praesentium dolore sed nulla ipsum eveniet corporis quidem,
-              mollitia itaque minus soluta, voluptates neque explicabo tempora
-              nisi culpa eius atque dignissimos. Molestias explicabo corporis
-              voluptatem?
-            </p>
-          </div>
-
-          <div class="sm:flex sm:items-end sm:justify-end">
-            <a
-              href="#"
-              class="block bg-pink-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
-            >
-              Read Blog
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <article class="flex bg-white transition hover:shadow-xl mt-8 w-1/3 ml-[30%]">
-        <div class="rotate-180 p-2 [writing-mode:_vertical-lr]">
-          <time
-            datetime="2022-10-10"
-            class="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900"
-          >
-            <span>2022</span>
-            <span class="w-px flex-1 bg-gray-900/10"></span>
-            <span>Oct 10</span>
-          </time>
-        </div>
-
-        <div class="hidden sm:block sm:basis-56">
-          <img
-            alt=""
-            src="https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-            class="aspect-square h-full w-full object-cover"
-          />
-        </div>
-
-        <div class="flex flex-1 flex-col justify-between">
-          <div class="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
-            <a href="#">
-              <h3 class="font-bold uppercase text-gray-900">
-                Finding the right guitar for your style - 5 tips
-              </h3>
-            </a>
-
-            <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Recusandae dolores, possimus pariatur animi temporibus nesciunt
-              praesentium dolore sed nulla ipsum eveniet corporis quidem,
-              mollitia itaque minus soluta, voluptates neque explicabo tempora
-              nisi culpa eius atque dignissimos. Molestias explicabo corporis
-              voluptatem?
-            </p>
-          </div>
-
-          <div class="sm:flex sm:items-end sm:justify-end">
-            <a
-              href="#"
-              class="block bg-pink-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
-            >
-              Read Blog
-            </a>
-          </div>
-        </div>
-      </article>
-
-      {/* <!------------------------TESTIMONIAL SECTION START-----------------------------------> */}
-
-      <span class="flex items-center mt-12">
-        <span class="h-px flex-1 bg-black"></span>
-        <span class="pl-6 text-4xl">You are not alone, Connect with Us</span>
-      </span>
-
-      <section id="testimonies" class="py-20">
-        <div class="max-w-6xl mx-8 md:mx-10 lg:mx-20 xl:mx-auto">
-          <div class="transition duration-500 ease-in-out transform scale-100 translate-x-0 translate-y-0 opacity-100">
-            <div class="mb-12 space-y-5 md:mb-16 md:text-center">
-              <p class="text-xl text-[] md:text-center md:text-2xl">
-                Here's what others have to say about us.
-              </p>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            <ul class="space-y-8">
-              <li class="text-sm leading-6">
-                <div class="relative group">
-                  <div class="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200"></div>
-                  <a
-                    href="https://twitter.com/kanyewest"
-                    class="cursor-pointer"
-                  >
-                    <div class="relative p-6 space-y-6 leading-none rounded-lg bg-white text-black">
-                      <div class="flex items-center space-x-4">
-                        <img
-                          src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                          class="w-12 h-12 bg-center bg-cover border rounded-full"
-                          alt="Kanye West"
-                        />
-                        <div>
-                          <h3 class="text-lg font-semibold text-black">
-                            Kanye West
-                          </h3>
-
-                          <p class="text-gray-500 text-md">
-                            Rapper &amp; Entrepreneur
-                          </p>
-                        </div>
-                      </div>
-                      <p class="leading-normal text-black text-md">Find God.</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-              <li class="text-sm leading-6">
-                <div class="relative group">
-                  <div class="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200"></div>
-                  <a
-                    href="https://twitter.com/kanyewest"
-                    class="cursor-pointer"
-                  >
-                    <div class="relative p-6 space-y-6 leading-none rounded-lg bg-white text-black">
-                      <div class="flex items-center space-x-4">
-                        <img
-                          src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                          class="w-12 h-12 bg-center bg-cover border rounded-full"
-                          alt="Kanye West"
-                        />
-                        <div>
-                          <h3 class="text-lg font-semibold text-black">
-                            Kanye West
-                          </h3>
-                          <p class="text-gray-500 text-md">
-                            Rapper &amp; Entrepreneur
-                          </p>
-                        </div>
-                      </div>
-                      <p class="leading-normal text-black text-md">Find God.</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-            </ul>
-
-            <ul class="hidden space-y-8 sm:block">
-              <li class="text-sm leading-6">
-                <div class="relative group">
-                  <div class="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200"></div>
-                  <a
-                    href="https://twitter.com/kanyewest"
-                    class="cursor-pointer"
-                  >
-                    <div class="relative p-6 space-y-6 leading-none rounded-lg bg-white text-black">
-                      <div class="flex items-center space-x-4">
-                        <img
-                          src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                          class="w-12 h-12 bg-center bg-cover border rounded-full"
-                          alt="Kanye West"
-                        />
-                        <div>
-                          <h3 class="text-lg font-semibold text-black">
-                            Kanye West
-                          </h3>
-                          <p class="text-gray-500 text-md">
-                            Rapper &amp; Entrepreneur
-                          </p>
-                        </div>
-                      </div>
-                      <p class="leading-normal text-black text-md">Find God.</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-              <li class="text-sm leading-6">
-                <div class="relative group">
-                  <div class="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200"></div>
-                  <a
-                    href="https://twitter.com/kanyewest"
-                    class="cursor-pointer"
-                  >
-                    <div class="relative p-6 space-y-6 leading-none rounded-lg bg-white text-black">
-                      <div class="flex items-center space-x-4">
-                        <img
-                          src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                          class="w-12 h-12 bg-center bg-cover border rounded-full"
-                          alt="Kanye West"
-                        />
-                        <div>
-                          <h3 class="text-lg font-semibold text-black">
-                            Kanye West
-                          </h3>
-                          <p class="text-gray-500 text-md">
-                            Rapper &amp; Entrepreneur
-                          </p>
-                        </div>
-                      </div>
-                      <p class="leading-normal text-black text-md">Find God.</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-            </ul>
-
-            <ul class="hidden space-y-8 lg:block">
-              <li class="text-sm leading-6">
-                <div class="relative group">
-                  <div class="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200"></div>
-                  <a
-                    href="https://twitter.com/kanyewest"
-                    class="cursor-pointer"
-                  >
-                    <div class="relative p-6 space-y-6 leading-none rounded-lg bg-white text-black">
-                      <div class="flex items-center space-x-4">
-                        <img
-                          src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                          class="w-12 h-12 bg-center bg-cover border rounded-full"
-                          alt="Kanye West"
-                        />
-                        <div>
-                          <h3 class="text-lg font-semibold text-black">
-                            Kanye West
-                          </h3>
-                          <p class="text-gray-500 text-md">
-                            Rapper &amp; Entrepreneur
-                          </p>
-                        </div>
-                      </div>
-                      <p class="leading-normal text-black text-md">Find God.</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-              <li class="text-sm leading-6">
-                <div class="relative group">
-                  <div class="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200"></div>
-                  <a
-                    href="https://twitter.com/kanyewest"
-                    class="cursor-pointer"
-                  >
-                    <div class="relative p-6 space-y-6 leading-none rounded-lg bg-white text-black">
-                      <div class="flex items-center space-x-4">
-                        <img
-                          src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                          class="w-12 h-12 bg-center bg-cover border rounded-full"
-                          alt="Kanye West"
-                        />
-                        <div>
-                          <h3 class="text-lg font-semibold text-black">
-                            Kanye West
-                          </h3>
-                          <p class="text-gray-500 text-md">
-                            Rapper &amp; Entrepreneur
-                          </p>
-                        </div>
-                      </div>
-                      <p class="leading-normal text-black text-md">Find God.</p>
-                    </div>
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* <!------------------------ECOMMERCE SECTION START-----------------------------------> */}
-
-      <span class="flex items-center mt-12">
-        <span class="h-px flex-1 bg-black"></span>
-        <span class="shrink-0 text-4xl px-6">Explore Products</span>
-        <span class="h-px flex-1 bg-black"></span>
-      </span>
-
-      <section class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-        <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-          <a href="#">
-            <img
-              src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Product"
-              class="h-80 w-72 object-cover rounded-t-xl"
-            />
-            <div class="px-4 py-3 w-72">
-              <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-              <p class="text-lg font-bold text-black truncate block capitalize">
-                Product Name
-              </p>
-              <div class="flex items-center">
-                <p class="text-lg font-semibold text-black cursor-auto my-3">
-                  $149
-                </p>
-                <del>
-                  <p class="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                </del>
-                <div class="ml-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    class="bi bi-bag-plus"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-                    />
-                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-          <a href="#">
-            <img
-              src="https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Product"
-              class="h-80 w-72 object-cover rounded-t-xl"
-            />
-            <div class="px-4 py-3 w-72">
-              <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-              <p class="text-lg font-bold text-black truncate block capitalize">
-                Product Name
-              </p>
-              <div class="flex items-center">
-                <p class="text-lg font-semibold text-black cursor-auto my-3">
-                  $149
-                </p>
-                <del>
-                  <p class="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                </del>
-                <div class="ml-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    class="bi bi-bag-plus"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-                    />
-                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-          <a href="#">
-            <img
-              src="https://images.unsplash.com/photo-1651950537598-373e4358d320?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MjV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alt="Product"
-              class="h-80 w-72 object-cover rounded-t-xl"
-            />
-            <div class="px-4 py-3 w-72">
-              <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-              <p class="text-lg font-bold text-black truncate block capitalize">
-                Product Name
-              </p>
-              <div class="flex items-center">
-                <p class="text-lg font-semibold text-black cursor-auto my-3">
-                  $149
-                </p>
-                <del>
-                  <p class="text-sm text-gray-600 cursor-auto ml-2">$199</p>
-                </del>
-                <div class="ml-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    class="bi bi-bag-plus"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-                    />
-                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      {/* <!------------------------FOOTER-----------------------------------> */}
-      <footer class="mt-20 xl:mt-32 mx-auto w-full relative text-center bg-pink-400 text-white">
-        <div class="px-6 py-8 md:py-14 xl:pt-20 xl:pb-12">
-          <h2 class="font-bold text-3xl xl:text-4xl leading-snug">
-            Ready to get your productivity back?
-            <br />
-            Start your free trial today.
-          </h2>
-          <a
-            class="mt-8 xl:mt-12 px-12 py-5 text-lg font-medium leading-tight inline-block bg-pink-800 rounded-full shadow-xl border border-transparent hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-sky-999 focus:ring-pink-500"
-            href="#"
-          >
-            Get started
-          </a>
-          <div class="mt-14 xl:mt-20">
-            <nav class="flex flex-wrap justify-center text-lg font-medium">
-              <div class="px-5 py-2">
-                <a href="#">Contact</a>
-              </div>
-              <div class="px-5 py-2">
-                <a href="#">Pricing</a>
-              </div>
-              <div class="px-5 py-2">
-                <a href="#">Privacy</a>
-              </div>
-              <div class="px-5 py-2">
-                <a href="#">Terms</a>
-              </div>
-              <div class="px-5 py-2">
-                <a href="#">Twitter</a>
-              </div>
-            </nav>
-            <p class="mt-7 text-base">© 2023 XYZ, LLC</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
+
+const SidebarLink = ({ icon, label, onClick, active = false }) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex items-center space-x-2 w-full px-2 py-2 rounded-lg transition-colors ${
+        active
+          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
+          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
+      }`}
+    >
+      {icon}
+      <span>{label}</span>
+    </button>
+  );
+};
+
+const Card = ({ children }) => {
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+      {children}
+    </div>
+  );
+};
+
+const FeatureOverview = ({ icon, title, description }) => {
+  return (
+    <div className="flex items-start space-x-4">
+      <div className="flex-shrink-0">{icon}</div>
+      <div>
+        <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+        <p className="text-gray-800 dark:text-gray-200">{description}</p>
+      </div>
+    </div>
+  );
+};
+
+const BenefitItem = ({ title, description }) => {
+  return (
+    <div className="border-l-4 border-pink-500 pl-4">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
+    </div>
+  );
+};
+
+const StepCard = ({ number, title, description }) => {
+  return (
+    <div className="flex flex-col items-center text-center">
+      <div className="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mb-4">
+        <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">{number}</span>
+      </div>
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
+    </div>
+  );
+};
+
+const TestimonialCard = ({ quote, author }) => {
+  return (
+    <div className="bg-pink-50 dark:bg-pink-900 p-4 rounded-lg">
+      <p className="italic mb-2 text-gray-800 dark:text-gray-200">"{quote}"</p>
+      <p className="font-semibold text-right text-gray-900 dark:text-gray-100">- {author}</p>
+    </div>
+  );
+};
+
+const BlogPostCard = ({ title, excerpt, date }) => {
+  return (
+    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200 mb-2">{excerpt}</p>
+      <p className="text-sm text-gray-700 dark:text-gray-300">{date}</p>
+    </div>
+  );
+};
+
+const FAQItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+      <button
+        className="flex justify-between items-center w-full text-left"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="font-semibold text-gray-900 dark:text-gray-100">{question}</span>
+        <span>{isOpen ? '-' : '+'}</span>
+      </button>
+      {isOpen && <p className="mt-2 text-gray-800 dark:text-gray-200">{answer}</p>}
+    </div>
+  );
+};
+
+const SuccessStoryCard = ({ name, story, improvement }) => {
+  return (
+    <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{name}</h4>
+      <p className="text-gray-800 dark:text-gray-200 mb-4">"{story}"</p>
+      <div className="flex items-center">
+        <Check className="text-green-500 mr-2" />
+        <span className="text-green-600 dark:text-green-400 font-medium">{improvement}</span>
+      </div>
+    </div>
+  );
+};
+
+const ExpertInsightCard = ({ expert, insight }) => {
+  return (
+    <div className="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
+      <p className="text-gray-800 dark:text-gray-200 mb-4">"{insight}"</p>
+      <p className="font-semibold text-right text-gray-900 dark:text-gray-100">- {expert}</p>
+    </div>
+  );
+};
+
+const CommunityHighlightCard = ({ title, description }) => {
+  return (
+    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
+    </div>
+  );
+};
+
+const AppFeatureCard = ({ title, description, icon }) => {
+  return (
+    <div className="flex items-start space-x-4">
+      <div className="flex-shrink-0 bg-pink-100 dark:bg-pink-900 p-3 rounded-full">
+        {icon}
+      </div>
+      <div>
+        <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
+        <p className="text-gray-800 dark:text-gray-200">{description}</p>
+      </div>
+    </div>
+  );
+};
+
+const PartnerLogo = ({ name }) => {
+  return (
+    <div className="bg-gray-100 dark:bg-gray-700 h-20 rounded-lg flex items-center justify-center">
+      <span className="text-gray-500 dark:text-gray-400 font-medium">{name}</span>
+    </div>
+  );
+};
+

@@ -43,28 +43,40 @@ export function Signup() {
             setError("Please fill in all fields");
             return;
         }
-
+    
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             setError("Please enter a valid email address");
             return;
         }
-
+    
         if (password.length < 6) {
             setError("Password must be at least 6 characters long");
             return;
         }
-
+    
         const userData = { name, email, password };
-
+    
         try {
-            const response = await axios.post(`${server_url}signup`, userData);
-            console.log("Signup successful:", response.data);
+            
+            try {
+                const response = await axios.post(`${server_url}signup`, userData);
+                console.log("Signup successful:", response.data);
+                alert("You have signed up successfully");
+                navigate("/login");
+                return;
+            } catch (primaryError) {
+                console.warn("Primary server failed, attempting local fallback:", primaryError);
+            }
+    
+            
+            const response = await axios.post('http://localhost:3000/signup', userData);
+            console.log("Signup successful via local server:", response.data);
             alert("You have signed up successfully");
             navigate("/login");
         } catch(error) {
             console.error("Signup error:", error);
-
+    
             if (error.response) {
                 setError(error.response.data.message || "Signup failed. Please try again.");
             } else if (error.request) {

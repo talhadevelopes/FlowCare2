@@ -7,17 +7,15 @@ const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 dotenv.config();
 
-
 const MONGO_URL = process.env.MONGO_URL;
 
-
-const User = require("../src/Sarwar/models");
+const { User, PeriodTracking } = require("../src/Sarwar/models");
 
 const app = express();
 app.use(express.json());
 
-app.use(cors())
 
+app.use(cors())
 
 mongoose.connect(MONGO_URL)
   .then(() => {
@@ -47,13 +45,36 @@ app.post("/signup", async(req, res) => {
         res.status(201).json({message: "You have signed up successfully"});
     }catch(error){
         console.log("Error while signing you up", error);
+        res.status(500).json({message: "Error during signup"});
     }
-
 });
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-})
+app.post("/trackerdata", async (req, res) => {
+    const { userId, ...trackerData } = req.body;
+
+    if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+    }
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const newPeriodTracking = new PeriodTracking({
+            user: user._id,
+            ...trackerData
+        });
+
+        await newPeriodTracking.save();
+        console.log("Tracker data submitted:", newPeriodTracking);
+        res.status(201).json({ message: "Period tracking data saved successfully" });
+    } catch (error) {
+        console.error("Error saving period tracking data:", error);
+        res.status(500).json({ message: "Error saving period tracking data", error: error.message });
+    }
+});
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
@@ -66,26 +87,30 @@ app.post("/login", async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (!user) {
-                console.log("No user found with this email:", email);
+            console.log("No user found with this email:", email);
             return res.status(400).json({ message: "Invalid email or password" });
         }
         console.log("User found:", user);
 
-        const isPasswordalid = await bcrypt.compare(password, user.password);
-        if (!isPasswordalid) {
-                console.log("Password mismatch for email:", email);
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            console.log("Password mismatch for email:", email);
             return res.status(400).json({ message: "Invalid email or password" });
         }
 
         console.log("Login successful for email:", email);
-        return res.status(200).json({ message: "You have logged in successfully" });
+        return res.status(200).json({ 
+            message: "You have logged in successfully",
+            userId: user._id 
+        });
     } catch (error) {
         console.error("Login error:", error);
         res.status(500).json({ message: "Server error. Please try again later." });
     }
 });
 
-  
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
-
-app.listen(3000);

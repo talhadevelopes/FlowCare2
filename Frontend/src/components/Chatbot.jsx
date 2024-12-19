@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Send, Moon, Sun, Home, Trash2, Loader, Paperclip, Smile, Volume2, VolumeX, HelpCircle } from 'lucide-react';
+import { Send, Moon, Sun, Home, Trash2, Loader, Paperclip, Smile, Volume2, VolumeX, HelpCircle, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -195,148 +194,167 @@ export function Chatbot() {
     return () => document.head.removeChild(style);
   }, []);
 
+  const SidebarLink = ({ icon, label, onClick, active = false }) => (
+    <button
+      onClick={onClick}
+      className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
+        active
+          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
+          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
+      }`}
+    >
+      {icon}
+      <span>{label}</span>
+    </button>
+  );
+
   return (
-    <div className={`flowcare-chatbot ${isDarkMode ? '' : 'light'}`}>
-      <div className="fixed inset-0 flex items-center justify-center bg-[var(--fc-bg-primary)] transition-colors duration-200 p-4">
-        <div className="w-full max-w-5xl mx-4 overflow-hidden rounded-lg bg-[var(--fc-bg-secondary)] shadow-xl transition-colors duration-200 flex flex-col">
-          <div className="flex items-center justify-between p-4 bg-[var(--fc-accent)] shadow-md">
-            <h2 style={{ fontFamily: 'Pacifico, cursive' }} className="text-2xl font-bold text-black">
-              FlowCare Chatbot
-            </h2>
-            <div className="flex space-x-3">
-              <button
-                onClick={() => navigate("/")}
-                className="p-2 text-black"
-                aria-label="Go to home"
-              >
-                <Home size={20} />
-              </button>
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 text-black"
-                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              <button
-                onClick={clearChat}
-                className="p-2 text-black"
-                aria-label="Clear chat"
-              >
-                <Trash2 size={20} />
-              </button>
-              <button
-                onClick={() => alert("Help: This is an AI chatbot designed to provide support and information for young girls aged 13-20.")}
-                className="p-2 text-black"
-                aria-label="Help"
-              >
-                <HelpCircle size={20} />
-              </button>
-            </div>
+    <div className={`flowcare-chatbot ${isDarkMode ? '' : 'light'} flex h-screen`}>
+      {/* Sidebar */}
+      <aside className="bg-[var(--fc-bg-secondary)] w-64 p-4 border-r border-[var(--fc-accent)]">
+        <nav className="mt-8 space-y-4">
+          <h1 className="text-2xl font-bold text-[var(--fc-accent)] mb-8" style={{ fontFamily: 'Pacifico, cursive' }}>FlowCare</h1>
+          <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
+          <SidebarLink icon={<BookOpen size={20} />} label="Education" onClick={() => navigate('/blogs')} />
+          <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
+          <SidebarLink icon={<Activity size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
+          <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
+          <SidebarLink icon={<MessageCircle size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} active />
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col bg-[var(--fc-bg-primary)] transition-colors duration-200">
+        <div className="flex items-center justify-between p-4 bg-[var(--fc-accent)] shadow-md">
+          <h2 style={{ fontFamily: 'Pacifico, cursive' }} className="text-2xl font-bold text-black">
+            FlowCare Chatbot
+          </h2>
+          <div className="flex space-x-3">
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 text-black"
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <button
+              onClick={clearChat}
+              className="p-2 text-black"
+              aria-label="Clear chat"
+            >
+              <Trash2 size={20} />
+            </button>
+            <button
+              onClick={() => alert("Help: This is an AI chatbot designed to provide support and information for young girls aged 13-20.")}
+              className="p-2 text-black"
+              aria-label="Help"
+            >
+              <HelpCircle size={20} />
+            </button>
           </div>
-          <div className="h-[calc(100vh-180px)] overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[var(--fc-accent)] scrollbar-track-[var(--fc-bg-secondary)]">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${
-                  message.role === 'user' ? 'justify-end' : 'justify-start'
-                } message-appear`}
-              >
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[var(--fc-accent)] scrollbar-track-[var(--fc-bg-secondary)]">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${
+                message.role === 'user' ? 'justify-end' : 'justify-start'
+              } message-appear`}
+            >
+              {message.role === 'assistant' && (
+                <div className="shrink-0 w-10 h-10 rounded-full bg-[var(--fc-accent)] flex items-center justify-center text-black mr-2 text-lg font-medium">
+                  AI
+                </div>
+              )}
+              <div className="flex flex-col max-w-[70%]">
+                <div className={`message-bubble inline-block whitespace-pre-line text-base ${
+                  message.role === 'user'
+                    ? 'bg-[var(--fc-accent)] text-black'
+                    : 'bg-[var(--fc-bg-secondary)] text-[var(--fc-text-primary)] border border-[var(--fc-accent)]'
+                }`}>
+                  {message.content}
+                </div>
                 {message.role === 'assistant' && (
-                  <div className="shrink-0 w-10 h-10 rounded-full bg-[var(--fc-accent)] flex items-center justify-center text-black mr-2 text-lg font-medium">
-                    AI
-                  </div>
-                )}
-                <div className="flex flex-col max-w-[50%]">
-                  <div className={`message-bubble inline-block whitespace-pre-line text-base ${
-                    message.role === 'user'
-                      ? 'bg-[var(--fc-accent)] text-black'
-                      : 'bg-[var(--fc-bg-secondary)] text-[var(--fc-text-primary)] border border-[var(--fc-accent)]'
-                  }`}>
-                    {message.content}
-                  </div>
-                  {message.role === 'assistant' && (
-                    <div className="flex mt-2 space-x-2">
-                      <button
-                        onClick={() => isSpeaking ? stopSpeaking() : speakMessage(message.content)}
-                        className="flex items-center space-x-1 px-3 py-1 rounded-full bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] transition-colors duration-200 text-black"
-                      >
-                        {isSpeaking ? <VolumeX size={16} /> : <Volume2 size={16} />}
-                        <span>{isSpeaking ? 'Stop' : 'Read'}</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-                {message.role === 'user' && (
-                  <div className="shrink-0 w-10 h-10 rounded-full bg-[var(--fc-accent-dark)] flex items-center justify-center text-black ml-2 text-lg font-medium">
-                    U
-                  </div>
-                )}
-              </div>
-            ))}
-            {isTyping && (
-              <div className="flex items-center text-[var(--fc-text-secondary)] message-appear">
-                <Loader className="animate-spin mr-2" size={16} />
-                <span>FlowCare AI is typing...</span>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-          <div className="p-4 bg-[var(--fc-bg-secondary)] border-t border-[var(--fc-accent)] shadow-md">
-            <form onSubmit={handleSubmit} className="flex space-x-2">
-              <input
-                type="text"
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                className="flex-grow p-3 rounded-lg bg-[var(--fc-input-bg)] text-[var(--fc-input-text)] placeholder-[var(--fc-text-secondary)] border border-[var(--fc-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--fc-accent-dark)]"
-              />
-              <input
-                type="file"
-                id="file-upload"
-                className="hidden"
-                onChange={handleFileUpload}
-              />
-              <label
-                htmlFor="file-upload"
-                className="p-3 rounded-lg bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] text-black transition-colors duration-200 cursor-pointer"
-              >
-                <Paperclip size={20} />
-              </label>
-              <button
-                type="button"
-                onClick={toggleEmojiPicker}
-                className="p-3 rounded-lg bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] text-black transition-colors duration-200"
-                aria-label="Add emoji"
-              >
-                <Smile size={20} />
-              </button>
-              <button
-                type="submit"
-                className="p-3 rounded-lg bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] text-black transition-colors duration-200"
-                aria-label="Send message"
-              >
-                <Send size={20} />
-              </button>
-            </form>
-            {showEmojiPicker && (
-              <div className="mt-2 p-2 bg-[var(--fc-bg-secondary)] border border-[var(--fc-accent)] rounded-lg">
-                <div className="emoji-grid">
-                  {popularEmojis.map((emoji, index) => (
+                  <div className="flex mt-2 space-x-2">
                     <button
-                      key={index}
-                      onClick={() => addEmoji(emoji)}
-                      className="emoji-button"
+                      onClick={() => isSpeaking ? stopSpeaking() : speakMessage(message.content)}
+                      className="flex items-center space-x-1 px-3 py-1 rounded-full bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] transition-colors duration-200 text-black"
                     >
-                      {emoji}
+                      {isSpeaking ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                      <span>{isSpeaking ? 'Stop' : 'Read'}</span>
                     </button>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+              {message.role === 'user' && (
+                <div className="shrink-0 w-10 h-10 rounded-full bg-[var(--fc-accent-dark)] flex items-center justify-center text-black ml-2 text-lg font-medium">
+                  U
+                </div>
+              )}
+            </div>
+          ))}
+          {isTyping && (
+            <div className="flex items-center text-[var(--fc-text-secondary)] message-appear">
+              <Loader className="animate-spin mr-2" size={16} />
+              <span>FlowCare AI is typing...</span>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+        <div className="p-4 bg-[var(--fc-bg-secondary)] border-t border-[var(--fc-accent)] shadow-md">
+          <form onSubmit={handleSubmit} className="flex space-x-2">
+            <input
+              type="text"
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your message..."
+              className="flex-grow p-3 rounded-lg bg-[var(--fc-input-bg)] text-[var(--fc-input-text)] placeholder-[var(--fc-text-secondary)] border border-[var(--fc-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--fc-accent-dark)]"
+            />
+            <input
+              type="file"
+              id="file-upload"
+              className="hidden"
+              onChange={handleFileUpload}
+            />
+            <label
+              htmlFor="file-upload"
+              className="p-3 rounded-lg bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] text-black transition-colors duration-200 cursor-pointer"
+            >
+              <Paperclip size={20} />
+            </label>
+            <button
+              type="button"
+              onClick={toggleEmojiPicker}
+              className="p-3 rounded-lg bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] text-black transition-colors duration-200"
+              aria-label="Add emoji"
+            >
+              <Smile size={20} />
+            </button>
+            <button
+              type="submit"
+              className="p-3 rounded-lg bg-[var(--fc-accent)] hover:bg-[var(--fc-accent-dark)] text-black transition-colors duration-200"
+              aria-label="Send message"
+            >
+              <Send size={20} />
+            </button>
+          </form>
+          {showEmojiPicker && (
+            <div className="mt-2 p-2 bg-[var(--fc-bg-secondary)] border border-[var(--fc-accent)] rounded-lg">
+              <div className="emoji-grid">
+                {popularEmojis.map((emoji, index) => (
+                  <button
+                    key={index}
+                    onClick={() => addEmoji(emoji)}
+                    className="emoji-button"
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

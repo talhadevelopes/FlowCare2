@@ -380,7 +380,7 @@ export function Blogs() {
           <SidebarLink
             icon={<LayoutDashboard size={20} />}
             label="Dashboard"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/Dashboard")}
           />
           <SidebarLink
             icon={<Home size={20} />}

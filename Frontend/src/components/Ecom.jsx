@@ -7,7 +7,11 @@ import {
   ShoppingBag,
   Activity,
   Stethoscope,
+  Bot,
   MessageCircle,
+  LayoutDashboard,
+  GraduationCap,
+  ActivitySquare,
   Sun,
   Moon,
   ChevronDown,
@@ -154,23 +158,28 @@ export function Ecom() {
             FlowCare
           </h1>
           <SidebarLink
+            icon={<LayoutDashboard size={20} />}
+            label="Dashboard"
+            onClick={() => navigate("/Dashboard")}
+          />
+          <SidebarLink
             icon={<Home size={20} />}
             label="Home"
             onClick={() => navigate("/")}
           />
           <SidebarLink
-            icon={<BookOpen size={20} />}
+            icon={<GraduationCap size={20} />}
             label="Education"
             onClick={() => navigate("/blogs")}
           />
           <SidebarLink
             icon={<ShoppingBag size={20} />}
             label="Shop"
-            onClick={() => navigate("/Ecom")}
             active
+            onClick={() => navigate("/Ecom")}
           />
           <SidebarLink
-            icon={<Activity size={20} />}
+            icon={<ActivitySquare size={20} />}
             label="Track Your Health"
             onClick={() => navigate("/tracker")}
           />
@@ -180,7 +189,7 @@ export function Ecom() {
             onClick={() => navigate("/consultations")}
           />
           <SidebarLink
-            icon={<MessageCircle size={20} />}
+            icon={<Bot size={20} />}
             label="AI Chatbot"
             onClick={() => navigate("/ChatBot")}
           />

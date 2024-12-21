@@ -1,39 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X } from 'lucide-react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  LayoutDashboard,
+  Home,
+  GraduationCap,
+  ShoppingBag,
+  ActivitySquare,
+  Stethoscope,
+  Bot,
+  ChevronRight,
+  Bell,
+  Calendar,
+  Heart,
+  Moon,
+  Sun,
+  Droplet,
+  Utensils,
+  Smile,
+  Frown,
+  Meh,
+  ThermometerSun,
+  Zap,
+  Coffee,
+  Dumbbell,
+  BookOpen,
+  AlertCircle,
+  CheckCircle,
+  X,
+} from "lucide-react";
+import axios from "axios";
 
-export function Dashboard (){
+export function Dashboard() {
   const [darkMode, setDarkMode] = useState(false);
   const [waterIntake, setWaterIntake] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState("overview");
   const [showMythModal, setShowMythModal] = useState(false);
   const [currentMyth, setCurrentMyth] = useState(null);
   const [periodData, setPeriodData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const navigate = useNavigate();
 
   // Sample data as fallback
   const sampleData = {
     cycleDay: 14,
-    currentPhase: 'Luteal',
+    currentPhase: "Luteal",
     cycleDuration: 28,
-    lastPeriodStart: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    lastPeriodStart: new Date(
+      Date.now() - 15 * 24 * 60 * 60 * 1000
+    ).toISOString(),
     lastPeriodDuration: 5,
-    moodTypes: ['Happy', 'Anxious', 'Irritable'],
-    moodSeverity: 'Moderate',
+    moodTypes: ["Happy", "Anxious", "Irritable"],
+    moodSeverity: "Moderate",
     moodDate: new Date().toISOString(),
-    symptoms: ['Cramps', 'Bloating', 'Headache'],
+    symptoms: ["Cramps", "Bloating", "Headache"],
     symptomSeverities: {
-      Cramps: 'Severe',
-      Bloating: 'Moderate',
-      Headache: 'Mild'
+      Cramps: "Severe",
+      Bloating: "Moderate",
+      Headache: "Mild",
     },
     symptomDate: new Date().toISOString(),
     sleepDuration: 7.5,
-    sleepQuality: 'Good',
-    nextPeriodPrediction: new Date(Date.now() + 13 * 24 * 60 * 60 * 1000).toISOString()
+    sleepQuality: "Good",
+    nextPeriodPrediction: new Date(
+      Date.now() + 13 * 24 * 60 * 60 * 1000
+    ).toISOString(),
   };
 
   useEffect(() => {
@@ -41,8 +74,10 @@ export function Dashboard (){
       setLoading(true);
       try {
         // Replace 'userId' with the actual user ID, possibly stored in local storage or context
-        const userId = localStorage.getItem('userId');
-        const response = await axios.get(`http://localhost:3000/periodtracking/${userId}`);
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get(
+          `http://localhost:3000/periodtracking/${userId}`
+        );
         setPeriodData(response.data);
       } catch (err) {
         console.error("Error fetching period data:", err);
@@ -58,9 +93,9 @@ export function Dashboard (){
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
 
@@ -118,11 +153,16 @@ export function Dashboard (){
 
   const data = periodData || sampleData;
 
-  const cycleDay = Math.floor((new Date() - new Date(data.lastPeriodStart)) / (1000 * 60 * 60 * 24)) % data.cycleDuration + 1;
+  const cycleDay =
+    (Math.floor(
+      (new Date() - new Date(data.lastPeriodStart)) / (1000 * 60 * 60 * 24)
+    ) %
+      data.cycleDuration) +
+    1;
   const daysUntilNextPeriod = data.cycleDuration - cycleDay;
   const fertileWindow = cycleDay >= 11 && cycleDay <= 17;
-  const pmsLikely = data.currentPhase === 'Luteal' && cycleDay > 21;
-  const wellRested = data.sleepQuality === 'Good' && data.sleepDuration >= 7;
+  const pmsLikely = data.currentPhase === "Luteal" && cycleDay > 21;
+  const wellRested = data.sleepQuality === "Good" && data.sleepDuration >= 7;
 
   const getHealthTips = () => {
     const tips = [
@@ -138,27 +178,49 @@ export function Dashboard (){
   const healthTips = getHealthTips();
 
   return (
-    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
+    <div className={`flex h-screen`}>
       <style jsx global>{`
         @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
+          0%,
+          100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
         }
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
         }
         @keyframes slideIn {
-          from { transform: translateY(-100%); }
-          to { transform: translateY(0); }
+          from {
+            transform: translateY(-100%);
+          }
+          to {
+            transform: translateY(0);
+          }
         }
         @keyframes slideOut {
-          from { transform: translateY(0); }
-          to { transform: translateY(-100%); }
+          from {
+            transform: translateY(0);
+          }
+          to {
+            transform: translateY(-100%);
+          }
         }
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
         :root {
           --background: 255, 255, 255;
@@ -185,29 +247,55 @@ export function Dashboard (){
           color: rgb(var(--foreground));
         }
       `}</style>
-      <aside className={`w-[240px] bg-[rgb(var(--card))] p-6 flex flex-col transition-all duration-300 ease-in-out ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}`}>
-        <h1 className="text-xl font-semibold text-[rgb(var(--primary))] mb-6">FlowCare</h1>
+      <aside
+        className={`w-[240px] bg-[rgb(var(--card))] p-6 flex flex-col transition-all duration-300 ease-in-out ${
+          sidebarVisible ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <h1 className="text-xl font-semibold text-[rgb(var(--primary))] mb-6">
+          FlowCare
+        </h1>
         <nav className="flex-1">
           <ul className="space-y-2">
-            <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active />
-            <NavItem icon={<Home size={20} />} label="Home" />
+            <NavItem
+              icon={<LayoutDashboard size={20} />}
+              label="Dashboard"
+              onClick={() => navigate("/Dashboard")}
+              active
+            />
+            <NavItem
+              icon={<Home size={20} />}
+              label="Home"
+              onClick={() => navigate("/")}
+            />
             <NavItem icon={<GraduationCap size={20} />} label="Education" />
             <NavItem icon={<ShoppingBag size={20} />} label="Shop" />
-            <NavItem icon={<ActivitySquare size={20} />} label="Track Your Health" />
-            <NavItem icon={<Stethoscope size={20} />} label="Expert Consultation" />
+            <NavItem
+              icon={<ActivitySquare size={20} />}
+              label="Track Your Health"
+            />
+            <NavItem
+              icon={<Stethoscope size={20} />}
+              label="Expert Consultation"
+            />
             <NavItem icon={<Bot size={20} />} label="AI Chatbot" />
           </ul>
         </nav>
-        <div className="pt-6 mt-6 border-t border-[rgba(var(--foreground),0.1)]">
+        <div className="pt-6 mt-6   border-t border-[rgba(var(--foreground),0.1)]">
           <div className="flex items-center">
             <div className="w-8 h-8 rounded-full bg-[rgba(var(--foreground),0.1)] flex items-center justify-center text-sm font-medium">
               UN
             </div>
             <div className="ml-3">
               <p className="text-sm font-medium">User Name</p>
-              <p className="text-xs text-[rgba(var(--foreground),0.6)]">Premium Member</p>
+              <p className="text-xs text-[rgba(var(--foreground),0.6)]">
+                Premium Member
+              </p>
             </div>
-            <ChevronRight size={16} className="ml-auto text-[rgba(var(--foreground),0.4)]" />
+            <ChevronRight
+              size={16}
+              className="ml-auto text-[rgba(var(--foreground),0.4)]"
+            />
           </div>
         </div>
       </aside>
@@ -216,14 +304,117 @@ export function Dashboard (){
         onClick={toggleSidebar}
         className="fixed left-0 top-4 z-10 p-2 bg-[rgb(var(--primary))] text-white rounded-r-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:ring-opacity-50"
         style={{
-          transform: sidebarVisible ? 'translateX(240px)' : 'translateX(0)',
+          transform: sidebarVisible ? "translateX(240px)" : "translateX(0)",
         }}
-        aria-label={sidebarVisible ? 'Hide sidebar' : 'Show sidebar'}
+        aria-label={sidebarVisible ? "Hide sidebar" : "Show sidebar"}
       >
-        <ChevronRight size={24} className={`transition-transform duration-300 ${sidebarVisible ? 'rotate-180' : 'rotate-0'}`} />
+        <ChevronRight
+          size={24}
+          className={`transition-transform duration-300 ${
+            sidebarVisible ? "rotate-180" : "rotate-0"
+          }`}
+        />
       </button>
 
-      <main className={`flex-1 p-6 overflow-auto bg-[rgb(var(--background))] transition-all duration-300 ease-in-out ${sidebarVisible ? 'ml-[240px]' : 'ml-0'}`}>
+      <main
+        className={`flex-1 p-6 mr-[10%] bg-pink-50 mt-12 mb-12 rounded-lg overflow-auto bg-[rgb(var(--background))] transition-all duration-300 ease-in-out ${
+          sidebarVisible ? "ml-[240px]" : "ml-0"
+        }`}
+      >
+        <div className="flex flex-wrap justify-center mt-10 max-w-4xl mx-auto">
+          <div className="p-4 max-w-sm">
+            <div className="flex rounded-lg h-full bg-white text-black p-8 flex-col">
+              <div className="flex items-center mb-3">
+                <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+                <h2 className=" text-lg font-medium">View as a Child</h2>
+              </div>
+              <div className="flex flex-col justify-between flex-grow">
+                <p className="leading-relaxed text-base">
+                  Track your cycles, symptoms, and health insights easily.
+                </p>
+                <a
+                  href="#"
+                  className="mt-3 text-black hover:text-blue-600 inline-flex items-center"
+                >
+                  View
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-4 h-4 ml-2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 max-w-sm">
+            <div className="flex rounded-lg h-full bg-white  p-8 flex-col">
+              <div className="flex items-center mb-3">
+                <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-pink-500 text-white flex-shrink-0">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+                <h2 className="text-black text-lg font-medium">
+                  View as Parent
+                </h2>
+              </div>
+              <div className="flex flex-col justify-between flex-grow">
+                <p className="leading-relaxed text-base text-black">
+                  Monitor and support your child's health and wellness journey.
+                </p>
+                <a
+                  href="#"
+                  className="mt-3 text-black hover:text-blue-600 inline-flex items-center"
+                >
+                  View
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-4 h-4 ml-2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <span className="relative flex justify-center mt-11 mb-11">
+          <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"></div>
+        </span>
+
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Dashboard</h2>
@@ -239,43 +430,70 @@ export function Dashboard (){
           </div>
 
           <div className="flex space-x-2 mb-4">
-            <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')}>
+            <TabButton
+              active={activeTab === "overview"}
+              onClick={() => setActiveTab("overview")}
+            >
               Overview
             </TabButton>
-            <TabButton active={activeTab === 'insights'} onClick={() => setActiveTab('insights')}>
+            <TabButton
+              active={activeTab === "insights"}
+              onClick={() => setActiveTab("insights")}
+            >
               Insights
             </TabButton>
-            <TabButton active={activeTab === 'mythbusters'} onClick={() => setActiveTab('mythbusters')}>
+            <TabButton
+              active={activeTab === "mythbusters"}
+              onClick={() => setActiveTab("mythbusters")}
+            >
               MythBusters
             </TabButton>
           </div>
 
-          {activeTab === 'overview' && (
+          {activeTab === "overview" && (
             <>
               <Card className="overflow-hidden">
                 <div className="relative h-32 bg-gradient-to-r from-pink-300 to-purple-400 dark:from-pink-600 dark:to-purple-700">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="text-3xl font-bold text-white">Cycle Day {cycleDay}</h3>
+                    <h3 className="text-3xl font-bold text-white">
+                      Cycle Day {cycleDay}
+                    </h3>
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-lg font-semibold mb-2">Current Phase: {data.currentPhase}</p>
+                  <p className="text-lg font-semibold mb-2">
+                    Current Phase: {data.currentPhase}
+                  </p>
                   <p className="text-sm text-[rgba(var(--foreground),0.6)]">
                     {daysUntilNextPeriod} days until next period
                   </p>
                   <div className="mt-4 h-2 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-[rgb(var(--primary))]" 
-                      style={{ width: `${(cycleDay / data.cycleDuration) * 100}%` }}
+                    <div
+                      className="h-full bg-[rgb(var(--primary))]"
+                      style={{
+                        width: `${(cycleDay / data.cycleDuration) * 100}%`,
+                      }}
                     ></div>
                   </div>
                 </div>
               </Card>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <AnimatedCard title="Mood" value={data.moodTypes[0]} icon={getMoodIcon(data.moodTypes[0])} />
-                <AnimatedCard title="Sleep Quality" value={data.sleepQuality} icon={<Moon className="h-6 w-6" />} />
-                <AnimatedCard title="Active Symptoms" value={data.symptoms.length} icon={<ThermometerSun className="h-6 w-6" />} />
+                <AnimatedCard
+                  title="Mood"
+                  value={data.moodTypes[0]}
+                  icon={getMoodIcon(data.moodTypes[0])}
+                />
+                <AnimatedCard
+                  title="Sleep Quality"
+                  value={data.sleepQuality}
+                  icon={<Moon className="h-6 w-6" />}
+                />
+                <AnimatedCard
+                  title="Active Symptoms"
+                  value={data.symptoms.length}
+                  icon={<ThermometerSun className="h-6 w-6" />}
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -283,7 +501,11 @@ export function Dashboard (){
                   <h3 className="font-semibold mb-4">Daily Health Tips</h3>
                   <ul className="space-y-2">
                     {healthTips.map((tip, index) => (
-                      <li key={index} className="flex items-start animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
+                      <li
+                        key={index}
+                        className="flex items-start animate-float"
+                        style={{ animationDelay: `${index * 0.2}s` }}
+                      >
                         <Utensils className="h-5 w-5 text-[rgb(var(--primary))] mr-2 mt-0.5 flex-shrink-0" />
                         <span>{tip}</span>
                       </li>
@@ -297,8 +519,8 @@ export function Dashboard (){
                     <span>{waterIntake} / 8</span>
                   </div>
                   <div className="h-4 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden mb-4">
-                    <div 
-                      className="h-full bg-[rgb(var(--primary))]" 
+                    <div
+                      className="h-full bg-[rgb(var(--primary))]"
                       style={{ width: `${(waterIntake / 8) * 100}%` }}
                     ></div>
                   </div>
@@ -314,24 +536,44 @@ export function Dashboard (){
               <Card>
                 <h3 className="font-semibold mb-4">Wellness Tracker</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <WellnessItem title="Energy" value={data.moodSeverity} icon={<Zap className="h-5 w-5" />} />
-                  <WellnessItem title="Stress" value={data.moodSeverity === 'Moderate' ? 'Low' : 'Moderate'} icon={<Coffee className="h-5 w-5" />} />
-                  <WellnessItem title="Exercise" value="30 min" icon={<Dumbbell className="h-5 w-5" />} />
+                  <WellnessItem
+                    title="Energy"
+                    value={data.moodSeverity}
+                    icon={<Zap className="h-5 w-5" />}
+                  />
+                  <WellnessItem
+                    title="Stress"
+                    value={
+                      data.moodSeverity === "Moderate" ? "Low" : "Moderate"
+                    }
+                    icon={<Coffee className="h-5 w-5" />}
+                  />
+                  <WellnessItem
+                    title="Exercise"
+                    value="30 min"
+                    icon={<Dumbbell className="h-5 w-5" />}
+                  />
                 </div>
               </Card>
 
               <Card>
                 <h3 className="font-semibold mb-4">Upcoming Events</h3>
                 <ul className="space-y-2">
-                  <EventItem title="Doctor's Appointment" date="Tomorrow, 10:00 AM" />
+                  <EventItem
+                    title="Doctor's Appointment"
+                    date="Tomorrow, 10:00 AM"
+                  />
                   <EventItem title="Yoga Class" date="Wednesday, 6:00 PM" />
-                  <EventItem title="Period Start Date" date={`In ${daysUntilNextPeriod} days`} />
+                  <EventItem
+                    title="Period Start Date"
+                    date={`In ${daysUntilNextPeriod} days`}
+                  />
                 </ul>
               </Card>
             </>
           )}
 
-          {activeTab === 'insights' && (
+          {activeTab === "insights" && (
             <>
               <Card>
                 <h3 className="font-semibold mb-4">Health Insights</h3>
@@ -339,17 +581,23 @@ export function Dashboard (){
                   <InsightItem
                     title="Fertility Window"
                     value={fertileWindow ? "Active" : "Inactive"}
-                    icon={<Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />}
+                    icon={
+                      <Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />
+                    }
                   />
                   <InsightItem
                     title="PMS Likelihood"
                     value={pmsLikely ? "High" : "Low"}
-                    icon={<ActivitySquare className="h-5 w-5 text-[rgb(var(--primary))]" />}
+                    icon={
+                      <ActivitySquare className="h-5 w-5 text-[rgb(var(--primary))]" />
+                    }
                   />
                   <InsightItem
                     title="Rest Status"
                     value={wellRested ? "Well Rested" : "Need More Rest"}
-                    icon={<Moon className="h-5 w-5 text-[rgb(var(--primary))]" />}
+                    icon={
+                      <Moon className="h-5 w-5 text-[rgb(var(--primary))]" />
+                    }
                   />
                 </div>
               </Card>
@@ -368,9 +616,14 @@ export function Dashboard (){
                 <h3 className="font-semibold mb-4">Symptom Trends</h3>
                 <ul className="space-y-2">
                   {data.symptoms.map((symptom, index) => (
-                    <li key={index} className="flex items-center justify-between">
+                    <li
+                      key={index}
+                      className="flex items-center justify-between"
+                    >
                       <span>{symptom}</span>
-                      <span className="text-[rgba(var(--foreground),0.6)]">{data.symptomSeverities[symptom]}</span>
+                      <span className="text-[rgba(var(--foreground),0.6)]">
+                        {data.symptomSeverities[symptom]}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -378,12 +631,17 @@ export function Dashboard (){
             </>
           )}
 
-          {activeTab === 'mythbusters' && (
+          {activeTab === "mythbusters" && (
             <Card>
-              <h3 className="font-semibold mb-4">Menstrual Health MythBusters</h3>
+              <h3 className="font-semibold mb-4">
+                Menstrual Health MythBusters
+              </h3>
               <div className="space-y-4">
                 {myths.map((myth, index) => (
-                  <div key={index} className="p-4 bg-[rgba(var(--primary),0.1)] rounded-lg">
+                  <div
+                    key={index}
+                    className="p-4 bg-[rgba(var(--primary),0.1)] rounded-lg"
+                  >
                     <p className="font-medium mb-2">{myth.myth}</p>
                     <button
                       onClick={() => openMythModal(myth)}
@@ -421,7 +679,7 @@ export function Dashboard (){
       )}
     </div>
   );
-};
+}
 
 const NavItem = ({ icon, label, active = false }) => {
   return (
@@ -429,7 +687,9 @@ const NavItem = ({ icon, label, active = false }) => {
       <a
         href="#"
         className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-          active ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]" : "text-[rgba(var(--foreground),0.7)] hover:bg-[rgba(var(--foreground),0.05)]"
+          active
+            ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]"
+            : "text-[rgba(var(--foreground),0.7)] hover:bg-[rgba(var(--foreground),0.05)]"
         }`}
       >
         {icon}
@@ -441,7 +701,9 @@ const NavItem = ({ icon, label, active = false }) => {
 
 const Card = ({ children, className = "" }) => {
   return (
-    <div className={`bg-[rgb(var(--card))] rounded-lg p-6 shadow-sm ${className}`}>
+    <div
+      className={`bg-[rgb(var(--card))] rounded-lg p-6 shadow-sm ${className}`}
+    >
       {children}
     </div>
   );
@@ -465,9 +727,9 @@ const AnimatedCard = ({ title, value, icon }) => {
 
 const getMoodIcon = (mood) => {
   switch (mood.toLowerCase()) {
-    case 'happy':
+    case "happy":
       return <Smile className="h-6 w-6 text-green-500" />;
-    case 'sad':
+    case "sad":
       return <Frown className="h-6 w-6 text-blue-500" />;
     default:
       return <Meh className="h-6 w-6 text-yellow-500" />;

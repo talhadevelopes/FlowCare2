@@ -180,12 +180,14 @@ span {
 ::-webkit-scrollbar {
   width: 10px;
   background-color: pink;
+  visibility: hidden;
 }
 
 ::-webkit-scrollbar-thumb {
   display: block;
   background: linear-gradient(rgb(101, 5, 82), #fc00ff);
   border-radius: 100px;
+  visibility: hidden;
 }
 
 #sidebar-container {

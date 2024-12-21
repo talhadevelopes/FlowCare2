@@ -7,6 +7,10 @@ import {
   Activity,
   Stethoscope,
   MessageCircle,
+  LayoutDashboard,
+  GraduationCap,
+  ActivitySquare,
+  Bot,
   Sun,
   Moon,
   ChevronDown,
@@ -120,12 +124,17 @@ export function Consultations() {
             FlowCare
           </h1>
           <SidebarLink
+            icon={<LayoutDashboard size={20} />}
+            label="Dashboard"
+            onClick={() => navigate("/Dashboard")}
+          />
+          <SidebarLink
             icon={<Home size={20} />}
             label="Home"
             onClick={() => navigate("/")}
           />
           <SidebarLink
-            icon={<BookOpen size={20} />}
+            icon={<GraduationCap size={20} />}
             label="Education"
             onClick={() => navigate("/blogs")}
           />
@@ -135,18 +144,18 @@ export function Consultations() {
             onClick={() => navigate("/Ecom")}
           />
           <SidebarLink
-            icon={<Activity size={20} />}
+            icon={<ActivitySquare size={20} />}
             label="Track Your Health"
             onClick={() => navigate("/tracker")}
           />
           <SidebarLink
             icon={<Stethoscope size={20} />}
             label="Expert Consultation"
-            onClick={() => navigate("/consultations")}
             active
+            onClick={() => navigate("/consultations")}
           />
           <SidebarLink
-            icon={<MessageCircle size={20} />}
+            icon={<Bot size={20} />}
             label="AI Chatbot"
             onClick={() => navigate("/ChatBot")}
           />
@@ -310,4 +319,3 @@ export function Consultations() {
     </div>
   );
 }
-

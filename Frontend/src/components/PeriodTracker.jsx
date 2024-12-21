@@ -363,48 +363,47 @@ export function PeriodTracker() {
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
       {/* Sidebar */}
       <aside className="bg-pink-50 dark:bg-gray-800 w-64 min-h-screen p-4">
-        <nav className="mt-8">
-          <div className="px-4 py-4 flex flex-col space-y-2">
-            <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">
-              FlowCare
-            </h1>
-            <SidebarLink
-              icon={<LayoutDashboard size={20} />}
-              label="Dashboard"
-              onClick={() => navigate("/dashboard")}
-            />
-            <SidebarLink
-              icon={<Home size={20} />}
-              label="Home"
-              onClick={() => navigate("/")}
-            />
-            <SidebarLink
-              icon={<GraduationCap size={20} />}
-              label="Education"
-              onClick={() => navigate("/blogs")}
-            />
-            <SidebarLink
-              icon={<ShoppingBag size={20} />}
-              label="Shop"
-              onClick={() => navigate("/Ecom")}
-            />
-            <SidebarLink
-              icon={<ActivitySquare size={20} />}
-              label="Track Your Health"
-              onClick={() => navigate("/tracker")}
-              active
-            />
-            <SidebarLink
-              icon={<Stethoscope size={20} />}
-              label="Expert Consultation"
-              onClick={() => navigate("/consultations")}
-            />
-            <SidebarLink
-              icon={<Bot size={20} />}
-              label="AI Chatbot"
-              onClick={() => navigate("/ChatBot")}
-            />
-          </div>
+        <nav className="mt-8 space-y-4">
+          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">
+            FlowCare
+          </h1>
+          <SidebarLink
+            icon={<LayoutDashboard size={20} />}
+            label="Dashboard"
+            onClick={() => navigate("/Dashboard")}
+          />
+          <SidebarLink
+            icon={<Home size={20} />}
+            label="Home"
+            onClick={() => navigate("/")}
+          />
+          <SidebarLink
+            icon={<GraduationCap size={20} />}
+            label="Education"
+            onClick={() => navigate("/blogs")}
+          />
+          <SidebarLink
+            icon={<ShoppingBag size={20} />}
+            label="Shop"
+    
+            onClick={() => navigate("/Ecom")}
+          />
+          <SidebarLink
+            icon={<ActivitySquare size={20} />}
+            label="Track Your Health"
+            acti
+            onClick={() => navigate("/tracker")}
+          />
+          <SidebarLink
+            icon={<Stethoscope size={20} />}
+            label="Expert Consultation"
+            onClick={() => navigate("/consultations")}
+          />
+          <SidebarLink
+            icon={<Bot size={20} />}
+            label="AI Chatbot"
+            onClick={() => navigate("/ChatBot")}
+          />
         </nav>
       </aside>
 

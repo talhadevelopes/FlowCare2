@@ -193,13 +193,13 @@ export function Dashboard() {
         }
         :root {
           --background: 255, 255, 255;
-          --foreground: 0, 0, 0;
+          --foreground: 33, 33, 33;
           --primary: 255, 105, 180;
           --primary-foreground: 0, 0, 0;
           --card: 255, 255, 255;
           --card-foreground: 0, 0, 0;
           --muted: 240, 240, 240;
-          --muted-foreground: 100, 100, 100;
+          --muted-foreground: 75, 75, 75;
         }
         .dark {
           --background: 23, 23, 23;
@@ -265,7 +265,7 @@ export function Dashboard() {
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Dashboard</h2>
             <div className="flex items-center gap-4">
-              <Bell className="h-5 w-5 text-[rgba(var(--foreground),0.6)]" />
+              <Bell className="h-5 w-5 text-[rgb(var(--muted-foreground))]"/>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="p-2 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))] transition-transform hover:scale-110"
@@ -297,7 +297,7 @@ export function Dashboard() {
                 </div>
                 <div className="p-6">
                   <p className="text-lg font-semibold mb-2">Current Phase: {periodData.currentPhase}</p>
-                  <p className="text-sm text-[rgba(var(--foreground),0.6)]">
+                  <p className="text-sm text-[rgb(var(--muted-foreground))]">
                     {daysUntilNextPeriod} days until next period
                   </p>
                   <div className="mt-4 h-2 bg-[rgba(var(--primary),0.2)] rounded-full overflow-hidden">
@@ -407,7 +407,7 @@ export function Dashboard() {
                   {periodData.symptoms.map((symptom, index) => (
                     <li key={index} className="flex items-center justify-between">
                       <span>{symptom}</span>
-                      <span className="text-[rgba(var(--foreground),0.6)]">
+                      <span className="text-[rgb(var(--muted-foreground))]">
                         {periodData.symptomSeverities instanceof Map 
                           ? periodData.symptomSeverities.get(symptom)
                           : periodData.symptomSeverities[symptom]}
@@ -470,7 +470,7 @@ const NavItem = ({ icon, label, active = false }) => {
       <a
         href="#"
         className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-          active ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]" : "text-[rgba(var(--foreground),0.7)] hover:bg-[rgba(var(--foreground),0.05)]"
+          active ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]" : "text-[rgb(var(--muted-foreground))] hover:bg-[rgba(var(--foreground),0.05)]"
         }`}
       >
         {icon}
@@ -493,7 +493,7 @@ const AnimatedCard = ({ title, value, icon }) => {
     <Card className="transition-all duration-300 hover:shadow-md hover:scale-105">
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
+          <p className="text-sm text-[rgb(var(--muted-foreground))]">{title}</p>
           <h3 className="text-2xl font-semibold mt-1">{value}</h3>
         </div>
         <div className="p-2 bg-[rgba(var(--primary),0.1)] rounded-full">
@@ -520,7 +520,7 @@ const InsightItem = ({ title, value, icon }) => {
     <div className="flex items-center space-x-3 p-3 bg-[rgba(var(--primary),0.1)] rounded-lg transition-all duration-300 hover:bg-[rgba(var(--primary),0.2)]">
       {icon}
       <div>
-        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
+        <p className="text-sm text-[rgb(var(--muted-foreground))]">{title}</p>
         <p className="font-medium">{value}</p>
       </div>
     </div>
@@ -534,7 +534,7 @@ const WellnessItem = ({ title, value, icon }) => {
         {icon}
       </div>
       <div>
-        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{title}</p>
+        <p className="text-sm text-[rgb(var(--muted-foreground))]">{title}</p>
         <p className="font-medium">{value}</p>
       </div>
     </div>
@@ -547,7 +547,7 @@ const EventItem = ({ title, date }) => {
       <Calendar className="h-5 w-5 text-[rgb(var(--primary))]" />
       <div>
         <p className="font-medium">{title}</p>
-        <p className="text-sm text-[rgba(var(--foreground),0.6)]">{date}</p>
+        <p className="text-sm text-[rgb(var(--muted-foreground))]">{date}</p>
       </div>
     </li>
   );
@@ -560,7 +560,7 @@ const TabButton = ({ children, active, onClick }) => {
       className={`px-4 py-2 rounded-md transition-colors ${
         active
           ? "bg-[rgb(var(--primary))] text-white"
-          : "bg-[rgba(var(--foreground),0.1)] text-[rgba(var(--foreground),0.7)] hover:bg-[rgba(var(--foreground),0.2)]"
+          : "bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--muted-foreground))] hover:bg-[rgba(var(--foreground),0.2)]"
       }`}
     >
       {children}

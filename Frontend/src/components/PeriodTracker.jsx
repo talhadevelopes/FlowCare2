@@ -5,6 +5,7 @@ import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronU
 import axios from 'axios'; 
 
 const server_url = import.meta.env.VITE_SERVER_URL;
+const local_url = 'http://localhost:3000/';
 
 const moodOptions = [
   { name: "Happy", icon: Smile },

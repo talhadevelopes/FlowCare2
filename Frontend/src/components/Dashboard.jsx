@@ -597,36 +597,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X } from 'lucide-react';
 import axios from 'axios';
+
+const server_url = import.meta.env.VITE_SERVER_URL;
+const local_url = 'http://localhost:3000/';
 
 export function Dashboard() {
   const [darkMode, setDarkMode] = useState(false);
@@ -640,19 +616,70 @@ export function Dashboard() {
   const [error, setError] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
+  const fallbackData = {
+    cycleDuration: 28,
+    lastPeriodStart: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    lastPeriodDuration: 5,
+    moodTypes: ['Happy', 'Anxious', 'Irritable'],
+    moodSeverity: 'Moderate',
+    moodDate: new Date().toISOString(),
+    symptoms: ['Cramps', 'Bloating', 'Headache'],
+    symptomSeverities: {
+      Cramps: 'Severe',
+      Bloating: 'Moderate',
+      Headache: 'Mild'
+    },
+    symptomDate: new Date().toISOString(),
+    sleepDuration: 7.5,
+    sleepQuality: 'Good',
+    nextPeriodPrediction: new Date(Date.now() + 13 * 24 * 60 * 60 * 1000).toISOString(),
+    currentPhase: 'Luteal'
+  };
+
   useEffect(() => {
     const fetchPeriodData = async () => {
       setLoading(true);
-      try {
-        const userId = localStorage.getItem('userId');
-        if (!userId) {
-          throw new Error('User ID not found in local storage');
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        setError("User ID not found. Please log in.");
+        setLoading(false);
+        return;
+      }
+
+      const fetchWithTimeout = async (url, timeout) => {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        try {
+          const response = await axios.get(`${url}periodtracking/${userId}`, {
+            signal: controller.signal
+          });
+          clearTimeout(id);
+          return response.data;
+        } catch (error) {
+          if (error.name === 'AbortError') {
+            throw new Error('Request timed out');
+          }
+          throw error;
         }
-        const response = await axios.get(`http://localhost:3000/periodtracking/${userId}`);
-        setPeriodData(response.data);
-      } catch (err) {
-        console.error("Error fetching period data:", err);
-        setError("Failed to fetch period data. Please try again later.");
+      };
+
+      try {
+        // Try server URL first
+        const data = await fetchWithTimeout(server_url, 5000); // 5 second timeout
+        setPeriodData(data);
+        setError(null);
+      } catch (serverError) {
+        console.error("Error fetching from server:", serverError);
+        try {
+          // Fallback to local URL
+          const data = await fetchWithTimeout(local_url, 5000); // 5 second timeout
+          setPeriodData(data);
+          setError("Using local data due to server unavailability.");
+        } catch (localError) {
+          console.error("Error fetching from local:", localError);
+          setPeriodData(fallbackData);
+          setError("Failed to fetch data. Using sample data.");
+        }
       } finally {
         setLoading(false);
       }
@@ -715,10 +742,6 @@ export function Dashboard() {
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
   }
 
   if (!periodData) {
@@ -832,6 +855,12 @@ export function Dashboard() {
 
       <main className={`flex-1 p-6 overflow-auto bg-[rgb(var(--background))] transition-all duration-300 ease-in-out ${sidebarVisible ? 'ml-[240px]' : 'ml-0'}`}>
         <div className="max-w-6xl mx-auto space-y-6">
+          {error && (
+            <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
+              <p className="font-bold">Note</p>
+              <p>{error}</p>
+            </div>
+          )}
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Dashboard</h2>
             <div className="flex items-center gap-4">
@@ -977,7 +1006,11 @@ export function Dashboard() {
                   {periodData.symptoms.map((symptom, index) => (
                     <li key={index} className="flex items-center justify-between">
                       <span>{symptom}</span>
-                      <span className="text-[rgba(var(--foreground),0.6)]">{periodData.symptomSeverities[symptom]}</span>
+                      <span className="text-[rgba(var(--foreground),0.6)]">
+                        {periodData.symptomSeverities instanceof Map 
+                          ? periodData.symptomSeverities.get(symptom)
+                          : periodData.symptomSeverities[symptom]}
+                      </span>
                     </li>
                   ))}
                 </ul>

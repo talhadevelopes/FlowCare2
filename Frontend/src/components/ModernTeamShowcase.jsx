@@ -40,7 +40,7 @@ const teamMembers = [
   {
     id: 4,
     name: "Juwairiyyah ahmed",
-    role: "Famale Eligibility ke liye hai sirf",
+    role: "Research and outreach",
     image: womenImage,
     bio: "a 3rd-semester engineering student with a creative flair for design and a deep passion for technology. Alongside my studies, I'm working as a graphic designer, blending creativity and technical skills to bring ideas to life.",
     linkedin: "https://www.linkedin.com/in/juwairiyyah-ahmed-0bb4ab260/",

@@ -18,10 +18,10 @@ const teamMembers = [
   {
     id: 2,
     name: "Mohammed Talha Ahmed Siddique",
-    role: "Front-End developer",
+    role: "Full Stack developer",
     image: "/placeholder.svg?height=400&width=300",
     bio: "You dont know me, but your wife does, and the nigga who complained about me - bruh your mom loves pan cakes right?",
-    linkedin: "https://linkedin.com/in/hanawatanabe",
+    linkedin: "https://www.linkedin.com/in/mohammed-talha-ahmed-6871a42ab/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     isLead: false
   },
   {
@@ -38,7 +38,7 @@ const teamMembers = [
     name: "Juwairiyyah ahmed",
     role: "Famale Eligibility ke liye hai sirf",
     image: "../../public/images/women.png?height=400&width=300",
-    bio: "Cute, Humble and Intelligence(rare in this gender). Kind and collaborative. mysterious and an poet. writes clean but talks about inter galatic things",
+    bio: "a 3rd-semester engineering student with a creative flair for design and a deep passion for technology. Alongside my studies, I’m working as a graphic designer, blending creativity and technical skills to bring ideas to life.",
     linkedin: "https://www.linkedin.com/in/juwairiyyah-ahmed-0bb4ab260/",
     isLead: false
   }

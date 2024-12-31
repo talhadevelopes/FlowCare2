@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Calendar, Heart, Moon, Sun, Droplet, Utensils, Menu, X, Check, Star, Users, ArrowRight } from 'lucide-react';
 
+
 export function Landing() {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -161,6 +162,8 @@ export function Landing() {
               We believe that every woman deserves access to personalized health insights, expert guidance, and a supportive community. Through innovation and compassion, we're building a future where women's health is understood, prioritized, and optimized.
             </p>
           </Card>
+
+          {/* Team Members Section */}
 
           {/* How It Works Section */}
           <Card>
@@ -358,13 +361,25 @@ export function Landing() {
             </div>
           </Card>
 
+          {/* Team Button */}
+          <div className="my-8">
+            <button
+              onClick={() => navigate('/team')}
+              className=" bg-pink-600 dark:bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
+            >
+              Meet Our Team
+            </button>
+          </div>
+
+          
+
           {/* Footer */}
           <footer className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company</h4>
                 <ul className="space-y-2">
-                  <li><button onClick={() => navigate('/team')} className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</button></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</a></li>
                   <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Careers</a></li>
                   <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Press</a></li>
                 </ul>
@@ -396,7 +411,7 @@ export function Landing() {
             </div>
             <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
               <p className="text-gray-700 dark:text-gray-400"> TEAM: EmpowerHer</p>
-              <p className="text-gray-700 dark:text-gray-400">&copy; 2024 FlowCare. All rights reserved. TEAM: EmpoerHer</p>
+              <p className="text-gray-700 dark:text-gray-400">&copy; 2024 FlowCare. All rights reserved.</p>
             </div>
           </footer>
         </div>

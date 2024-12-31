@@ -6,6 +6,7 @@ export function Landing() {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   useEffect(() => {
     if (darkMode) {
@@ -23,10 +24,14 @@ export function Landing() {
     });
   };
 
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       {/* Sidebar */}
-      <aside className="bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4">
+      <aside className={`bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4 transition-all duration-300 ease-in-out ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}`}>
         <nav className="mt-8">
           <div className="px-4 py-4 flex flex-col space-y-2">
             <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">FlowCare</h1>
@@ -40,9 +45,19 @@ export function Landing() {
           </div>
         </nav>
       </aside>
+      <button
+        onClick={toggleSidebar}
+        className="fixed left-0 top-4 z-10 p-2 bg-pink-600 text-white rounded-r-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+        style={{
+          transform: sidebarVisible ? 'translateX(256px)' : 'translateX(0)',
+        }}
+        aria-label={sidebarVisible ? 'Hide sidebar' : 'Show sidebar'}
+      >
+        <ChevronRight size={24} className={`transition-transform duration-300 ${sidebarVisible ? 'rotate-180' : 'rotate-0'}`} />
+      </button>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 overflow-auto bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      <main className={`flex-1 p-6 overflow-auto bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-all duration-300 ease-in-out ${sidebarVisible ? 'ml-64' : 'ml-0'}`}>
         <div className="max-w-6xl mx-auto space-y-12">
           {/* Header */}
           <div className="flex justify-between items-center">
@@ -484,9 +499,9 @@ const FAQItem = ({ question, answer }) => {
 // Update the SuccessStoryCard component
 const SuccessStoryCard = ({ name, story, improvement }) => {
   return (
-    <div className="bg-gray-500 dark:bg-gray-700 p-6 rounded-lg shadow-sm">
-      <h4 className="text-lg font-semibold mb-2 text-gray-200 dark:text-gray-100">{name}</h4>
-      <p className="text-gray-200 dark:text-gray-300 mb-4">"{story}"</p>
+    <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{name}</h4>
+      <p className="text-gray-700 dark:text-gray-300 mb-4">"{story}"</p>
       <div className="flex items-center">
         <Check className="text-green-500 dark:text-green-400 mr-2" />
         <span className="text-green-600 dark:text-green-400 font-medium">{improvement}</span>
@@ -531,7 +546,7 @@ const AppFeatureCard = ({ title, description, icon }) => {
 const PartnerLogo = ({ name }) => {
   return (
     <div className="bg-gray-100 dark:bg-gray-700 h-20 rounded-lg flex items-center justify-center">
-      <span className="text-gray-100 dark:text-gray-300 font-medium">{name}</span>
+      <span className="text-gray-700 dark:text-gray-300 font-medium">{name}</span>
     </div>
   );
 };

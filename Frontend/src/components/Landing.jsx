@@ -163,7 +163,43 @@ export function Landing() {
             </p>
           </Card>
 
-          {/* Team Members Section */}
+          {/* Team Members Card */}
+          <Card className="my-8">
+            <div className="bg-gray-900 rounded-xl p-6 relative overflow-hidden group">
+              {/* Background Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-2">Team EmpowerHer</h3>
+                <p className="text-gray-400 mb-4">Building for HackRevolution - January 5, 2024</p>
+                
+                {/* Team Stats */}
+                <div className="bg-gray-800/50 rounded-lg p-4 mb-6">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-gray-400 text-sm">Team Size</p>
+                      <p className="text-3xl font-bold text-white">04</p>
+                    </div>
+                    <div className="h-8 w-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                      <Users className="h-4 w-4 text-green-400" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <button
+                  onClick={() => navigate('/team')}
+                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium
+                           hover:from-pink-500 hover:to-purple-500 transition-all duration-300
+                           flex items-center justify-center space-x-2 group"
+                >
+                  <span>Meet Our Team</span>
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
+          </Card>
 
           {/* How It Works Section */}
           <Card>
@@ -361,17 +397,6 @@ export function Landing() {
             </div>
           </Card>
 
-          {/* Team Button */}
-          <div className="my-8">
-            <button
-              onClick={() => navigate('/team')}
-              className=" bg-pink-600 dark:bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
-            >
-              Meet Our Team
-            </button>
-          </div>
-
-          
 
           {/* Footer */}
           <footer className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
@@ -436,9 +461,9 @@ const SidebarLink = ({ icon, label, onClick, active = false }) => {
   );
 };
 
-const Card = ({ children }) => {
+const Card = ({ children, className }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+    <div className={`bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.02] ${className}`}>
       {children}
     </div>
   );
@@ -565,4 +590,18 @@ const PartnerLogo = ({ name }) => {
     </div>
   );
 };
+
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }<continuation_point>
+    }
+  }
+`;
+document.head.appendChild(style);
 

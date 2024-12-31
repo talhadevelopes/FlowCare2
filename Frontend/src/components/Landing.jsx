@@ -163,44 +163,6 @@ export function Landing() {
             </p>
           </Card>
 
-          {/* Team Members Card */}
-          <Card className="my-8">
-            <div className="bg-gray-900 rounded-xl p-6 relative overflow-hidden group">
-              {/* Background Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-white mb-2">Team EmpowerHer</h3>
-                <p className="text-gray-400 mb-4">Building for HackRevolution - January 5, 2024</p>
-                
-                {/* Team Stats */}
-                <div className="bg-gray-800/50 rounded-lg p-4 mb-6">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-gray-400 text-sm">Team Size</p>
-                      <p className="text-3xl font-bold text-white">04</p>
-                    </div>
-                    <div className="h-8 w-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                      <Users className="h-4 w-4 text-green-400" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action Button */}
-                <button
-                  onClick={() => navigate('/team')}
-                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium
-                           hover:from-pink-500 hover:to-purple-500 transition-all duration-300
-                           flex items-center justify-center space-x-2 group"
-                >
-                  <span>Meet Our Team</span>
-                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
-            </div>
-          </Card>
-
           {/* How It Works Section */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">How FlowCare Works</h3>
@@ -260,7 +222,7 @@ export function Landing() {
             </div>
           </Card>
 
-          {/* New Section: Success Stories */}
+          {/* Success Stories */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Success Stories</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -277,7 +239,7 @@ export function Landing() {
             </div>
           </Card>
 
-          {/* New Section: Expert Insights */}
+          {/* Expert Insights */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Expert Insights</h3>
             <div className="space-y-6">
@@ -292,7 +254,7 @@ export function Landing() {
             </div>
           </Card>
 
-          {/* New Section: Community Highlights */}
+          {/* Community Highlights */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Community Highlights</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -342,7 +304,7 @@ export function Landing() {
             </div>
           </Card>
 
-          {/* New Section: App Features Showcase */}
+          {/* App Features Showcase */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">App Features Showcase</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -369,7 +331,7 @@ export function Landing() {
             </div>
           </Card>
 
-          {/* New Section: Partnerships */}
+          {/* Partnerships */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Our Trusted Partners</h3>
             <p className="text-lg mb-6 text-gray-800 dark:text-gray-300">
@@ -397,6 +359,101 @@ export function Landing() {
             </div>
           </Card>
 
+          {/* Team Members Card - Now at the bottom */}
+          <Card className="my-8">
+            <div className="bg-gray-900 rounded-xl p-6 relative overflow-hidden group">
+              {/* Animated Background Pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
+                  backgroundSize: '24px 24px'
+                }}></div>
+              </div>
+
+              {/* Animated Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-[length:200%_100%] animate-gradient"></div>
+
+              {/* Content */}
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">Team EmpowerHer</h3>
+                    <p className="text-gray-400">Building for HackRevolution - January 5, 2024</p>
+                  </div>
+                  <div className="bg-green-500/20 px-3 py-1 rounded-full flex items-center">
+                    <span className="text-green-400 text-sm font-medium">Active Project</span>
+                  </div>
+                </div>
+
+                {/* Team Stats Grid */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-gray-800/50 rounded-lg p-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-gray-400 text-sm">Team Size</p>
+                        <p className="text-3xl font-bold text-white">04</p>
+                      </div>
+                      <div className="h-10 w-10 rounded-full bg-pink-500/20 flex items-center justify-center">
+                        <Users className="h-5 w-5 text-pink-400" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-800/50 rounded-lg p-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-gray-400 text-sm">Project Status</p>
+                        <p className="text-lg font-semibold text-white">In Development</p>
+                      </div>
+                      <div className="h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                        <ActivitySquare className="h-5 w-5 text-purple-400" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Team Focus Areas */}
+                <div className="bg-gray-800/50 rounded-lg p-4">
+                  <h4 className="text-gray-300 font-medium mb-3">Focus Areas</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-pink-500/20 text-pink-400 text-sm">Women's Health</span>
+                    <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-sm">AI Integration</span>
+                    <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-sm">Healthcare Tech</span>
+                    <span className="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm">Community Building</span>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <button
+                  onClick={() => navigate('/team')}
+                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-4 rounded-lg font-medium
+                           hover:from-pink-500 hover:to-purple-500 transition-all duration-300
+                           flex items-center justify-center space-x-2 group relative overflow-hidden"
+                >
+                  {/* Button Shine Effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                  </div>
+
+                  <div className="relative flex items-center space-x-2">
+                    <span className='text-l text-gray-700 dark:text-gray-200'>Meet Our Team</span>
+                    <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </button>
+
+                {/* Bottom Stats */}
+                <div className="pt-4 mt-4 border-t border-gray-800 grid grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4 text-gray-400" />
+                    <span className="text-gray-400 text-sm">Started: Dec 2023</span>
+                  </div>
+                  <div className="flex items-center space-x-2 justify-end">
+                    <Heart className="h-4 w-4 text-gray-400" />
+                    <span className="text-gray-400 text-sm">Made with passion</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
 
           {/* Footer */}
           <footer className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
@@ -599,8 +656,16 @@ style.textContent = `
     }
     50% {
       opacity: 0.5;
-    }<continuation_point>
     }
+  }
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient {
+    animation: gradient 8s linear infinite;
   }
 `;
 document.head.appendChild(style);

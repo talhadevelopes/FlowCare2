@@ -67,17 +67,17 @@ export function Landing() {
               onClick={toggleDarkMode}
               className="p-2 rounded-full bg-gray-200 dark:bg-gray-700"
             >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {darkMode ? <Sun className="h-5 w-5 text-gray-800 dark:text-gray-200" /> : <Moon className="h-5 w-5 text-gray-800 dark:text-gray-200" />}
             </button>
           </div>
 
           {/* Hero Section */}
           <Card>
-            <div className="flex flex-col md:flex-row items-center">
+            <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="w-full md:w-1/2 pr-8">
                 <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">Your Trusted Companion for Better Health</h1>
-                <p className="text-xl mb-4 text-gray-800 dark:text-gray-200">Empowering women through personalized health tracking and education.</p>
-                <p className="text-lg mb-6 text-gray-800 dark:text-gray-200">Explore, learn, and connect with a community that cares about your well-being.</p>
+                <p className="text-lg mb-6 text-gray-700 dark:text-gray-300">Empowering women through personalized health tracking and education.</p>
+                <p className="text-lg mb-6 text-gray-700 dark:text-gray-300">Explore, learn, and connect with a community that cares about your well-being.</p>
                 <button 
                   onClick={() => navigate('/Signup')}
                   className="bg-pink-600 dark:bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
@@ -86,7 +86,7 @@ export function Landing() {
                 </button>
               </div>
               {/* <div className="w-full md:w-1/2 mt-8 md:mt-0">
-                <img src="/placeholder.svg?height=300&width=400" alt="FlowCare App" className="rounded-lg shadow-lg" />
+                <img src="/placeholder.svg?height=300&width=400" alt="FlowCare App" className="rounded-lg shadow-lg w-full h-auto" />
               </div> */}
             </div>
           </Card>
@@ -96,32 +96,32 @@ export function Landing() {
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Comprehensive Health Management</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <FeatureOverview
-                icon={<LayoutDashboard className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                icon={<LayoutDashboard className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
                 title="Personalized Dashboard"
                 description="Get a quick overview of your health status and upcoming activities."
               />
               <FeatureOverview
-                icon={<GraduationCap className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                icon={<GraduationCap className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
                 title="Educational Resources"
                 description="Access a wealth of articles and videos on women's health topics."
               />
               <FeatureOverview
-                icon={<ShoppingBag className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                icon={<ShoppingBag className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
                 title="Curated Shop"
                 description="Find health and wellness products tailored to your needs."
               />
               <FeatureOverview
-                icon={<ActivitySquare className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                icon={<ActivitySquare className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
                 title="Health Tracking"
                 description="Monitor your cycle, symptoms, and overall well-being with easy-to-use tools."
               />
               <FeatureOverview
-                icon={<Stethoscope className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                icon={<Stethoscope className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
                 title="Expert Consultations"
                 description="Connect with healthcare professionals for personalized advice."
               />
               <FeatureOverview
-                icon={<Bot className="h-8 w-8 text-pink-500 dark:text-pink-400" />}
+                icon={<Bot className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
                 title="AI-Powered Chatbot"
                 description="Get instant answers to your health questions anytime, anywhere."
               />
@@ -154,10 +154,10 @@ export function Landing() {
           {/* Our Mission Section */}
           <Card>
             <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Our Mission</h3>
-            <p className="text-lg mb-4 text-gray-800 dark:text-gray-200">
+            <p className="text-lg mb-4 text-gray-800 dark:text-gray-300">
               At FlowCare, we're committed to revolutionizing women's health management. Our mission is to empower women with the knowledge, tools, and support they need to take control of their health and well-being.
             </p>
-            <p className="text-lg text-gray-800 dark:text-gray-200">
+            <p className="text-lg text-gray-800 dark:text-gray-300">
               We believe that every woman deserves access to personalized health insights, expert guidance, and a supportive community. Through innovation and compassion, we're building a future where women's health is understood, prioritized, and optimized.
             </p>
           </Card>
@@ -310,22 +310,22 @@ export function Landing() {
               <AppFeatureCard
                 title="Cycle Prediction"
                 description="Our AI-powered algorithm learns from your data to provide accurate cycle predictions."
-                icon={<Calendar className="h-8 w-8 text-pink-500" />}
+                icon={<Calendar className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
               />
               <AppFeatureCard
                 title="Symptom Tracking"
                 description="Log and monitor various symptoms to gain insights into your health patterns."
-                icon={<ActivitySquare className="h-8 w-8 text-pink-500" />}
+                icon={<ActivitySquare className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
               />
               <AppFeatureCard
                 title="Nutrition Guide"
                 description="Get personalized nutrition advice based on your cycle phase and health goals."
-                icon={<Utensils className="h-8 w-8 text-pink-500" />}
+                icon={<Utensils className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
               />
               <AppFeatureCard
                 title="Mood Tracking"
                 description="Track your emotional well-being and identify patterns related to your cycle."
-                icon={<Heart className="h-8 w-8 text-pink-500" />}
+                icon={<Heart className="h-8 w-8 text-pink-600 dark:text-pink-400" />}
               />
             </div>
           </Card>
@@ -333,7 +333,7 @@ export function Landing() {
           {/* New Section: Partnerships */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Our Trusted Partners</h3>
-            <p className="text-lg mb-6 text-gray-800 dark:text-gray-200">
+            <p className="text-lg mb-6 text-gray-800 dark:text-gray-300">
               We collaborate with leading healthcare providers, research institutions, and wellness brands to bring you the best in women's health care.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -348,7 +348,7 @@ export function Landing() {
           <Card>
             <div className="text-center">
               <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Ready to Take Control of Your Health?</h3>
-              <p className="mb-6 text-gray-800 dark:text-gray-200">Join FlowCare today and start your journey to better health and wellness.</p>
+              <p className="mb-6 text-gray-800 dark:text-gray-300">Join FlowCare today and start your journey to better health and wellness.</p>
               <button 
                 onClick={() => navigate('/Signup')}
                 className="bg-pink-600 dark:bg-pink-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
@@ -364,38 +364,39 @@ export function Landing() {
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Careers</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Press</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Careers</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Press</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Resources</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Blog</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Help Center</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Community</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Blog</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Help Center</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Community</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Legal</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Privacy Policy</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Terms of Service</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Cookie Policy</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Privacy Policy</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Terms of Service</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Cookie Policy</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Connect</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Twitter</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Facebook</a></li>
-                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Instagram</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Twitter</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Facebook</a></li>
+                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Instagram</a></li>
                 </ul>
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
-              <p className="text-gray-600 dark:text-gray-400">&copy; 2023 FlowCare. All rights reserved.</p>
+              <p className="text-gray-700 dark:text-gray-400"> TEAM: EmpowerHer</p>
+              <p className="text-gray-700 dark:text-gray-400">&copy; 2024 FlowCare. All rights reserved. TEAM: EmpoerHer</p>
             </div>
           </footer>
         </div>
@@ -411,7 +412,7 @@ const SidebarLink = ({ icon, label, onClick, active = false }) => {
       className={`flex items-center space-x-2 w-full px-2 py-2 rounded-lg transition-colors ${
         active
           ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
-          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
+          : 'text-gray-900 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
       }`}
     >
       {icon}
@@ -434,7 +435,7 @@ const FeatureOverview = ({ icon, title, description }) => {
       <div className="flex-shrink-0">{icon}</div>
       <div>
         <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-        <p className="text-gray-800 dark:text-gray-200">{description}</p>
+        <p className="text-gray-700 dark:text-gray-300">{description}</p>
       </div>
     </div>
   );
@@ -444,7 +445,7 @@ const BenefitItem = ({ title, description }) => {
   return (
     <div className="border-l-4 border-pink-500 pl-4">
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-800 dark:text-gray-200">{description}</p>
+      <p className="text-gray-700 dark:text-gray-300">{description}</p>
     </div>
   );
 };
@@ -456,7 +457,7 @@ const StepCard = ({ number, title, description }) => {
         <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">{number}</span>
       </div>
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-800 dark:text-gray-200">{description}</p>
+      <p className="text-gray-700 dark:text-gray-300">{description}</p>
     </div>
   );
 };
@@ -464,7 +465,7 @@ const StepCard = ({ number, title, description }) => {
 const TestimonialCard = ({ quote, author }) => {
   return (
     <div className="bg-pink-50 dark:bg-pink-900 p-4 rounded-lg">
-      <p className="italic mb-2 text-gray-800 dark:text-gray-200">"{quote}"</p>
+      <p className="italic mb-2 text-gray-800 dark:text-gray-300">"{quote}"</p>
       <p className="font-semibold text-right text-gray-900 dark:text-gray-100">- {author}</p>
     </div>
   );
@@ -474,8 +475,8 @@ const BlogPostCard = ({ title, excerpt, date }) => {
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-800 dark:text-gray-200 mb-2">{excerpt}</p>
-      <p className="text-sm text-gray-700 dark:text-gray-300">{date}</p>
+      <p className="text-gray-700 dark:text-gray-300 mb-2">{excerpt}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-400">{date}</p>
     </div>
   );
 };
@@ -492,7 +493,7 @@ const FAQItem = ({ question, answer }) => {
         <span className="font-semibold text-gray-900 dark:text-gray-100">{question}</span>
         <span>{isOpen ? '-' : '+'}</span>
       </button>
-      {isOpen && <p className="mt-2 text-gray-800 dark:text-gray-200">{answer}</p>}
+      {isOpen && <p className="mt-2 text-gray-700 dark:text-gray-300">{answer}</p>}
     </div>
   );
 };
@@ -500,8 +501,8 @@ const FAQItem = ({ question, answer }) => {
 const SuccessStoryCard = ({ name, story, improvement }) => {
   return (
     <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{name}</h4>
-      <p className="text-gray-800 dark:text-gray-200 mb-4">"{story}"</p>
+      <h4 className="text-lg font-semibold mb-2 text-gray-300 dark:text-gray-300">{name}</h4>
+      <p className="text-gray-600 dark:text-gray-200 mb-4">"{story}"</p>
       <div className="flex items-center">
         <Check className="text-green-500 mr-2" />
         <span className="text-green-600 dark:text-green-400 font-medium">{improvement}</span>
@@ -513,7 +514,7 @@ const SuccessStoryCard = ({ name, story, improvement }) => {
 const ExpertInsightCard = ({ expert, insight }) => {
   return (
     <div className="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
-      <p className="text-gray-800 dark:text-gray-200 mb-4">"{insight}"</p>
+      <p className="text-gray-800 dark:text-gray-300 mb-4">"{insight}"</p>
       <p className="font-semibold text-right text-gray-900 dark:text-gray-100">- {expert}</p>
     </div>
   );
@@ -523,7 +524,7 @@ const CommunityHighlightCard = ({ title, description }) => {
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-800 dark:text-gray-200">{description}</p>
+      <p className="text-gray-700 dark:text-gray-300">{description}</p>
     </div>
   );
 };
@@ -536,7 +537,7 @@ const AppFeatureCard = ({ title, description, icon }) => {
       </div>
       <div>
         <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-        <p className="text-gray-800 dark:text-gray-200">{description}</p>
+        <p className="text-gray-700 dark:text-gray-300">{description}</p>
       </div>
     </div>
   );
@@ -545,7 +546,7 @@ const AppFeatureCard = ({ title, description, icon }) => {
 const PartnerLogo = ({ name }) => {
   return (
     <div className="bg-gray-100 dark:bg-gray-700 h-20 rounded-lg flex items-center justify-center">
-      <span className="text-gray-500 dark:text-gray-400 font-medium">{name}</span>
+      <span className="text-gray-200 dark:text-gray-400 font-medium">{name}</span>
     </div>
   );
 };

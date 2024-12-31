@@ -221,7 +221,7 @@ import { ChevronLeft, ChevronRight, Linkedin, Github } from 'lucide-react'
 import sarwarImage from '../../public/images/sarwar.png'
 import noumanImage from '../../public/images/nouman.jpeg'
 import womenImage from '../../public/images/women.png'
-import talhaImage from '../../public/images/talha.jp'
+import talhaImage from '../../public/images/talha.jpeg'
 
 const teamMembers = [
   {

@@ -17,6 +17,7 @@ import { PeriodTracker } from "./components/PeriodTracker";
 import { Ecom } from "./components/Ecom";
 import { Chatbot } from "./components/Chatbot";
 import { Dashboard } from "./components/Dashboard";
+import { ModernTeamShowcase } from "./components/ModernTeamShowcase"
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: "/Dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/team",
+    element: <ModernTeamShowcase />,
   },
 ]);
 

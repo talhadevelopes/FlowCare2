@@ -364,7 +364,7 @@ export function Landing() {
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</a></li>
+                  <li><button onClick={() => navigate('/team')} className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</button></li>
                   <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Careers</a></li>
                   <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Press</a></li>
                 </ul>

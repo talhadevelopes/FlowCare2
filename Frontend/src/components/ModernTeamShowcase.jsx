@@ -211,18 +211,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Linkedin, Github } from 'lucide-react'

@@ -149,7 +149,7 @@ export function Blogs() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-auto bg-gray-100 dark:bg-gray-900">
+      <main className="flex-1 p-8 overflow-auto bg-gray-50 dark:bg-gray-900"> {/* Update 2 */}
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Header */}
           <div className="flex justify-between items-center">
@@ -163,8 +163,8 @@ export function Blogs() {
           </div>
 
           {/* Featured Article */}
-          <div className="bg-pink-100 dark:bg-pink-900 rounded-xl p-6">
-            <h2 className="text-2xl font-semibold text-pink-700 dark:text-pink-300 mb-2">Featured Article</h2>
+          <div className="bg-pink-50 dark:bg-pink-900 rounded-xl p-6"> {/* Update 3 */}
+            <h2 className="text-2xl font-semibold text-pink-800 dark:text-pink-300 mb-2"> {/* Update 3 */}Featured Article</h2>
             <div className="flex items-center space-x-4">
               <Award className="h-16 w-16 text-pink-500" />
               <div>
@@ -198,8 +198,8 @@ export function Blogs() {
           </div>
 
           {/* Trophy System */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md">
-            <h2 className="text-2xl font-semibold text-pink-700 dark:text-pink-300 mb-4">
+          <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-6 text-center shadow-md"> {/* Update 2 */}
+            <h2 className="text-2xl font-semibold text-pink-700 dark:text-pink-300 mb-4"> {/* Update 4 */}
               Your Learning Progress
             </h2>
             <div className="flex justify-center gap-4">
@@ -213,7 +213,7 @@ export function Blogs() {
                 />
               ))}
             </div>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
+            <p className="mt-2 text-gray-800 dark:text-gray-300"> {/* Update 4 */}
               {completedBlogs} out of 5 articles completed
             </p>
           </div>
@@ -221,7 +221,7 @@ export function Blogs() {
           {/* Blog Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredPosts.map((post) => (
-              <div key={post.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+              <div key={post.id} className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden"> {/* Update 2 */}
                 <div className="p-4">
                   <div className="flex justify-between items-start mb-4">
                     {post.icon}
@@ -245,8 +245,8 @@ export function Blogs() {
                     </div>
                   </div>
                   <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">{post.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">{post.excerpt}</p>
-                  <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-gray-700 dark:text-gray-400 mb-4"> {/* Update 1 */} {post.excerpt}</p>
+                  <div className="flex justify-between items-center text-sm text-gray-700 dark:text-gray-400"> {/* Update 1 */}
                     <span>{post.author}</span>
                     <span>{post.readingTime} read</span>
                   </div>
@@ -256,9 +256,9 @@ export function Blogs() {
           </div>
 
           {/* Period 101 Section */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+          <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-md"> {/* Update 2 */}
             <h2 className="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4">Period 101</h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-6">
+            <p className="text-gray-800 dark:text-gray-300 mb-6"> {/* Update 1 */}
               Welcome to Period 101, your comprehensive guide to understanding menstruation. 
               Whether you're experiencing your first period or looking to deepen your knowledge, 
               we're here to help you navigate this important aspect of your health.
@@ -284,10 +284,10 @@ export function Blogs() {
                     {activeItem === id ? <ChevronUp /> : <ChevronDown />}
                   </button>
                   {activeItem === id && (
-                    <div className="p-4 bg-pink-50 dark:bg-gray-700">
-                      <p className="textgray-700 dark:text-gray-300">{answer}</p>
+                    <div className="p-4 bg-pink-100 dark:bg-gray-700"> {/* Update 5 */}
+                      <p className="text-gray-800 dark:text-gray-300"> {/* Update 1 */} {answer}</p>
                       <div className="mt-4">
-                        <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                        <label className="flex items-center space-x-2 text-gray-800 dark:text-gray-300"> {/* Update 1 */}
                           <input
                             type="checkbox"
                             checked={readSections[index]}

@@ -211,13 +211,17 @@
 
 
 
+
+
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Linkedin, Github } from 'lucide-react'
-import sarwarImage from '/images/Sarwar.png'
-import noumanImage from '/images/nouman.jpeg'
-import womenImage from '/images/women.png'
-import talhaImage from '/images/talha.jpeg'
+
+// Import images
+import sarwarImage from '../../public/images/sarwar.png'
+import noumanImage from '../../public/images/nouman.jpeg'
+import womenImage from '../../public/images/women.png'
+import talhaImage from '../../public/images/talha.jp'
 
 const teamMembers = [
   {

@@ -148,16 +148,7 @@ export function ModernTeamShowcase() {
                         <p className="text-sm text-gray-400 mb-2">About</p>
                         <p className="text-white/90 text-sm">{member.bio}</p>
                       </div>
-                      <div className="w-full mt-4">
-                        <p className="text-sm text-gray-400 mb-2">Skills</p>
-                        <div className="flex flex-wrap gap-2">
-                          {['React', 'Node.js', 'MongoDB', 'Express'].map((skill) => (
-                            <span key={skill} className="bg-gray-700 text-white text-xs px-2 py-1 rounded">
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+                      
 
                       <div className="flex items-center justify-between w-full mt-4">
                         <div className="flex space-x-4">

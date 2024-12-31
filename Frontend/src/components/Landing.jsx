@@ -642,8 +642,8 @@ const AppFeatureCard = ({ title, description, icon }) => {
 
 const PartnerLogo = ({ name }) => {
   return (
-    <div className="bg-gray-100 dark:bg-gray-700 h-20 rounded-lg flex items-center justify-center">
-      <span className="text-gray-200 dark:text-gray-400 font-medium">{name}</span>
+    <div className="bg-gray-200 dark:bg-gray-700 h-20 rounded-lg flex items-center justify-center">
+      <span className="text-gray-100 dark:text-gray-400 font-medium">{name}</span>
     </div>
   );
 };

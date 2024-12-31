@@ -6,6 +6,7 @@ export function Landing() {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   useEffect(() => {
     if (darkMode) {
@@ -23,10 +24,14 @@ export function Landing() {
     });
   };
 
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       {/* Sidebar */}
-      <aside className="bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4">
+      <aside className={`bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4 fixed transition-all duration-300 ease-in-out ${sidebarVisible ? 'translate-x-0' : '-translate-x-full'}`} style={{ zIndex: 40 }}>
         <nav className="mt-8">
           <div className="px-4 py-4 flex flex-col space-y-2">
             <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">FlowCare</h1>
@@ -41,8 +46,19 @@ export function Landing() {
         </nav>
       </aside>
 
+      <button
+        onClick={toggleSidebar}
+        className="fixed left-0 top-4 z-10 p-2 bg-pink-600 text-white rounded-r-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+        style={{
+          transform: sidebarVisible ? 'translateX(256px)' : 'translateX(0)',
+        }}
+        aria-label={sidebarVisible ? 'Hide sidebar' : 'Show sidebar'}
+      >
+        <ChevronRight size={24} className={`transition-transform duration-300 ${sidebarVisible ? 'rotate-180' : 'rotate-0'}`} />
+      </button>
+
       {/* Main Content */}
-      <main className="flex-1 p-6 overflow-auto bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      <main className={`flex-1 p-6 overflow-auto bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out ${sidebarVisible ? 'ml-64' : 'ml-0'}`}>
         <div className="max-w-6xl mx-auto space-y-12">
           {/* Header */}
           <div className="flex justify-between items-center">
@@ -60,8 +76,8 @@ export function Landing() {
             <div className="flex flex-col md:flex-row items-center">
               <div className="w-full md:w-1/2 pr-8">
                 <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">Your Trusted Companion for Better Health</h1>
-                <p className="text-xl mb-4 text-gray-900 dark:text-gray-100">Empowering women through personalized health tracking and education.</p>
-                <p className="text-lg mb-6 text-gray-900 dark:text-gray-100">Explore, learn, and connect with a community that cares about your well-being.</p>
+                <p className="text-xl mb-4 text-gray-800 dark:text-gray-200">Empowering women through personalized health tracking and education.</p>
+                <p className="text-lg mb-6 text-gray-800 dark:text-gray-200">Explore, learn, and connect with a community that cares about your well-being.</p>
                 <button 
                   onClick={() => navigate('/Signup')}
                   className="bg-pink-600 dark:bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
@@ -138,10 +154,10 @@ export function Landing() {
           {/* Our Mission Section */}
           <Card>
             <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Our Mission</h3>
-            <p className="text-lg mb-4 text-gray-900 dark:text-gray-100">
+            <p className="text-lg mb-4 text-gray-800 dark:text-gray-200">
               At FlowCare, we're committed to revolutionizing women's health management. Our mission is to empower women with the knowledge, tools, and support they need to take control of their health and well-being.
             </p>
-            <p className="text-lg text-gray-900 dark:text-gray-100">
+            <p className="text-lg text-gray-800 dark:text-gray-200">
               We believe that every woman deserves access to personalized health insights, expert guidance, and a supportive community. Through innovation and compassion, we're building a future where women's health is understood, prioritized, and optimized.
             </p>
           </Card>
@@ -317,7 +333,7 @@ export function Landing() {
           {/* New Section: Partnerships */}
           <Card>
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Our Trusted Partners</h3>
-            <p className="text-lg mb-6 text-gray-900 dark:text-gray-100">
+            <p className="text-lg mb-6 text-gray-800 dark:text-gray-200">
               We collaborate with leading healthcare providers, research institutions, and wellness brands to bring you the best in women's health care.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -332,7 +348,7 @@ export function Landing() {
           <Card>
             <div className="text-center">
               <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Ready to Take Control of Your Health?</h3>
-              <p className="mb-6 text-gray-900 dark:text-gray-100">Join FlowCare today and start your journey to better health and wellness.</p>
+              <p className="mb-6 text-gray-800 dark:text-gray-200">Join FlowCare today and start your journey to better health and wellness.</p>
               <button 
                 onClick={() => navigate('/Signup')}
                 className="bg-pink-600 dark:bg-pink-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-pink-700 dark:hover:bg-pink-600 transition-colors"
@@ -348,33 +364,33 @@ export function Landing() {
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">About Us</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Careers</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Press</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">About Us</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Careers</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Press</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Resources</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Blog</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Help Center</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Community</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Blog</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Help Center</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Community</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Legal</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Privacy Policy</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Terms of Service</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Cookie Policy</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Privacy Policy</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Terms of Service</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Cookie Policy</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Connect</h4>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Twitter</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Facebook</a></li>
-                  <li><a href="#" className="text-gray-900 dark:text-gray-100 hover:text-pink-600 dark:hover:text-pink-400">Instagram</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Twitter</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Facebook</a></li>
+                  <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400">Instagram</a></li>
                 </ul>
               </div>
             </div>
@@ -395,7 +411,7 @@ const SidebarLink = ({ icon, label, onClick, active = false }) => {
       className={`flex items-center space-x-2 w-full px-2 py-2 rounded-lg transition-colors ${
         active
           ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
-          : 'text-gray-700 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
+          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
       }`}
     >
       {icon}
@@ -418,7 +434,7 @@ const FeatureOverview = ({ icon, title, description }) => {
       <div className="flex-shrink-0">{icon}</div>
       <div>
         <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-        <p className="text-gray-900 dark:text-gray-100">{description}</p>
+        <p className="text-gray-800 dark:text-gray-200">{description}</p>
       </div>
     </div>
   );
@@ -428,7 +444,7 @@ const BenefitItem = ({ title, description }) => {
   return (
     <div className="border-l-4 border-pink-500 pl-4">
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-900 dark:text-gray-100">{description}</p>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
     </div>
   );
 };
@@ -440,7 +456,7 @@ const StepCard = ({ number, title, description }) => {
         <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">{number}</span>
       </div>
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-900 dark:text-gray-100">{description}</p>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
     </div>
   );
 };
@@ -448,7 +464,7 @@ const StepCard = ({ number, title, description }) => {
 const TestimonialCard = ({ quote, author }) => {
   return (
     <div className="bg-pink-50 dark:bg-pink-900 p-4 rounded-lg">
-      <p className="italic mb-2 text-gray-900 dark:text-gray-100">"{quote}"</p>
+      <p className="italic mb-2 text-gray-800 dark:text-gray-200">"{quote}"</p>
       <p className="font-semibold text-right text-gray-900 dark:text-gray-100">- {author}</p>
     </div>
   );
@@ -458,8 +474,8 @@ const BlogPostCard = ({ title, excerpt, date }) => {
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-900 dark:text-gray-100 mb-2">{excerpt}</p>
-      <p className="text-sm text-gray-900 dark:text-gray-100">{date}</p>
+      <p className="text-gray-800 dark:text-gray-200 mb-2">{excerpt}</p>
+      <p className="text-sm text-gray-700 dark:text-gray-300">{date}</p>
     </div>
   );
 };
@@ -474,21 +490,20 @@ const FAQItem = ({ question, answer }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="font-semibold text-gray-900 dark:text-gray-100">{question}</span>
-        <span className="text-gray-900 dark:text-gray-100">{isOpen ? '-' : '+'}</span>
+        <span>{isOpen ? '-' : '+'}</span>
       </button>
-      {isOpen && <p className="mt-2 text-gray-900 dark:text-gray-100">{answer}</p>}
+      {isOpen && <p className="mt-2 text-gray-800 dark:text-gray-200">{answer}</p>}
     </div>
   );
 };
 
-// Update the SuccessStoryCard component
 const SuccessStoryCard = ({ name, story, improvement }) => {
   return (
-    <div className="bg-gray-500 dark:bg-gray-700 p-6 rounded-lg shadow-sm">
-      <h4 className="text-lg font-semibold mb-2 text-gray-200 dark:text-gray-100">{name}</h4>
-      <p className="text-gray-200 dark:text-gray-300 mb-4">"{story}"</p>
+    <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{name}</h4>
+      <p className="text-gray-800 dark:text-gray-200 mb-4">"{story}"</p>
       <div className="flex items-center">
-        <Check className="text-green-500 dark:text-green-400 mr-2" />
+        <Check className="text-green-500 mr-2" />
         <span className="text-green-600 dark:text-green-400 font-medium">{improvement}</span>
       </div>
     </div>
@@ -498,7 +513,7 @@ const SuccessStoryCard = ({ name, story, improvement }) => {
 const ExpertInsightCard = ({ expert, insight }) => {
   return (
     <div className="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
-      <p className="text-gray-900 dark:text-gray-100 mb-4">"{insight}"</p>
+      <p className="text-gray-800 dark:text-gray-200 mb-4">"{insight}"</p>
       <p className="font-semibold text-right text-gray-900 dark:text-gray-100">- {expert}</p>
     </div>
   );
@@ -508,7 +523,7 @@ const CommunityHighlightCard = ({ title, description }) => {
   return (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
       <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-      <p className="text-gray-900 dark:text-gray-100">{description}</p>
+      <p className="text-gray-800 dark:text-gray-200">{description}</p>
     </div>
   );
 };
@@ -521,17 +536,17 @@ const AppFeatureCard = ({ title, description, icon }) => {
       </div>
       <div>
         <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{title}</h4>
-        <p className="text-gray-900 dark:text-gray-100">{description}</p>
+        <p className="text-gray-800 dark:text-gray-200">{description}</p>
       </div>
     </div>
   );
 };
 
-// Update the PartnerLogo component
 const PartnerLogo = ({ name }) => {
   return (
     <div className="bg-gray-100 dark:bg-gray-700 h-20 rounded-lg flex items-center justify-center">
-      <span className="text-gray-100 dark:text-gray-300 font-medium">{name}</span>
+      <span className="text-gray-500 dark:text-gray-400 font-medium">{name}</span>
     </div>
   );
 };
+

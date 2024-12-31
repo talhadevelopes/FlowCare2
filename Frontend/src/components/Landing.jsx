@@ -481,13 +481,14 @@ const FAQItem = ({ question, answer }) => {
   );
 };
 
+// Update the SuccessStoryCard component
 const SuccessStoryCard = ({ name, story, improvement }) => {
   return (
-    <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-      <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">{name}</h4>
-      <p className="text-gray-900 dark:text-gray-100 mb-4">"{story}"</p>
+    <div className="bg-gray-500 dark:bg-gray-700 p-6 rounded-lg shadow-sm">
+      <h4 className="text-lg font-semibold mb-2 text-gray-200 dark:text-gray-100">{name}</h4>
+      <p className="text-gray-200 dark:text-gray-300 mb-4">"{story}"</p>
       <div className="flex items-center">
-        <Check className="text-green-500 mr-2" />
+        <Check className="text-green-500 dark:text-green-400 mr-2" />
         <span className="text-green-600 dark:text-green-400 font-medium">{improvement}</span>
       </div>
     </div>
@@ -526,10 +527,11 @@ const AppFeatureCard = ({ title, description, icon }) => {
   );
 };
 
+// Update the PartnerLogo component
 const PartnerLogo = ({ name }) => {
   return (
     <div className="bg-gray-100 dark:bg-gray-700 h-20 rounded-lg flex items-center justify-center">
-      <span className="text-gray-900 dark:text-gray-100 font-medium">{name}</span>
+      <span className="text-gray-100 dark:text-gray-300 font-medium">{name}</span>
     </div>
   );
 };

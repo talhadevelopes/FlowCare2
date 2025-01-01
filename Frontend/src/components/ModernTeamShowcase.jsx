@@ -24,7 +24,8 @@ const teamMembers = [
     name: "Mohammed Talha Ahmed Siddique",
     role: "Full Stack developer",
     image: talhaImage,
-    bio: "You dont know me, but your wife does, and the nigga who complained about me - bruh your mom loves pan cakes right?",
+    // bio: "You dont know me, but your wife does, and the nigga who complained about me - bruh your mom loves pan cakes right?",
+    bio: "An undergrad refining skills with MERN in hand, deploying apps with DevOps to take a stand. Crafting solutions that work across the land, the digital world is mine to command.",
     linkedin: "https://www.linkedin.com/in/mohammed-talha-ahmed-6871a42ab/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     isLead: false
   },

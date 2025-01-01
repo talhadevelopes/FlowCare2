@@ -18,6 +18,7 @@ import { Ecom } from "./components/Ecom";
 import { Chatbot } from "./components/Chatbot";
 import { Dashboard } from "./components/Dashboard";
 import { ModernTeamShowcase } from "./components/ModernTeamShowcase"
+import { SymptomAnalysis } from "./components/SymptomAnalysis"
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: "/team",
     element: <ModernTeamShowcase />,
+  },
+  {
+    path: "/symptomsanalyzer",
+    element: <SymptomAnalysis />,
   },
 ]);
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Calendar, Heart, Moon, Sun, Droplet, Utensils, Menu, X, Check, Star, Users, ArrowRight } from 'lucide-react';
+import { LayoutDashboard, HeartPulse, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Calendar, Heart, Moon, Sun, Droplet, Utensils, Menu, X, Check, Star, Users, ArrowRight } from 'lucide-react';
 
 
 export function Landing() {
@@ -43,6 +43,7 @@ export function Landing() {
             <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
             <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
             <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
+            <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" onClick={() => navigate('/symptomsanalyzer')} />
           </div>
         </nav>
       </aside>

@@ -231,7 +231,7 @@ const goals = [
 ]
 
 
-export function ParentDashboard() {
+export  function ParentDashboard() {
   const [darkMode, setDarkMode] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
 
@@ -520,43 +520,259 @@ export function ParentDashboard() {
   )
 
   const renderCycleTracking = () => (
-    <motion.div
-      variants={pageTransition}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      className="grid gap-6"
-    >
+    <div className="grid gap-6">
+      {/* Main Cycle Overview */}
       <motion.div
         variants={cardVariants}
-        whileHover="hover"
-        whileTap="tap"
+        initial="initial"
+        animate="animate"
+        className="grid md:grid-cols-2 gap-6"
+      >
+        {/* Symptoms Chart */}
+        <motion.div
+          variants={cardVariants}
+          whileHover="hover"
+          className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+        >
+          <div className="p-6">
+            <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
+              Symptom Intensity
+            </h3>
+            <div className="relative h-64">
+              <div className="absolute inset-0 flex items-end justify-between px-4">
+                {cycleData.days.map((day, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ height: 0 }}
+                    animate={{ height: `${day.symptoms * 20}%` }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.645, 0.045, 0.355, 1],
+                      delay: i * 0.02
+                    }}
+                    className="w-1.5 bg-gradient-to-t from-pink-500 to-purple-600 rounded-full"
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="mt-4 flex justify-between text-sm text-gray-500">
+              <span>Day 1</span>
+              <span>Day 15</span>
+              <span>Day 30</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Mood Tracking */}
+        <motion.div
+          variants={cardVariants}
+          whileHover="hover"
+          className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+        >
+          <div className="p-6">
+            <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
+              Mood Patterns
+            </h3>
+            <div className="relative h-64">
+              <div className="absolute inset-0 flex items-center justify-between px-4">
+                {cycleData.days.map((day, i) => (
+                  <div key={i} className="h-full flex items-center">
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: i * 0.03,
+                        ease: [0.645, 0.045, 0.355, 1]
+                      }}
+                      className="w-2 h-2 rounded-full"
+                      style={{
+                        backgroundColor: `hsl(${280 + (day.mood * 20)}, 70%, 60%)`
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <motion.div
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <svg className="w-full h-full">
+                  <path
+                    d={`M 0 ${32 * 2} ${cycleData.days.map((day, i) => `L ${(i * 100) / 30}% ${100 - (day.mood * 20)}%`).join(' ')}`}
+                    fill="none"
+                    stroke="url(#gradient)"
+                    strokeWidth="2"
+                    className="transition-all duration-300"
+                  />
+                  <defs>
+                    <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#ec4899" />
+                      <stop offset="100%" stopColor="#9333ea" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </motion.div>
+            </div>
+            <div className="mt-4 flex justify-between text-sm text-gray-500">
+              <span>Morning</span>
+              <span>Afternoon</span>
+              <span>Evening</span>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Cycle Analysis */}
+      <motion.div
+        variants={cardVariants}
+        initial="initial"
+        animate="animate"
         className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
       >
         <div className="p-6">
           <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
-            Cycle Overview
+            Cycle Analysis
           </h3>
-          <div className="relative h-64">
-            <div className="absolute inset-0 flex items-end justify-between px-4">
-              {cycleData.days.map((day, i) => (
+          <div className="grid md:grid-cols-4 gap-6">
+            {/* Phase Indicator */}
+            <div className="space-y-4">
+              <div className="p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 border border-pink-100/20 dark:border-pink-900/20">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Current Phase</p>
                 <motion.div
-                  key={i}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${day.symptoms * 20}%` }}
-                  transition={{
-                    duration: 0.6,
-                    ease: [0.645, 0.045, 0.355, 1],
-                    delay: i * 0.02
-                  }}
-                  className="w-1.5 bg-gradient-to-t from-pink-500 to-purple-600 rounded-full"
-                />
-              ))}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="relative"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full blur-lg opacity-20" />
+                  <p className="text-lg font-semibold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                    Follicular
+                  </p>
+                </motion.div>
+              </div>
+              <div className="p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 border border-pink-100/20 dark:border-pink-900/20">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Days Until Next</p>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-lg font-semibold text-purple-600 dark:text-purple-400"
+                >
+                  14 Days
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Cycle Calendar */}
+            <div className="md:col-span-3">
+              <div className="grid grid-cols-7 gap-2">
+                {Array.from({ length: 28 }, (_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.02 }}
+                    className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium ${
+                      i === 0
+                        ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white'
+                        : 'bg-white/50 dark:bg-gray-800/50 border border-pink-100/20 dark:border-pink-900/20'
+                    }`}
+                  >
+                    {i + 1}
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </motion.div>
-    </motion.div>
+
+      {/* Symptoms & Wellness */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Symptom Log */}
+        <motion.div
+          variants={cardVariants}
+          initial="initial"
+          animate="animate"
+          className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+        >
+          <div className="p-6">
+            <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
+              Recent Symptoms
+            </h3>
+            <div className="space-y-4">
+              {['Cramps', 'Headache', 'Fatigue'].map((symptom, index) => (
+                <motion.div
+                  key={symptom}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center justify-between p-4 rounded-xl bg-white/50<continuation_point>
+dark:bg-gray-800/50 border border-pink-100/20 dark:border-pink-900/20"
+                >
+                  <span className="font-medium">{symptom}</span>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((level) => (
+                      <motion.button
+                        key={level}
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        className={`w-2 h-2 rounded-full ${
+                          level <= 3
+                            ? 'bg-gradient-to-r from-pink-500 to-purple-600'
+                            : 'bg-gray-200 dark:bg-gray-700'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Wellness Score */}
+        <motion.div
+          variants={cardVariants}
+          initial="initial"
+          animate="animate"
+          className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+        >
+          <div className="p-6">
+            <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
+              Wellness Metrics
+            </h3>
+            <div className="space-y-6">
+              {[
+                { label: 'Sleep Quality', value: 85 },
+                { label: 'Energy Level', value: 70 },
+                { label: 'Mood Balance', value: 90 }
+              ].map((metric, index) => (
+                <div key={metric.label} className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="font-medium">{metric.label}</span>
+                    <span className="text-gray-500">{metric.value}%</span>
+                  </div>
+                  <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${metric.value}%` }}
+                      transition={{
+                        duration: 1,
+                        delay: index * 0.2,
+                        ease: [0.645, 0.045, 0.355, 1]
+                      }}
+                      className="h-full bg-gradient-to-r from-pink-500 to-purple-600"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
   )
 
   const renderMedications = () => (
@@ -828,4 +1044,5 @@ export function ParentDashboard() {
     </div>
   )
 }
+
 

@@ -1,8 +1,68 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Activity, Bell, Brain, Calendar, ChevronRight, FileText, Heart, Mail, MessageCircle, Moon, Phone, Pill, Play, Plus, Sun, User, Sparkles, TrendingUp } from 'lucide-react'
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
+import { Activity, Bell, Brain, Calendar, ChevronRight, FileText, Heart, Mail, MessageCircle, Moon, Phone, Pill, Play, Plus, Sun, User, Sparkles, TrendingUp, Target, Clock, Award, BarChart2 } from 'lucide-react'
+
+// Animation variants defined inline
+const pageTransition = {
+  initial: { opacity: 0, y: 20 },
+  animate: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.645, 0.045, 0.355, 1], // Cubic bezier for smooth motion
+      staggerChildren: 0.1
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    y: -20,
+    transition: {
+      duration: 0.4,
+      ease: [0.645, 0.045, 0.355, 1]
+    }
+  }
+}
+
+const cardVariants = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { 
+    opacity: 1, 
+    scale: 1,
+    transition: {
+      duration: 0.4,
+      ease: [0.645, 0.045, 0.355, 1]
+    }
+  },
+  hover: { 
+    y: -8,
+    transition: {
+      duration: 0.3,
+      ease: [0.645, 0.045, 0.355, 1]
+    }
+  },
+  tap: { 
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+      ease: [0.645, 0.045, 0.355, 1]
+    }
+  }
+}
+
+const listItemVariants = {
+  initial: { opacity: 0, x: -20 },
+  animate: { 
+    opacity: 1, 
+    x: 0,
+    transition: {
+      duration: 0.4,
+      ease: [0.645, 0.045, 0.355, 1]
+    }
+  }
+}
 
 // Mock data
 const mockChildrenData = [
@@ -96,6 +156,78 @@ const contacts = [
     email: "clinic@example.com",
     available: "8AM - 8PM",
   },
+]
+
+const cycleData = {
+  days: Array.from({ length: 30 }, (_, i) => ({
+    day: i + 1,
+    symptoms: Math.random() * 5,
+    mood: Math.random() * 5,
+    energy: Math.random() * 5
+  }))
+}
+
+const medications = [
+  {
+    name: "Iron Supplement",
+    schedule: "Daily",
+    time: "8:00 AM",
+    taken: true
+  },
+  {
+    name: "Vitamin D",
+    schedule: "Daily",
+    time: "8:00 AM",
+    taken: true
+  },
+  {
+    name: "Pain Relief",
+    schedule: "As needed",
+    time: "When required",
+    taken: false
+  }
+]
+
+const activities = [
+  {
+    type: "Exercise",
+    duration: "30 mins",
+    date: "Today",
+    completed: true
+  },
+  {
+    type: "Meditation",
+    duration: "15 mins",
+    date: "Today",
+    completed: false
+  },
+  {
+    type: "Water Intake",
+    duration: "2L",
+    date: "Today",
+    completed: true
+  }
+]
+
+const goals = [
+  {
+    title: "Regular Exercise",
+    progress: 80,
+    target: "30 mins daily",
+    streak: 5
+  },
+  {
+    title: "Sleep Schedule",
+    progress: 90,
+    target: "8 hours daily",
+    streak: 7
+  },
+  {
+    title: "Symptom Tracking",
+    progress: 100,
+    target: "Daily logging",
+    streak: 10
+  }
 ]
 
 
@@ -387,6 +519,215 @@ export function ParentDashboard() {
     </div>
   )
 
+  const renderCycleTracking = () => (
+    <motion.div
+      variants={pageTransition}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="grid gap-6"
+    >
+      <motion.div
+        variants={cardVariants}
+        whileHover="hover"
+        whileTap="tap"
+        className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+      >
+        <div className="p-6">
+          <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
+            Cycle Overview
+          </h3>
+          <div className="relative h-64">
+            <div className="absolute inset-0 flex items-end justify-between px-4">
+              {cycleData.days.map((day, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${day.symptoms * 20}%` }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.645, 0.045, 0.355, 1],
+                    delay: i * 0.02
+                  }}
+                  className="w-1.5 bg-gradient-to-t from-pink-500 to-purple-600 rounded-full"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+
+  const renderMedications = () => (
+    <motion.div
+      variants={pageTransition}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="grid gap-6"
+    >
+      <motion.div
+        variants={cardVariants}
+        className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+      >
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              Medication Schedule
+            </h3>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 rounded-lg bg-pink-500 text-white font-medium"
+            >
+              <Plus className="h-4 w-4" />
+            </motion.button>
+          </div>
+          <div className="space-y-4">
+            <LayoutGroup>
+              {medications.map((med, index) => (
+                <motion.div
+                  layout
+                  key={index}
+                  variants={listItemVariants}
+                  className="p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl border border-pink-100/20 dark:border-pink-900/20"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-pink-100 dark:bg-pink-900/30 rounded-lg">
+                        <Pill className="h-5 w-5 text-pink-500" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium">{med.name}</h4>
+                        <p className="text-sm text-gray-500">{med.schedule}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-sm text-gray-500">{med.time}</span>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className={`h-6 w-6 rounded-full ${
+                          med.taken
+                            ? 'bg-green-500'
+                            : 'bg-gray-200 dark:bg-gray-700'
+                        }`}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </LayoutGroup>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+
+  const renderActivities = () => (
+    <motion.div
+      variants={pageTransition}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="grid gap-6"
+    >
+      <motion.div
+        variants={cardVariants}
+        className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+      >
+        <div className="p-6">
+          <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
+            Daily Activities
+          </h3>
+          <div className="space-y-4">
+            {activities.map((activity, index) => (
+              <motion.div
+                key={index}
+                variants={listItemVariants}
+                className="p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl border border-pink-100/20 dark:border-pink-900/20"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-pink-100 dark:bg-pink-900/30 rounded-lg">
+                      <Activity className="h-5 w-5 text-pink-500" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium">{activity.type}</h4>
+                      <p className="text-sm text-gray-500">{activity.duration}</p>
+                    </div>
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`h-6 w-6 rounded-full ${
+                      activity.completed
+                        ? 'bg-green-500'
+                        : 'bg-gray-200 dark:bg-gray-700'
+                    }`}
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+
+  const renderGoals = () => (
+    <motion.div
+      variants={pageTransition}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="grid gap-6"
+    >
+      <motion.div
+        variants={cardVariants}
+        className="relative overflow-hidden bg-gradient-to-br from-white to-pink-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-pink-100/20"
+      >
+        <div className="p-6">
+          <h3 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-6">
+            Wellness Goals
+          </h3>
+          <div className="grid gap-6">
+            {goals.map((goal, index) => (
+              <motion.div
+                key={index}
+                variants={listItemVariants}
+                className="space-y-2"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium">{goal.title}</h4>
+                    <p className="text-sm text-gray-500">{goal.target}</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Award className="h-4 w-4 text-pink-500" />
+                    <span className="text-sm font-medium">{goal.streak} days</span>
+                  </div>
+                </div>
+                <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${goal.progress}%` }}
+                    transition={{
+                      duration: 1,
+                      ease: [0.645, 0.045, 0.355, 1]
+                    }}
+                    className="h-full bg-gradient-to-r from-pink-500 to-purple-600"
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-pink-100/20 dark:border-pink-900/20">
@@ -432,9 +773,22 @@ export function ParentDashboard() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.645, 0.045, 0.355, 1]
+            }}
             className="flex space-x-1 p-1 rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-lg border border-pink-100/20 dark:border-pink-900/20"
           >
-            {['overview', 'health', 'education', 'emergency'].map((tab) => (
+            {[
+              'overview',
+              'health',
+              'cycle',
+              'medications',
+              'activities',
+              'goals',
+              'education',
+              'emergency'
+            ].map((tab) => (
               <motion.button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -454,13 +808,17 @@ export function ParentDashboard() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageTransition}
             >
               {activeTab === 'overview' && renderOverviewCards()}
               {activeTab === 'health' && renderHealthCards()}
+              {activeTab === 'cycle' && renderCycleTracking()}
+              {activeTab === 'medications' && renderMedications()}
+              {activeTab === 'activities' && renderActivities()}
+              {activeTab === 'goals' && renderGoals()}
               {activeTab === 'education' && renderEducationResources()}
               {activeTab === 'emergency' && renderEmergencyContacts()}
             </motion.div>

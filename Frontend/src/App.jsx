@@ -19,6 +19,7 @@ import { Chatbot } from "./components/Chatbot";
 import { Dashboard } from "./components/Dashboard";
 import { ModernTeamShowcase } from "./components/ModernTeamShowcase"
 import { SymptomAnalysis } from "./components/SymptomAnalysis"
+import { ParentDashboard } from "./components/ParentDashboard"
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
   {
     path: "/symptomsanalyzer",
     element: <SymptomAnalysis />,
+  },
+  {
+    path: "/parents",
+    element: <ParentDashboard />,
   },
 ]);
 

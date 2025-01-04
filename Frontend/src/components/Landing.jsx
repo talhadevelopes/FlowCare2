@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, HeartPulse, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Calendar, Heart, Moon, Sun, Droplet, Utensils, Menu, X, Check, Star, Users, ArrowRight } from 'lucide-react';
-
+import { LayoutDashboard, HeartPulse, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Calendar, Heart, Moon, Sun, Droplet, Utensils, Menu, X, Check, Star, Users, ArrowRight, UserCircle } from 'lucide-react';
 
 export function Landing() {
   const navigate = useNavigate();
@@ -87,9 +86,9 @@ export function Landing() {
                   Join Us!
                 </button>
               </div>
-              {/* <div className="w-full md:w-1/2 mt-8 md:mt-0">
+              <div className="w-full md:w-1/2 mt-8 md:mt-0">
                 <img src="/placeholder.svg?height=300&width=400" alt="FlowCare App" className="rounded-lg shadow-lg w-full h-auto" />
-              </div> */}
+              </div>
             </div>
           </Card>
 
@@ -346,6 +345,42 @@ export function Landing() {
             </div>
           </Card>
 
+          {/* Parent Dashboard Access */}
+          <Card className="my-8">
+            <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl p-6 relative overflow-hidden group">
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">Parent Dashboard</h3>
+                    <p className="text-gray-200">Access comprehensive insights for your child's health</p>
+                  </div>
+                  <div className="bg-white/20 p-3 rounded-full">
+                    <UserCircle className="h-8 w-8 text-white" />
+                  </div>
+                </div>
+
+                <p className="text-white/80">
+                  Our Parent Dashboard provides a centralized view of your child's health metrics, 
+                  allowing you to track growth, monitor symptoms, and stay informed about their well-being.
+                </p>
+
+                <button
+                  onClick={() => navigate('/parents')}
+                  className="w-full bg-white text-purple-600 px-6 py-3 rounded-lg font-medium
+                             hover:bg-gray-100 transition-all duration-300
+                             flex items-center justify-center space-x-2 group"
+                >
+                  <span>Access Parent Dashboard</span>
+                  <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+              <div className="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+            </div>
+          </Card>
+
           {/* CTA */}
           <Card>
             <div className="text-center">
@@ -360,7 +395,7 @@ export function Landing() {
             </div>
           </Card>
 
-          {/* Team Members Card - Now at the bottom */}
+          {/* Team Members Card */}
           <Card className="my-8">
             <div className="bg-gray-900 rounded-xl p-6 relative overflow-hidden group">
               {/* Animated Background Pattern */}
@@ -493,7 +528,7 @@ export function Landing() {
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
-              <p className="text-gray-700 dark:text-gray-400"> TEAM: EmpowerHer</p>
+              <p className="text-gray-700 dark:text-gray-400">TEAM: EmpowerHer</p>
               <p className="text-gray-700 dark:text-gray-400">&copy; 2024 FlowCare. All rights reserved.</p>
             </div>
           </footer>
@@ -670,4 +705,5 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
 

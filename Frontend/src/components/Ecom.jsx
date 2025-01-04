@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ShoppingCart, Home, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, ChevronDown, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, Coffee } from 'lucide-react';
+'use client'
+
+import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ShoppingCart, Home, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2 } from 'lucide-react'
 
 const products = [
   {
@@ -63,101 +65,171 @@ const products = [
     rating: 4.1,
     category: "Accessories"
   },
-];
+]
 
-const categories = ["All", "Pads", "Tampons", "Menstrual Cups", "Pain Relief", "Accessories", "Hygiene"];
+const categories = ["All", "Pads", "Tampons", "Menstrual Cups", "Pain Relief", "Accessories", "Hygiene"]
 
 export function Ecom() {
-  const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [cartItems, setCartItems] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [sortBy, setSortBy] = useState("featured");
+  const [darkMode, setDarkMode] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [cartItems, setCartItems] = useState([])
+  const [favorites, setFavorites] = useState([])
+  const [sortBy, setSortBy] = useState("featured")
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+    setDarkMode(!darkMode)
+    const root = document.documentElement
+    root.classList.toggle('dark', !darkMode)
+  }
 
   const addToCart = (product) => {
-    setCartItems([...cartItems, product]);
-  };
+    setCartItems(prev => {
+      const existingItem = prev.find(item => item.id === product.id)
+      if (existingItem) {
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      }
+      return [...prev, { ...product, quantity: 1 }]
+    })
+    setIsCartOpen(true)
+  }
+
+  const updateCartItemQuantity = (id, quantity) => {
+    setCartItems(prev =>
+      quantity === 0
+        ? prev.filter(item => item.id !== id)
+        : prev.map(item =>
+            item.id === id ? { ...item, quantity } : item
+          )
+    )
+  }
+
+  const removeCartItem = (id) => {
+    setCartItems(prev => prev.filter(item => item.id !== id))
+  }
 
   const toggleFavorite = (productId) => {
-    setFavorites(prevFavorites => 
-      prevFavorites.includes(productId)
-        ? prevFavorites.filter(id => id !== productId)
-        : [...prevFavorites, productId]
-    );
-  };
+    setFavorites(prev => 
+      prev.includes(productId)
+        ? prev.filter(id => id !== productId)
+        : [...prev, productId]
+    )
+  }
 
   const filteredProducts = products
-    .filter(product => selectedCategory === "All" || product.category === selectedCategory)
+    .filter(product => 
+      (selectedCategory === "All" || product.category === selectedCategory) &&
+      (searchQuery === "" || 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.brand.toLowerCase().includes(searchQuery.toLowerCase()))
+    )
     .sort((a, b) => {
-      if (sortBy === "priceLowToHigh") return a.price - b.price;
-      if (sortBy === "priceHighToLow") return b.price - a.price;
-      if (sortBy === "rating") return b.rating - a.rating;
-      return 0; // Default (featured) sorting
-    });
+      if (sortBy === "priceLowToHigh") return a.price - b.price
+      if (sortBy === "priceHighToLow") return b.price - a.price
+      if (sortBy === "rating") return b.rating - a.rating
+      return 0
+    })
 
-  const SidebarLink = ({ icon, label, onClick, active = false }) => (
-    <button
-      onClick={onClick}
-      className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
-        active
-          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
-          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </button>
-  );
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       {/* Sidebar */}
-      <aside className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4">
+      <motion.aside
+        initial={{ x: -20, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4 border-r border-gray-200 dark:border-gray-700"
+      >
         <nav className="mt-8 space-y-4">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">FlowCare</h1>
-          <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
-          <SidebarLink icon={<BookOpen size={20} />} label="Education" onClick={() => navigate('/blogs')} />
-          <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} active />
-          <SidebarLink icon={<Activity size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
-          <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
-          <SidebarLink icon={<MessageCircle size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
+          <motion.h1
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-8"
+          >
+            FlowCare
+          </motion.h1>
+          {[
+            { icon: <Home size={20} />, label: "Home", path: "/" },
+            { icon: <BookOpen size={20} />, label: "Education", path: "/blogs" },
+            { icon: <ShoppingBag size={20} />, label: "Shop", path: "/Ecom", active: true },
+            { icon: <Activity size={20} />, label: "Track Your Health", path: "/tracker" },
+            { icon: <Stethoscope size={20} />, label: "Expert Consultation", path: "/consultations" },
+            { icon: <MessageCircle size={20} />, label: "AI Chatbot", path: "/ChatBot" }
+          ].map((link) => (
+            <motion.button
+              key={link.label}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
+                link.active
+                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              {link.icon}
+              <span>{link.label}</span>
+            </motion.button>
+          ))}
         </nav>
-      </aside>
+      </motion.aside>
 
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-auto bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
-          <div className="flex justify-between items-center">
-            <h1 className="text-4xl font-bold text-pink-600 dark:text-pink-400">Shop</h1>
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="flex justify-between items-center"
+          >
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              Shop
+            </h1>
             <div className="flex items-center space-x-4">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={toggleDarkMode}
                 className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
               >
                 {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </button>
-              <button className="relative p-2 rounded-full bg-pink-100 text-pink-600 dark:bg-pink-900 dark:text-pink-300">
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white"
+              >
                 <ShoppingCart className="h-6 w-6" />
                 {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                    {cartItems.length}
-                  </span>
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"
+                  >
+                    {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                  </motion.span>
                 )}
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Search and Filter */}
-          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4"
+          >
             <div className="relative flex-grow">
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
                 className="w-full px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-300 dark:bg-gray-700 dark:text-white"
               />
@@ -182,71 +254,217 @@ export function Ecom() {
               <option value="priceHighToLow">Price: High to Low</option>
               <option value="rating">Highest Rated</option>
             </select>
-            <button className="flex items-center space-x-2 px-4 py-2 rounded-full bg-pink-500 text-white hover:bg-pink-600 transition-colors">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white"
+            >
               <Filter className="h-5 w-5" />
               <span className="hidden md:inline">Filter</span>
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ staggerChildren: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                <div className="p-4 flex justify-center">{product.icon}</div>
-                <div className="p-4">
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8 }}
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="p-6 flex justify-center"
+                >
+                  {product.icon}
+                </motion.div>
+                <div className="p-6">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
                   <div className="mt-2 flex items-center">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`h-5 w-5 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+                      <Star
+                        key={i}
+                        className={`h-5 w-5 ${
+                          i < Math.floor(product.rating)
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                        }`}
+                        fill="currentColor"
+                      />
                     ))}
-                    <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">{product.rating.toFixed(1)}</span>
+                    <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                      {product.rating.toFixed(1)}
+                    </span>
                   </div>
-                  <div className="mt-2 flex items-center justify-between">
+                  <div className="mt-4 flex items-center justify-between">
                     <div>
-                      <span className="text-lg font-bold text-pink-600 dark:text-pink-400">${product.price.toFixed(2)}</span>
-                      <span className="ml-2 text-sm line-through text-gray-500">${product.oldPrice.toFixed(2)}</span>
+                      <span className="text-lg font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                        ${product.price.toFixed(2)}
+                      </span>
+                      <span className="ml-2 text-sm line-through text-gray-500">
+                        ${product.oldPrice.toFixed(2)}
+                      </span>
                     </div>
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       onClick={() => toggleFavorite(product.id)}
-                      className={`p-2 rounded-full ${favorites.includes(product.id) ? 'text-red-500' : 'text-gray-400'}`}
+                      className={`p-2 rounded-full ${
+                        favorites.includes(product.id)
+                          ? 'text-red-500'
+                          : 'text-gray-400'
+                      }`}
                     >
-                      <Heart className="h-6 w-6" fill={favorites.includes(product.id) ? "currentColor" : "none"} />
-                    </button>
+                      <Heart
+                        className="h-6 w-6"
+                        fill={favorites.includes(product.id) ? "currentColor" : "none"}
+                      />
+                    </motion.button>
                   </div>
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => addToCart(product)}
-                    className="mt-4 w-full px-4 py-2 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-colors"
+                    className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full"
                   >
                     Add to Cart
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Pagination */}
-          <div className="flex justify-center mt-8">
-            <nav className="inline-flex rounded-md shadow">
-              <a href="#" className="px-3 py-2 rounded-l-md border border-gray-300 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700">
-                Previous
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                1
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                2
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                3
-              </a>
-              <a href="#" className="px-3 py-2 rounded-r-md border border-gray-300 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700">
-                Next
-              </a>
-            </nav>
-          </div>
+          {/* Cart Dialog */}
+          <AnimatePresence>
+            {isCartOpen && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.5 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-black"
+                  onClick={() => setIsCartOpen(false)}
+                />
+                <motion.div
+                  initial={{ x: '100%' }}
+                  animate={{ x: 0 }}
+                  exit={{ x: '100%' }}
+                  className="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-800 shadow-xl p-6 overflow-auto"
+                >
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold flex items-center gap-2">
+                      <ShoppingCart className="h-6 w-6" />
+                      Your Cart
+                    </h2>
+                    <button
+                      onClick={() => setIsCartOpen(false)}
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <X className="h-6 w-6" />
+                    </button>
+                  </div>
+
+                  {cartItems.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+                      <motion.div
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="p-4 rounded-full bg-pink-100 dark:bg-pink-900/30"
+                      >
+                        <ShoppingBag className="h-8 w-8 text-pink-500" />
+                      </motion.div>
+                      <p className="text-gray-500 dark:text-gray-400 text-center">Your cart is empty</p>
+                      <button
+                        onClick={() => setIsCartOpen(false)}
+                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        Continue Shopping
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="space-y-4 mb-6">
+                        <AnimatePresence mode="popLayout">
+                          {cartItems.map((item) => (
+                            <motion.div
+                              key={item.id}
+                              layout
+                              initial={{ scale: 0.95, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              exit={{ scale: 0.95, opacity: 0 }}
+                              className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700"
+                            >
+                              <div className="p-2 rounded-md bg-pink-100 dark:bg-pink-900/30">
+                                {item.icon}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-medium truncate">{item.name}</h4>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{item.brand}</p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  onClick={() => updateCartItemQuantity(item.id, Math.max(0, item.quantity - 1))}
+                                  className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                                >
+                                  <Minus className="h-4 w-4" />
+                                </motion.button>
+                                <span className="w-8 text-center">{item.quantity}</span>
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}
+                                  className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </motion.button>
+                              </div>
+                              <div className="flex items-center gap-4">
+                                <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  onClick={() => removeCartItem(item.id)}
+                                  className="p-1 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </motion.button>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </AnimatePresence>
+                      </div>
+                      <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">Total</span>
+                          <span className="font-bold text-lg">${total.toFixed(2)}</span>
+                        </div>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg"
+                        >
+                          Proceed to Checkout
+                        </motion.button>
+                      </div>
+                    </>
+                  )}
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
       </main>
     </div>
-  );
+  )
 }
+

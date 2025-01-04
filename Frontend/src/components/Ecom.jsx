@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ShoppingCart, Home, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2 } from 'lucide-react'
+import { ShoppingCart, Home, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2, Gift, Sparkles, ArrowRight, Send, Calendar, Coffee, Pill, Bath, Wind } from 'lucide-react'
 
 const products = [
   {
@@ -13,7 +13,9 @@ const products = [
     oldPrice: 10.99,
     icon: <Package className="h-12 w-12 text-pink-500" />,
     rating: 4.5,
-    category: "Pads"
+    category: "Pads",
+    isNew: true,
+    featured: true
   },
   {
     id: 2,
@@ -23,7 +25,8 @@ const products = [
     oldPrice: 34.99,
     icon: <Droplet className="h-12 w-12 text-blue-500" />,
     rating: 4.8,
-    category: "Menstrual Cups"
+    category: "Menstrual Cups",
+    featured: true
   },
   {
     id: 3,
@@ -33,7 +36,8 @@ const products = [
     oldPrice: 19.99,
     icon: <Zap className="h-12 w-12 text-yellow-500" />,
     rating: 4.2,
-    category: "Pain Relief"
+    category: "Pain Relief",
+    isNew: true
   },
   {
     id: 4,
@@ -53,7 +57,8 @@ const products = [
     oldPrice: 9.99,
     icon: <Package className="h-12 w-12 text-purple-500" />,
     rating: 4.4,
-    category: "Tampons"
+    category: "Tampons",
+    featured: true
   },
   {
     id: 6,
@@ -63,11 +68,76 @@ const products = [
     oldPrice: 59.99,
     icon: <Activity className="h-12 w-12 text-indigo-500" />,
     rating: 4.1,
-    category: "Accessories"
+    category: "Accessories",
+    isNew: true
   },
+  {
+    id: 7,
+    name: "Herbal Tea Collection",
+    brand: "MoonBloom",
+    price: 19.99,
+    oldPrice: 24.99,
+    icon: <Coffee className="h-12 w-12 text-amber-500" />,
+    rating: 4.7,
+    category: "Wellness",
+    isNew: true
+  },
+  {
+    id: 8,
+    name: "Natural Pain Relief Pills",
+    brand: "HerbalEase",
+    price: 22.99,
+    oldPrice: 27.99,
+    icon: <Pill className="h-12 w-12 text-red-500" />,
+    rating: 4.3,
+    category: "Pain Relief"
+  },
+  {
+    id: 9,
+    name: "Relaxing Bath Bombs",
+    brand: "SpaFlow",
+    price: 16.99,
+    oldPrice: 21.99,
+    icon: <Bath className="h-12 w-12 text-teal-500" />,
+    rating: 4.9,
+    category: "Wellness",
+    featured: true
+  },
+  {
+    id: 10,
+    name: "Aromatherapy Diffuser",
+    brand: "CalmScents",
+    price: 39.99,
+    oldPrice: 49.99,
+    icon: <Wind className="h-12 w-12 text-cyan-500" />,
+    rating: 4.6,
+    category: "Wellness",
+    isNew: true
+  }
 ]
 
-const categories = ["All", "Pads", "Tampons", "Menstrual Cups", "Pain Relief", "Accessories", "Hygiene"]
+const categories = ["All", "Pads", "Tampons", "Menstrual Cups", "Pain Relief", "Wellness", "Accessories"]
+
+const specialOffers = [
+  {
+    title: "Summer Sale",
+    description: "Get 20% off on all menstrual cups",
+    code: "SUMMER20",
+    expiry: "Limited time offer"
+  },
+  {
+    title: "Bundle & Save",
+    description: "Buy any 3 wellness products and save 15%",
+    code: "WELLNESS15",
+    expiry: "Valid until stocks last"
+  },
+  {
+    title: "First Purchase",
+    description: "10% off on your first order",
+    code: "WELCOME10",
+    expiry: "For new customers"
+  }
+]
 
 export function Ecom() {
   const [darkMode, setDarkMode] = useState(false)
@@ -77,6 +147,7 @@ export function Ecom() {
   const [sortBy, setSortBy] = useState("featured")
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [email, setEmail] = useState("")
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
@@ -121,6 +192,12 @@ export function Ecom() {
     )
   }
 
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    alert("Thank you for subscribing!")
+    setEmail("")
+  }
+
   const filteredProducts = products
     .filter(product => 
       (selectedCategory === "All" || product.category === selectedCategory) &&
@@ -135,11 +212,13 @@ export function Ecom() {
       return 0
     })
 
+  const featuredProducts = products.filter(p => p.featured)
+  const newArrivals = products.filter(p => p.isNew)
+
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
-      {/* Sidebar */}
       <motion.aside
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -178,10 +257,8 @@ export function Ecom() {
         </nav>
       </motion.aside>
 
-      {/* Main Content */}
       <main className="flex-1 p-8 overflow-auto bg-gray-100 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto space-y-8">
-          {/* Header */}
+        <div className="max-w-7xl mx-auto space-y-12">
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -219,7 +296,6 @@ export function Ecom() {
             </div>
           </motion.div>
 
-          {/* Search and Filter */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -264,85 +340,353 @@ export function Ecom() {
             </motion.button>
           </motion.div>
 
-          {/* Product Grid */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ staggerChildren: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {filteredProducts.map((product) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+          <section className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                Featured Products
+              </h2>
+              <motion.button
+                whileHover={{ scale: 1.02, x: 5 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-2 text-pink-500 dark:text-pink-400"
               >
+                View All <ArrowRight className="h-4 w-4" />
+              </motion.button>
+            </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            >
+              {featuredProducts.map((product) => (
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="p-6 flex justify-center"
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -8 }}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700"
                 >
-                  {product.icon}
-                </motion.div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
-                  <div className="mt-2 flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-5 w-5 ${
-                          i < Math.floor(product.rating)
-                            ? 'text-yellow-400'
-                            : 'text-gray-300'
-                        }`}
-                        fill="currentColor"
-                      />
-                    ))}
-                    <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                      {product.rating.toFixed(1)}
-                    </span>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between">
-                    <div>
-                      <span className="text-lg font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-                        ${product.price.toFixed(2)}
-                      </span>
-                      <span className="ml-2 text-sm line-through text-gray-500">
-                        ${product.oldPrice.toFixed(2)}
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="p-6 flex justify-center"
+                  >
+                    {product.icon}
+                  </motion.div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
+                    <div className="mt-2 flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-5 w-5 ${
+                            i < Math.floor(product.rating)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                          }`}
+                          fill="currentColor"
+                        />
+                      ))}
+                      <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                        {product.rating.toFixed(1)}
                       </span>
                     </div>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div>
+                        <span className="text-lg font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                          ${product.price.toFixed(2)}
+                        </span>
+                        <span className="ml-2 text-sm line-through text-gray-500">
+                          ${product.oldPrice.toFixed(2)}
+                        </span>
+                      </div>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => toggleFavorite(product.id)}
+                        className={`p-2 rounded-full ${
+                          favorites.includes(product.id)
+                            ? 'text-red-500'
+                            : 'text-gray-400'
+                        }`}
+                      >
+                        <Heart
+                          className="h-6 w-6"
+                          fill={favorites.includes(product.id) ? "currentColor" : "none"}
+                        />
+                      </motion.button>
+                    </div>
                     <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => toggleFavorite(product.id)}
-                      className={`p-2 rounded-full ${
-                        favorites.includes(product.id)
-                          ? 'text-red-500'
-                          : 'text-gray-400'
-                      }`}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => addToCart(product)}
+                      className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full"
                     >
-                      <Heart
-                        className="h-6 w-6"
-                        fill={favorites.includes(product.id) ? "currentColor" : "none"}
-                      />
+                      Add to Cart
                     </motion.button>
                   </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </section>
+
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              Special Offers
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {specialOffers.map((offer, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.02 }}
+                  className="p-6 bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-xl border border-pink-100 dark:border-pink-800"
+                >
+                  <Gift className="h-8 w-8 text-pink-500 mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">{offer.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">{offer.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-sm bg-white dark:bg-gray-800 px-2 py-1 rounded">
+                      {offer.code}
+                    </span>
+                    <span className="text-sm text-gray-500">{offer.expiry}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent flex items-center gap-2">
+                New Arrivals <Sparkles className="h-6 w-6" />
+              </h2>
+              <motion.button
+                whileHover={{ scale: 1.02, x: 5 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-2 text-pink-500 dark:text-pink-400"
+              >
+                View All <ArrowRight className="h-4 w-4" />
+              </motion.button>
+            </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            >
+              {newArrivals.map((product) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -8 }}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="p-6 flex justify-center"
+                  >
+                    {product.icon}
+                  </motion.div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
+                    <div className="mt-2 flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-5 w-5 ${
+                            i < Math.floor(product.rating)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                          }`}
+                          fill="currentColor"
+                        />
+                      ))}
+                      <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                        {product.rating.toFixed(1)}
+                      </span>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div>
+                        <span className="text-lg font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                          ${product.price.toFixed(2)}
+                        </span>
+                        <span className="ml-2 text-sm line-through text-gray-500">
+                          ${product.oldPrice.toFixed(2)}
+                        </span>
+                      </div>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => toggleFavorite(product.id)}
+                        className={`p-2 rounded-full ${
+                          favorites.includes(product.id)
+                            ? 'text-red-500'
+                            : 'text-gray-400'
+                        }`}
+                      >
+                        <Heart
+                          className="h-6 w-6"
+                          fill={favorites.includes(product.id) ? "currentColor" : "none"}
+                        />
+                      </motion.button>
+                    </div>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => addToCart(product)}
+                      className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full"
+                    >
+                      Add to Cart
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </section>
+
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              Shop by Category
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {categories.filter(cat => cat !== "All").map((category, index) => (
+                <motion.button
+                  key={category}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`p-6 rounded-xl border text-center transition-colors ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white border-transparent'
+                      : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-700'
+                  }`}
+                >
+                  <h3 className="font-medium">{category}</h3>
+                  <p className="text-sm mt-1 opacity-75">
+                    {products.filter(p => p.category === category).length} Products
+                  </p>
+                </motion.button>
+              ))}
+            </div>
+          </section>
+
+          <section className="relative overflow-hidden rounded-2xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600 opacity-10" />
+            <div className="relative p-8 md:p-12">
+              <div className="max-w-2xl mx-auto text-center space-y-4">
+                <h2 className="text-2xl md:text-3xl font-bold">Stay Updated</h2>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Subscribe to our newsletter for exclusive offers and period care tips.
+                </p>
+                <form onSubmit={handleSubscribe} className="flex gap-4 max-w-md mx-auto">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-300 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => addToCart(product)}
-                    className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full"
+                    type="submit"
+                    className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg flex items-center gap-2"
                   >
-                    Add to Cart
+                    Subscribe <Send className="h-4 w-4" />
                   </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                </form>
+              </div>
+            </div>
+          </section>
 
-          {/* Cart Dialog */}
+          <section className="space-y-6">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              All Products
+            </h2>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            >
+              {filteredProducts.map((product) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -8 }}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="p-6 flex justify-center"
+                  >
+                    {product.icon}
+                  </motion.div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
+                    <div className="mt-2 flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-5 w-5 ${
+                            i < Math.floor(product.rating)
+                              ? 'text-yellow-400'
+                              : 'text-gray-300'
+                          }`}
+                          fill="currentColor"
+                        />
+                      ))}
+                      <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                        {product.rating.toFixed(1)}
+                      </span>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div>
+                        <span className="text-lg font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                          ${product.price.toFixed(2)}
+                        </span>
+                        <span className="ml-2 text-sm line-through text-gray-500">
+                          ${product.oldPrice.toFixed(2)}
+                        </span>
+                      </div>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => toggleFavorite(product.id)}
+                        className={`p-2 rounded-full ${
+                          favorites.includes(product.id)
+                            ? 'text-red-500'
+                            : 'text-gray-400'
+                        }`}
+                      >
+                        <Heart
+                          className="h-6 w-6"
+                          fill={favorites.includes(product.id) ? "currentColor" : "none"}
+                        />
+                      </motion.button>
+                    </div>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => addToCart(product)}
+                      className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full"
+                    >
+                      Add to Cart
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </section>
+
           <AnimatePresence>
             {isCartOpen && (
               <>
@@ -368,8 +712,7 @@ export function Ecom() {
                       onClick={() => setIsCartOpen(false)}
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                      <X className="h-6 w-6" />
-                    </button>
+                      <X className="h-6 w-6" />                    </button>
                   </div>
 
                   {cartItems.length === 0 ? (

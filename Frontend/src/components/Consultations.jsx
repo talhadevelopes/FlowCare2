@@ -1,204 +1,164 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { Home, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, ChevronDown, Search, MapPin, User, Calendar, Phone, ArrowRight, Star } from 'lucide-react';
+'use client'
 
-const cities = ["Hyderabad", "Mumbai", "Delhi", "Gurgaon", "Noida", "Chandigarh"];
-const specializations = ["Obstetrics", "Gynecology", "Urogynecology", "Reproductive Medicine"];
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { CalendarIcon, MapPin, Search, Star, Clock, DollarSign, ChevronDown } from 'lucide-react'
+
+const specializations = [
+  "Gynecology",
+  "Obstetrics",
+  "Reproductive Endocrinology",
+  "Urogynecology",
+  "Gynecologic Oncology"
+]
 
 const doctors = [
   {
     id: 1,
     name: "Dr. Sarah Johnson",
-    specialization: "Obstetrics & Gynecology",
-    hospital: "Care Hospitals",
+    specialization: "Gynecology",
     rating: 4.8,
-    experience: "15 years",
-    consultationFee: "$100",
-    image: "https://randomuser.me/api/portraits/women/68.jpg"
+    reviewCount: 124,
+    availableDate: "2024-03-15",
+    price: 150,
+    image: "/placeholder.svg?height=100&width=100"
   },
   {
     id: 2,
     name: "Dr. Emily Chen",
-    specialization: "Reproductive Medicine",
-    hospital: "Fertility Center",
+    specialization: "Obstetrics",
     rating: 4.9,
-    experience: "12 years",
-    consultationFee: "$120",
-    image: "https://randomuser.me/api/portraits/women/75.jpg"
+    reviewCount: 98,
+    availableDate: "2024-03-16",
+    price: 180,
+    image: "/placeholder.svg?height=100&width=100"
   },
   {
     id: 3,
     name: "Dr. Michael Brown",
-    specialization: "Urogynecology",
-    hospital: "Women's Health Clinic",
-    rating: 4.7,
-    experience: "18 years",
-    consultationFee: "$110",
-    image: "https://randomuser.me/api/portraits/men/32.jpg"
-  },
-  {
-    id: 4,
-    name: "Dr. Lisa Taylor",
-    specialization: "Gynecologic Oncology",
-    hospital: "Cancer Care Institute",
-    rating: 4.9,
-    experience: "20 years",
-    consultationFee: "$150",
-    image: "https://randomuser.me/api/portraits/women/91.jpg"
-  },
-  {
-    id: 5,
-    name: "Dr. David Wilson",
     specialization: "Reproductive Endocrinology",
-    hospital: "Fertility Solutions",
-    rating: 4.8,
-    experience: "14 years",
-    consultationFee: "$130",
-    image: "https://randomuser.me/api/portraits/men/60.jpg"
+    rating: 4.7,
+    reviewCount: 86,
+    availableDate: "2024-03-17",
+    price: 200,
+    image: "/placeholder.svg?height=100&width=100"
   }
-];
+]
 
 export function Consultations() {
-  const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(false);
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedSpecialization, setSelectedSpecialization] = useState("");
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  const SidebarLink = ({ icon, label, onClick, active = false }) => (
-    <button
-      onClick={onClick}
-      className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
-        active
-          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
-          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </button>
-  );
+  const [selectedSpecialization, setSelectedSpecialization] = useState('')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   return (
-    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
-      {/* Sidebar */}
-      <aside className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4">
-        <nav className="mt-8 space-y-4">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">FlowCare</h1>
-          <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
-          <SidebarLink icon={<BookOpen size={20} />} label="Education" onClick={() => navigate('/blogs')} />
-          <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
-          <SidebarLink icon={<Activity size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
-          <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} active />
-          <SidebarLink icon={<MessageCircle size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
-        </nav>
-      </aside>
+    <div className="container mx-auto py-8 px-4">
+      <motion.h1 
+        className="text-4xl font-bold mb-8 text-center text-pink-600"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        Expert Consultations
+      </motion.h1>
 
-      {/* Main Content */}
-      <main className="flex-1 p-8 overflow-auto bg-gray-100 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto space-y-8">
-          {/* Header */}
-          <div className="flex justify-between items-center">
-            <h1 className="text-4xl font-bold text-pink-600 dark:text-pink-400">Expert Consultation</h1>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-            >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </button>
-          </div>
-
-          {/* Appointment Booking Section */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-semibold text-pink-600 dark:text-pink-400 mb-4">Book an Appointment</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="relative">
-                <select
-                  value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 appearance-none"
-                >
-                  <option value="">Select City</option>
-                  {cities.map((city) => (
-                    <option key={city} value={city}>{city}</option>
-                  ))}
-                </select>
-                <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              </div>
-              <div className="relative">
-                <select
-                  value={selectedSpecialization}
-                  onChange={(e) => setSelectedSpecialization(e.target.value)}
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 appearance-none"
-                >
-                  <option value="">Select Specialization</option>
-                  {specializations.map((spec) => (
-                    <option key={spec} value={spec}>{spec}</option>
-                  ))}
-                </select>
-                <User className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              </div>
+      <motion.div 
+        className="bg-white shadow-md rounded-lg p-6 mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <h2 className="text-2xl font-semibold mb-4">Find a Specialist</h2>
+        <p className="text-gray-600 mb-6">Search for women's health experts in your area</p>
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <div className="flex-1 relative">
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+            <div className="relative">
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <input
+                id="location"
+                type="text"
+                placeholder="Enter your location"
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+              />
             </div>
           </div>
-
-          {/* Doctor Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {doctors.map((doctor) => (
-              <div key={doctor.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-                <div className="p-6">
-                  <div className="flex items-center mb-4">
-                    <img src={doctor.image} alt={doctor.name} className="w-16 h-16 rounded-full mr-4" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{doctor.name}</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{doctor.specialization}</p>
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{doctor.hospital}</p>
-                    <div className="flex items-center mt-1">
-                      <Star className="text-yellow-400" size={16} />
-                      <span className="ml-1 text-sm text-gray-600 dark:text-gray-400">{doctor.rating}</span>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    <span><Calendar size={16} className="inline mr-1" /> {doctor.experience}</span>
-                    <span><Phone size={16} className="inline mr-1" /> {doctor.consultationFee}</span>
-                  </div>
-                  <button className="w-full bg-pink-500 text-white py-2 rounded-md hover:bg-pink-600 transition-colors">
-                    Book Appointment
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          <div className="flex justify-center mt-8">
-            <nav className="inline-flex rounded-md shadow">
-              <a href="#" className="px-3 py-2 rounded-l-md border border-gray-300 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700">
-                Previous
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                1
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                2
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                3
-              </a>
-              <a href="#" className="px-3 py-2 rounded-r-md border border-gray-300 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700">
-                Next
-              </a>
-            </nav>
+          <div className="flex-1 relative">
+            <label htmlFor="specialization" className="block text-sm font-medium text-gray-700 mb-1">Specialization</label>
+            <div className="relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="w-full text-left pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 bg-white"
+              >
+                {selectedSpecialization || "Select specialization"}
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              </button>
+              {isDropdownOpen && (
+                <motion.ul
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg"
+                >
+                  {specializations.map((spec) => (
+                    <li
+                      key={spec}
+                      onClick={() => {
+                        setSelectedSpecialization(spec)
+                        setIsDropdownOpen(false)
+                      }}
+                      className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      {spec}
+                    </li>
+                  ))}
+                </motion.ul>
+              )}
+            </div>
           </div>
         </div>
-      </main>
-    </div>
-  );
-}
+        <button className="w-full bg-pink-500 text-white py-2 px-4 rounded-md hover:bg-pink-600 transition-colors duration-300">
+          Search Doctors
+        </button>
+      </motion.div>
 
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {doctors.map((doctor) => (
+          <motion.div
+            key={doctor.id}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.03 }}
+            className="bg-white shadow-md rounded-lg overflow-hidden"
+          >
+            <div className="p-6">
+              <div className="flex items-center space-x-4 mb-4">
+                <img src={doctor.image} alt={doctor.name} className="w-16 h-16 rounded-full object-cover" />
+                <div>
+                  <h3 className="text-lg font-semibold">{doctor.name}</h3>
+                  <p className="text-gray-600">{doctor.specialization}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                <Star className="h-4 w-4 fill-current text-yellow-400" />
+                <span>{doctor.rating}</span>
+                <span>({doctor.reviewCount} reviews)</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                <Clock className="h-4 w-4" />
+                <span>Next available: {new Date(doctor.availableDate).toLocaleDateString()}</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+                <DollarSign className="h-4 w-4" />
+                <span>${doctor.price} per consultation</span>
+              </div>
+              <button className="w-full bg-pink-500 text-white py-2 px-4 rounded-md hover:bg-pink-600 transition-colors duration-300">
+                Book Appointment
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
 

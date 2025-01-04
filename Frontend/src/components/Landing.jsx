@@ -43,6 +43,7 @@ export function Landing() {
             <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
             <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
             <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" onClick={() => navigate('/symptomsanalyzer')} />
+            <SidebarLink icon={<HeartPulse size={20} />} label="forums" onClick={() => navigate('/forums')} />
           </div>
         </nav>
       </aside>

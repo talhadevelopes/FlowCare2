@@ -8,7 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Landing } from "./components/Landing";
-import Forum from "./components/Forum";
+import { Forum } from "./components/Forum";
 import { Blogs } from "./components/Blogs";
 import { Consultations } from "./components/Consultations";
 import { Signup } from "./components/Signup";
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: "/forum",
+    path: "/forums",
     element: <Forum />,
   },
   {

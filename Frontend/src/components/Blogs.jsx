@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Calendar,HeartPulse, MessageSquare, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart, Sun, LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, Search, BookOpen, Utensils, Leaf, Clock, Filter, Bookmark, Share2, Award, Sparkles, Brain, Dumbbell, Pill, Droplet, X } from 'lucide-react';
+import { Calendar, HeartPulse, MessageSquare, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart, Sun, LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, Search, BookOpen, Utensils, Leaf, Clock, Filter, Bookmark, Share2, Award, Sparkles, Brain, Dumbbell, Pill, Droplet, X } from 'lucide-react';
+import { Quiz } from './Quiz';
 
 const blogPosts = [
   {
@@ -144,6 +145,8 @@ export function Blogs() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [savedPosts, setSavedPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [allSectionsRead, setAllSectionsRead] = useState(false);
+  const [quizScore, setQuizScore] = useState(null);
 
   useEffect(() => {
     if (darkMode) {
@@ -170,6 +173,11 @@ export function Blogs() {
     updatedReadSections[index] = true;
     setReadSections(updatedReadSections);
     setCompletedTopics(updatedReadSections.filter(Boolean).length);
+
+    // Check if all sections are read
+    if (updatedReadSections.every(Boolean)) {
+      setAllSectionsRead(true);
+    }
   };
 
   const handleSavePost = (postId) => {
@@ -192,6 +200,10 @@ export function Blogs() {
     if (!savedPosts.includes(post.id)) {
       setCompletedBlogs(prev => prev + 1);
     }
+  };
+
+  const handleQuizComplete = (score) => {
+    setQuizScore(score);
   };
 
   const SidebarLink = ({ icon, label, onClick, active = false }) => (
@@ -329,6 +341,24 @@ export function Blogs() {
                   {completedTopics} out of 5 topics completed
                 </p>
               </div>
+              {quizScore !== null && (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Quiz Score</h3>
+                  <div className="flex justify-center items-center">
+                    <Award className={`h-12 w-12 ${
+                      quizScore === 3 ? 'text-yellow-500' :
+                      quizScore === 2 ? 'text-gray-400' :
+                      'text-bronze-500'
+                    }`} />
+                    <span className="ml-2 text-2xl font-bold">{quizScore}/3</span>
+                  </div>
+                  <p className="mt-2 text-gray-800 dark:text-gray-300">
+                    {quizScore === 3 ? 'Perfect score!' :
+                     quizScore === 2 ? 'Great job!' :
+                     'Keep learning!'}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -425,6 +455,19 @@ export function Blogs() {
               ))}
             </div>
           </div>
+
+          {/* Quiz Section */}
+          {allSectionsRead && (
+            <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400 mb-4">
+                Knowledge Check Quiz
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Test your knowledge on women's health topics. Answer the questions below and see how much you've learned!
+              </p>
+              <Quiz onQuizComplete={handleQuizComplete} />
+            </div>
+          )}
         </div>
       </main>
 
@@ -452,4 +495,87 @@ export function Blogs() {
     </div>
   );
 }
+
+// function Quiz() {
+//   const [currentQuestion, setCurrentQuestion] = useState(0);
+//   const [score, setScore] = useState(0);
+//   const [showScore, setShowScore] = useState(false);
+//   const props = {}; // Added to avoid error in handleAnswerClick
+
+//   const questions = [
+//     {
+//       questionText: "What is the average length of a menstrual cycle?",
+//       answerOptions: [
+//         { answerText: "14 days", isCorrect: false },
+//         { answerText: "28 days", isCorrect: true },
+//         { answerText: "45 days", isCorrect: false },
+//         { answerText: "60 days", isCorrect: false },
+//       ],
+//     },
+//     {
+//       questionText: "Which of these is NOT a phase of the menstrual cycle?",
+//       answerOptions: [
+//         { answerText: "Follicular phase", isCorrect: false },
+//         { answerText: "Ovulation", isCorrect: false },
+//         { answerText: "Luteal phase", isCorrect: false },
+//         { answerText: "Gestation phase", isCorrect: true },
+//       ],
+//     },
+//     {
+//       questionText: "What hormone is responsible for the thickening of the uterine lining?",
+//       answerOptions: [
+//         { answerText: "Estrogen", isCorrect: true },
+//         { answerText: "Testosterone", isCorrect: false },
+//         { answerText: "Adrenaline", isCorrect: false },
+//         { answerText: "Insulin", isCorrect: false },
+//       ],
+//     },
+//   ];
+
+//   const handleAnswerClick = (isCorrect) => {
+//     if (isCorrect) {
+//       setScore(score + 1);
+//     }
+
+//     const nextQuestion = currentQuestion + 1;
+//     if (nextQuestion < questions.length) {
+//       setCurrentQuestion(nextQuestion);
+//     } else {
+//       setShowScore(true);
+//       props.onQuizComplete(score);
+//     }
+//   };
+
+//   return (
+//     <div className="quiz">
+//       {showScore ? (
+//         <div className="score-section text-xl font-semibold text-center p-4">
+//           You scored {score} out of {questions.length}
+//         </div>
+//       ) : (
+//         <>
+//           <div className="question-section mb-6">
+//             <div className="question-count text-lg font-medium mb-2">
+//               <span>Question {currentQuestion + 1}</span>/{questions.length}
+//             </div>
+//             <div className="question-text text-xl font-semibold">{questions[currentQuestion].questionText}</div>
+//           </div>
+//           <div className="answer-section grid grid-cols-1 gap-4">
+//             {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+//               <button
+//                 key={index}
+//                 onClick={() => handleAnswerClick(answerOption.isCorrect)}
+//                 className="px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-colors duration-300"
+//               >
+//                 {answerOption.answerText}
+//               </button>
+//             ))}
+//           </div>
+//         </>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default Blogs;
 

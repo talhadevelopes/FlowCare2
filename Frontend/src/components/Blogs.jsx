@@ -16,47 +16,49 @@ const blogPosts = [
   },
   {
     id: 2,
-    title: "Nutrition Tips for a Healthy Period",
+    title: "How long does the menstrual cycle and period last?",
     excerpt: "Discover the best foods to eat during your menstrual cycle for optimal health.",
     author: "Nutritionist Sarah Lee",
     date: "2024-03-10",
     readingTime: "4 min",
     icon: <Utensils className="h-12 w-12 text-green-500" />,
     category: "Nutrition",
-    content: "During your period, it's important to focus on foods rich in iron, such as leafy greens and lean meats, to replenish iron lost through menstruation. Omega-3 fatty acids found in fish and flaxseeds can help reduce inflammation and cramps. Staying hydrated and consuming foods high in magnesium, like nuts and seeds, can also alleviate common period symptoms."
-  },
+    content: "Your menstrual cycle takes around 28 days to complete, but this is a good time to point out that EVERYONE is different! Just like your fingerprints are unique, so is your bloody brilliant body and how you experience periods. So, while we say 28 days it might be a little longer, it might be a little shorter, there really aren’t any set rules here. Of those 28 days, you could expect to bleed for anywhere between 3-8 days. Again, everyone is different, and your periods are likely to change. Your body can take some time to get into its own flow, so cut it a bit of slack - it’s learning what to do while you’re getting used to things too!"
+    },
   {
     id: 3,
-    title: "Managing PMS Symptoms Naturally",
+    title: "What are the signs that my period is coming?",
     excerpt: "Explore natural remedies and lifestyle changes to alleviate PMS symptoms.",
     author: "Holistic Health Coach Maria Garcia",
     date: "2024-03-05",
     readingTime: "6 min",
     icon: <Leaf className="h-12 w-12 text-purple-500" />,
     category: "Wellness",
-    content: "Natural remedies for PMS include regular exercise, stress-reduction techniques like meditation, and herbal supplements such as chasteberry and evening primrose oil. Reducing caffeine and salt intake, while increasing complex carbohydrates and calcium-rich foods, can also help balance hormones and reduce symptoms. Always consult with a healthcare provider before starting any new supplement regimen."
+    content: "If you’ve never had a period before, there are some signs which might indicate your period is coming and they’re all natural parts of growing up. If you’ve noticed your boobs are beginning to develop, and you’ve started to grow pubic hair, then you could expect to get your period about two years later. A more immediate sign for some people is if you notice discharge in your pants. Discharge is a white or yellowish fluid which usually shows up a few months before your first period. There are lots of other signs your period is coming and these can be both physical and emotional. We call these signs PMS (premenstrual syndrome). Not everyone gets PMS and we all experience it differently. It usually happens just before and during your period, and it’s basically the reason you might find yourself wanting to eat your body weight in chocolate or burst into tears at the smallest of things…lost sock, bad hair day, burnt toast…trust me, we all have those days! PMS brings with it all kinds of symptoms such as headaches, bloating, cramps, mood swings, feeling tired and having trouble concentrating. We’ve got a great blog all about PMS with top tips on how to help with these symptoms and many more, so go and take a look. It will finally explain some of those weird and wonderful feelings that you never knew were thanks to your bloody brilliant period!"
+    
   },
   {
     id: 4,
-    title: "The History of Menstrual Products",
+    title: "Why does the colour vary so much?",
     excerpt: "A journey through time exploring the evolution of menstrual products.",
     author: "Historian Dr. Alex Thompson",
     date: "2024-02-28",
     readingTime: "7 min",
     icon: <Clock className="h-12 w-12 text-blue-500" />,
     category: "History",
-    content: "The history of menstrual products dates back to ancient civilizations. Early methods included using papyrus in Egypt and wool in Rome. The first commercial disposable pads were introduced in the late 19th century. Tampons were patented in the 1930s, and menstrual cups were first developed in the 1930s but gained popularity in recent decades. Today, there's a growing focus on sustainable and reusable menstrual products."
+    content: "Like we just said, there’s lots of other things going on in there besides blood, that’s why it doesn’t always come out bright red like you might expect. But it’s not just what your period is made up of that determines the colour. The colour of your period can be a great tool for knowing what’s going on in your body. It can highlight signs of a poor diet, possible infections or other health conditions. In most cases a variety of shades is totally normal, with oxygen and hormones (there they are again) also playing a role in the shade of your flow (which is COMPLETELY NATURAL!).We’ve got a handy diagram and more information on the different colours of your period here."
+    
   },
   {
     id: 5,
-    title: "Exercise and Your Menstrual Cycle",
+    title: "Pain and WHAT IS NORMAL?",
     excerpt: "Learn how to optimize your workouts based on your menstrual cycle phases.",
     author: "Fitness Expert Lisa Brown",
     date: "2024-03-20",
     readingTime: "5 min",
     icon: <Dumbbell className="h-12 w-12 text-orange-500" />,
     category: "Fitness",
-    content: "Your menstrual cycle can affect your energy levels and exercise performance. During the follicular phase, estrogen levels rise, potentially increasing your strength and endurance. This is a great time for high-intensity workouts. In the luteal phase, you might feel less energetic, making it ideal for lower-intensity exercises like yoga or pilates. Listen to your body and adjust your workout routine accordingly throughout your cycle."
+    content: "A not-so-fun part about getting your period is period pains, or menstrual cramps, as they’re also called. It’s worth pointing out that not everyone gets period cramps. Most women, girls and people who have periods do, but if you don’t, then that’s absolutely nothing to worry about – just embrace the fact you can enjoy your bloody brilliant period cramp free. So, what is period pain? Period pain is mainly caused by your uterus contracting (tensing up like the other muscles in your body) to help get rid of the lining which we spoke about earlier. You can get pains in your stomach, but it can also spread into your back and thighs. We’ve got a whole heap more information on period pain and what you can do to help here. Hopefully by now you’ll be getting the idea that there’s all kinds of normal when it comes to your period: your normal, your mates’ normal, your next-door neighbours’ normal! What we’re trying to say is we’re all unique, but periods themselves are a normal part of life. After all, half the population will have periods at some point in their lives, so we should all be able to support each other. It’s important to have conversations about periods, as it’s something so many of us have in common! Getting to know your body, your feelings, your health and your flow is really important. If you notice changes in your normal, or if you find it difficult to cope with any aspect of your period, ask for support. There’s no shame in asking for advice, like our team of Bloody Brilliant experts - your local doctor or nurse has all the skills and experience needed to help you. Only you know how you feel, so it’s important you get help if you need it! "
   },
   {
     id: 6,
@@ -107,8 +109,8 @@ const blogPosts = [
 const womenHealthTopics = [
   {
     id: 1,
-    question: "Understanding Your Menstrual Cycle",
-    answer: "The menstrual cycle is a complex process involving hormonal changes that prepare your body for potential pregnancy. It typically lasts 28 days but can range from 21 to 35 days. The cycle consists of four main phases: menstruation, the follicular phase, ovulation, and the luteal phase. Each phase is characterized by different hormonal levels and physical changes in your body.",
+    question: "What is a period?",
+    answer: "Your period or menstruation (that’s the ‘sciencey’ name) is part of your menstrual cycle. This cycle is ultimately your body’s way of preparing itself for a possible pregnancy. During your menstrual cycle, there is an increase and decrease in a number of different hormones such as oestrogen and progesterone which control different aspects of this cycle, you’ll be hearing a lot about these hormones, so sit tight.During your cycle your body releases an egg from your ovaries – we’re talking teeny tiny eggs here - you can’t see them with the naked eye, they’re that small! In order for the egg to be released it has to be matured, which is a job for our hormones.These hormones are also responsible for making the lining of your uterus thick. Should one day an egg get fertilised by sperm, it would land on the thick cosy lining and that’s where a pregnancy would start. However, if the egg doesn’t get fertilised your body no longer needs the lining, so (here comes the hormones again!) your hormones instruct your body to break the lining down and remove it from the uterus via your vagina.",
   },
   {
     id: 2,

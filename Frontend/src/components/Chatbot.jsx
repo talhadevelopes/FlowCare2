@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Send, Moon, Sun, Home, Trash2, Loader, Paperclip, Smile, Volume2, VolumeX, HelpCircle, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle } from 'lucide-react';
+import { Send, Moon, Sun, Home, Trash2, LayoutDashboard,ActivitySquare, Loader,GraduationCap, Bot,MessageSquare, HeartPulse, Paperclip, Smile, Volume2, VolumeX, HelpCircle, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI("AIzaSyAc1l4zjH_fiCzprd5pE77A9ikQtA-xZuc");
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const popularEmojis = [
@@ -212,14 +212,19 @@ export function Chatbot() {
     <div className={`flowcare-chatbot ${isDarkMode ? '' : 'light'} flex h-screen`}>
       {/* Sidebar */}
       <aside className="bg-[var(--fc-bg-secondary)] w-64 p-4 border-r border-[var(--fc-accent)]">
-        <nav className="mt-8 space-y-4">
-          <h1 className="text-2xl font-bold text-[var(--fc-accent)] mb-8" style={{ fontFamily: 'Pacifico, cursive' }}>FlowCare</h1>
-          <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
-          <SidebarLink icon={<BookOpen size={20} />} label="Education" onClick={() => navigate('/blogs')} />
-          <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
-          <SidebarLink icon={<Activity size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
-          <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
-          <SidebarLink icon={<MessageCircle size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} active />
+      <nav className="mt-8">
+          <div className="px-4 py-4 flex flex-col space-y-2">
+            <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">FlowCare</h1>
+            <SidebarLink icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
+            <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
+            <SidebarLink icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} />
+            <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
+            <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
+            <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
+            <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} active/>
+            <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" onClick={() => navigate('/symptomsanalyzer')} />
+            <SidebarLink icon={<MessageSquare size={20} />} label="Forums" onClick={() => navigate('/forums')}  />
+          </div>
         </nav>
       </aside>
 

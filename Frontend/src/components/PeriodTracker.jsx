@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { Calendar, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart, Sun, LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot } from 'lucide-react';
+import { Calendar, Frown, HeartPulse, Smile, Angry,MessageSquare, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart, Sun, LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot } from 'lucide-react';
 import axios from 'axios'; 
 
 const server_url = import.meta.env.VITE_SERVER_URL;
@@ -320,16 +320,18 @@ export function PeriodTracker() {
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       {/* Sidebar */}
       <aside className="bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4">
-        <nav className="mt-8">
+      <nav className="mt-8">
           <div className="px-4 py-4 flex flex-col space-y-2">
             <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">FlowCare</h1>
             <SidebarLink icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
             <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
             <SidebarLink icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} />
             <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
-            <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} active />
+            <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} active/>
             <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
             <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
+            <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" onClick={() => navigate('/symptomsanalyzer')} />
+            <SidebarLink icon={<MessageSquare size={20} />} label="Forums" onClick={() => navigate('/forums')} />
           </div>
         </nav>
       </aside>

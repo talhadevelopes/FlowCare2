@@ -1,8 +1,7 @@
-'use client'
-
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ShoppingCart, Home, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2, Gift, Sparkles, ArrowRight, Send, Calendar, Coffee, Pill, Bath, Wind } from 'lucide-react'
+import { useNavigate } from "react-router-dom"
+import { ShoppingCart, LayoutDashboard, GraduationCap, Home, BookOpen,ActivitySquare, Bot, HeartPulse, MessageSquare, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2, Gift, Sparkles, ArrowRight, Send, Calendar, Coffee, Pill, Bath, Wind } from 'lucide-react'
 
 const products = [
   {
@@ -140,6 +139,7 @@ const specialOffers = [
 ]
 
 export function Ecom() {
+  const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [cartItems, setCartItems] = useState([])
@@ -233,12 +233,16 @@ export function Ecom() {
             FlowCare
           </motion.h1>
           {[
+            { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/dashboard"},
             { icon: <Home size={20} />, label: "Home", path: "/" },
-            { icon: <BookOpen size={20} />, label: "Education", path: "/blogs" },
+            { icon: <GraduationCap size={20} />, label: "Education", path: "/blogs" },
             { icon: <ShoppingBag size={20} />, label: "Shop", path: "/Ecom", active: true },
-            { icon: <Activity size={20} />, label: "Track Your Health", path: "/tracker" },
+            { icon: <ActivitySquare size={20} />, label: "Track Your Health", path: "/tracker" },
             { icon: <Stethoscope size={20} />, label: "Expert Consultation", path: "/consultations" },
-            { icon: <MessageCircle size={20} />, label: "AI Chatbot", path: "/ChatBot" }
+            { icon: <Bot size={20} />, label: "AI Chatbot", path: "/ChatBot" },
+            { icon: <HeartPulse size={20} />, label: "HealthLens", path: "/symptomsanalyzer" },
+            { icon: <MessageSquare size={20} />, label: "Forums", path: "/forums" }
+
           ].map((link) => (
             <motion.button
               key={link.label}

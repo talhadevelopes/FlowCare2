@@ -307,7 +307,7 @@ export  function ParentDashboard() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-start space-x-3 p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-pink-100/20 dark:border-pink-900/20"
+                    className="text-black flex items-start space-x-3 p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-pink-100/20 dark:border-pink-900/20"
                   >
                     <Activity className="h-5 w-5 text-pink-500 mt-0.5" />
                     <div>

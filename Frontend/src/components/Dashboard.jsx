@@ -1,36 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  Home,
-  MessageSquare,
-  HeartPulse,
-  GraduationCap,
-  ShoppingBag,
-  ActivitySquare,
-  Stethoscope,
-  Bot,
-  ChevronRight,
-  Bell,
-  Calendar,
-  Heart,
-  Moon,
-  Sun,
-  Droplet,
-  Utensils,
-  Smile,
-  Frown,
-  Meh,
-  ThermometerSun,
-  Zap,
-  Coffee,
-  Dumbbell,
-  BookOpen,
-  AlertCircle,
-  CheckCircle,
-  X,
-} from "lucide-react";
+import { LayoutDashboard, Home, MessageSquare, HeartPulse, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X, ToggleLeft, ToggleRight, Lock, Unlock } from 'lucide-react';
 import axios from "axios";
+import { PrivacyForm } from './PrivacyForm';
 
 const server_url = import.meta.env.VITE_SERVER_URL;
 const local_url = "http://localhost:3000/";
@@ -47,6 +19,14 @@ export function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [selectedData, setSelectedData] = useState({
+    cycleInfo: true,
+    moodData: true,
+    sleepData: true,
+    symptomsData: true,
+    wellnessData: true,
+  });
+  const [showPrivacyForm, setShowPrivacyForm] = useState(false);
 
   const fallbackData = {
     cycleDuration: 28,
@@ -146,6 +126,19 @@ export function Dashboard() {
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
+  };
+
+  const toggleDataSelection = (dataType) => {
+    setSelectedData(prev => ({
+      ...prev,
+      [dataType]: !prev[dataType]
+    }));
+  };
+
+  const handleSavePrivacySettings = (settings) => {
+    console.log('Privacy settings saved:', settings);
+    // Here you would typically send these settings to your backend
+    setShowPrivacyForm(false);
   };
 
   const myths = [
@@ -393,6 +386,12 @@ export function Dashboard() {
             <div className="flex items-center gap-4">
               <Bell className="h-5 w-5 text-[rgb(var(--muted-foreground))]" />
               <button
+                onClick={() => setShowPrivacyForm(!showPrivacyForm)}
+                className="p-2 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))] transition-transform hover:scale-110"
+              >
+                {showPrivacyForm ? <Unlock size={20} /> : <Lock size={20} />}
+              </button>
+              <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="p-2 rounded-full bg-[rgba(var(--foreground),0.1)] text-[rgb(var(--foreground))] transition-transform hover:scale-110"
               >
@@ -421,6 +420,12 @@ export function Dashboard() {
               MythBusters
             </TabButton>
           </div>
+
+          {showPrivacyForm && (
+            <Card className="mb-6">
+              <PrivacyForm onSave={handleSavePrivacySettings} />
+            </Card>
+          )}
 
           {activeTab === "overview" && (
             <>
@@ -606,6 +611,40 @@ export function Dashboard() {
                   ))}
                 </ul>
               </Card>
+
+              <Card>
+                <h3 className="font-semibold mb-4">Data Sharing Settings</h3>
+                <p className="text-sm text-[rgb(var(--muted-foreground))] mb-4">
+                  Select the data you want to share with the parent dashboard:
+                </p>
+                <div className="space-y-4">
+                  <DataToggle
+                    label="Cycle Information"
+                    isSelected={selectedData.cycleInfo}
+                    onToggle={() => toggleDataSelection('cycleInfo')}
+                  />
+                  <DataToggle
+                    label="Mood Data"
+                    isSelected={selectedData.moodData}
+                    onToggle={() => toggleDataSelection('moodData')}
+                  />
+                  <DataToggle
+                    label="Sleep Data"
+                    isSelected={selectedData.sleepData}
+                    onToggle={() => toggleDataSelection('sleepData')}
+                  />
+                  <DataToggle
+                    label="Symptoms Data"
+                    isSelected={selectedData.symptomsData}
+                    onToggle={() => toggleDataSelection('symptomsData')}
+                  />
+                  <DataToggle
+                    label="Wellness Data"
+                    isSelected={selectedData.wellnessData}
+                    onToggle={() => toggleDataSelection('wellnessData')}
+                  />
+                </div>
+              </Card>
             </>
           )}
 
@@ -659,11 +698,15 @@ export function Dashboard() {
   );
 }
 
-const NavItem = ({ icon, label, active = false }) => {
+const NavItem = ({ icon, label, onClick, active = false }) => {
   return (
     <li>
       <a
         href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          onClick();
+        }}
         className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
           active
             ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]"
@@ -766,3 +809,25 @@ const TabButton = ({ children, active, onClick }) => {
     </button>
   );
 };
+
+const DataToggle = ({ label, isSelected, onToggle }) => {
+  return (
+    <div className="flex items-center justify-between">
+      <span>{label}</span>
+      <button
+        onClick={onToggle}
+        className="focus:outline-none"
+        aria-label={`Toggle ${label}`}
+      >
+        {isSelected ? (
+          <ToggleRight className="h-6 w-6 text-[rgb(var(--primary))]" />
+        ) : (
+          <ToggleLeft className="h-6 w-6 text-[rgb(var(--muted-foreground))]" />
+        )}
+      </button>
+    </div>
+  );
+};
+
+// export default Dashboard;
+

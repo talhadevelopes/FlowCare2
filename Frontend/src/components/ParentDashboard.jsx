@@ -71,11 +71,11 @@ const mockChildrenData = [
     name: 'Sarah',
     age: 13,
     lastPeriod: '2024-01-01',
-    nextPeriod: '2024-01-28',
+    nextPeriod: '2025-01-30',
     cycleLength: 28,
-    currentPhase: 'Follicular',
-    symptoms: ['Mild cramps', 'Fatigue'],
-    mood: 'Happy',
+    currentPhase: 'Menstrual',
+    symptoms: ['Mild cramps', 'Headache'],
+    mood: 'Tired',
     sleep: 'Good',
     medications: ['Iron supplement'],
     appointments: [
@@ -411,7 +411,7 @@ export  function ParentDashboard() {
                   <div>
                     <p className="font-medium">Cycle Insights</p>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {child.name} is in their {child.currentPhase} phase. 
+                      {child.name} is in her {child.currentPhase} phase. 
                       Next period expected on {child.nextPeriod}.
                     </p>
                   </div>

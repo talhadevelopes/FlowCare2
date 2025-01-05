@@ -1,7 +1,9 @@
-import React, { useState } from "react"
+'use client'
+
+import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useNavigate } from "react-router-dom"
-import { ShoppingCart, LayoutDashboard, GraduationCap, Home, BookOpen,ActivitySquare, Bot, HeartPulse, MessageSquare, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2, Gift, Sparkles, ArrowRight, Send, Calendar, Coffee, Pill, Bath, Wind } from 'lucide-react'
+// import { useRouter } from "next/navigation"
+import { ShoppingCart, LayoutDashboard, GraduationCap, Home, BookOpen, ActivitySquare, Bot, HeartPulse, MessageSquare, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2, Gift, Sparkles, ArrowRight, Send, Calendar, Coffee, Pill, Bath, Wind } from 'lucide-react'
 
 const products = [
   {
@@ -139,7 +141,7 @@ const specialOffers = [
 ]
 
 export function Ecom() {
-  const navigate = useNavigate();
+  // const router = useRouter()
   const [darkMode, setDarkMode] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [cartItems, setCartItems] = useState([])
@@ -149,10 +151,16 @@ export function Ecom() {
   const [searchQuery, setSearchQuery] = useState("")
   const [email, setEmail] = useState("")
 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [darkMode])
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
-    const root = document.documentElement
-    root.classList.toggle('dark', !darkMode)
   }
 
   const addToCart = (product) => {
@@ -196,6 +204,42 @@ export function Ecom() {
     e.preventDefault()
     alert("Thank you for subscribing!")
     setEmail("")
+  }
+
+  const sendMailWithCartItems = async () => {
+    const formspreeEndpoint = "https://formspree.io/f/mqaagdkg" // Replace with your actual Formspree endpoint
+
+    const emailBody = {
+      subject: "FlowCare Order Form - New Order",
+      message: `
+        New order details:
+        
+        ${cartItems.map(item => `${item.name} (${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`).join('\n')}
+        
+        Total: $${total.toFixed(2)}
+      `
+    }
+
+    try {
+      const response = await fetch(formspreeEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(emailBody),
+      })
+
+      if (response.ok) {
+        alert("Order details sent successfully!")
+        setIsCartOpen(false) // Close the cart after sending
+        setCartItems([]) // Clear the cart
+      } else {
+        throw new Error("Failed to send order details")
+      }
+    } catch (error) {
+      console.error("Error sending email:", error)
+      alert("Failed to send order details. Please try again.")
+    }
   }
 
   const filteredProducts = products
@@ -242,7 +286,6 @@ export function Ecom() {
             { icon: <Bot size={20} />, label: "AI Chatbot", path: "/ChatBot" },
             { icon: <HeartPulse size={20} />, label: "HealthLens", path: "/symptomsanalyzer" },
             { icon: <MessageSquare size={20} />, label: "Forums", path: "/forums" }
-
           ].map((link) => (
             <motion.button
               key={link.label}
@@ -716,7 +759,8 @@ export function Ecom() {
                       onClick={() => setIsCartOpen(false)}
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                      <X className="h-6 w-6" />                    </button>
+                      <X className="h-6 w-6" />
+                    </button>
                   </div>
 
                   {cartItems.length === 0 ? (
@@ -801,6 +845,14 @@ export function Ecom() {
                           className="w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg"
                         >
                           Proceed to Checkout
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={sendMailWithCartItems}
+                          className="w-full px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg"
+                        >
+                          Send Order Details
                         </motion.button>
                       </div>
                     </>

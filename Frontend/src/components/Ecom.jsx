@@ -751,20 +751,20 @@ export function Ecom() {
                   className="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-800 shadow-xl p-6 overflow-auto"
                 >
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold flex items-center gap-2">
-                      <ShoppingCart className="h-6 w-6" />
+                    <h2 className="text-2xl font-bold flex items-center gap-2 dark:text-white">
+                      <ShoppingCart className="h-6 w-6 dark:text-white" />
                       Your Cart
                     </h2>
                     <button
                       onClick={() => setIsCartOpen(false)}
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                      <X className="h-6 w-6" />
+                      <X className="h-6 w-6 dark:text-white" />
                     </button>
                   </div>
 
                   {cartItems.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+                    <div className="flex flex-col items-center justify-center h-[60vh] gap-4 dark:text-white">
                       <motion.div
                         initial={{ scale: 0.5, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
@@ -797,7 +797,7 @@ export function Ecom() {
                                 {item.icon}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-medium truncate">{item.name}</h4>
+                                <h4 className="font-medium truncate dark:text-white">{item.name}</h4>
                                 <p className="text-sm text-gray-500 dark:text-gray-400">{item.brand}</p>
                               </div>
                               <div className="flex items-center gap-2">
@@ -807,7 +807,7 @@ export function Ecom() {
                                   onClick={() => updateCartItemQuantity(item.id, Math.max(0, item.quantity - 1))}
                                   className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                                 >
-                                  <Minus className="h-4 w-4" />
+                                  <Minus className="h-4 w-4 dark:text-white" />
                                 </motion.button>
                                 <span className="w-8 text-center">{item.quantity}</span>
                                 <motion.button
@@ -816,10 +816,10 @@ export function Ecom() {
                                   onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}
                                   className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                                 >
-                                  <Plus className="h-4 w-4" />
+                                  <Plus className="h-4 w-4 dark:text-white" />
                                 </motion.button>
                               </div>
-                              <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-4 dark:text-white">
                                 <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
                                 <motion.button
                                   whileHover={{ scale: 1.1 }}

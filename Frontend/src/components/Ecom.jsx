@@ -1,9 +1,49 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 // import { useRouter } from "next/navigation"
-import { ShoppingCart, LayoutDashboard, GraduationCap, Home, BookOpen, ActivitySquare, Bot, HeartPulse, MessageSquare, ShoppingBag, Activity, Stethoscope, MessageCircle, Sun, Moon, Search, Filter, Heart, Star, Package, Droplet, Zap, Leaf, X, Plus, Minus, Trash2, Gift, Sparkles, ArrowRight, Send, Calendar, Coffee, Pill, Bath, Wind } from 'lucide-react'
+import {
+  ShoppingCart,
+  LayoutDashboard,
+  GraduationCap,
+  Home,
+  BookOpen,
+  ActivitySquare,
+  Bot,
+  HeartPulse,
+  MessageSquare,
+  ShoppingBag,
+  Activity,
+  Stethoscope,
+  MessageCircle,
+  Sun,
+  Moon,
+  Search,
+  Filter,
+  Heart,
+  Star,
+  Package,
+  Droplet,
+  Zap,
+  Leaf,
+  X,
+  Plus,
+  Minus,
+  Trash2,
+  Gift,
+  Sparkles,
+  ArrowRight,
+  Send,
+  Calendar,
+  Coffee,
+  Pill,
+  Bath,
+  Wind,
+} from "lucide-react";
+import { element } from "prop-types";
+import { Dashboard } from "./Dashboard";
+import { useNavigate } from "react-router-dom";
 
 const products = [
   {
@@ -16,7 +56,7 @@ const products = [
     rating: 4.5,
     category: "Pads",
     isNew: true,
-    featured: true
+    featured: true,
   },
   {
     id: 2,
@@ -27,7 +67,7 @@ const products = [
     icon: <Droplet className="h-12 w-12 text-blue-500" />,
     rating: 4.8,
     category: "Menstrual Cups",
-    featured: true
+    featured: true,
   },
   {
     id: 3,
@@ -38,7 +78,7 @@ const products = [
     icon: <Zap className="h-12 w-12 text-yellow-500" />,
     rating: 4.2,
     category: "Pain Relief",
-    isNew: true
+    isNew: true,
   },
   {
     id: 4,
@@ -48,7 +88,7 @@ const products = [
     oldPrice: 29.99,
     icon: <Leaf className="h-12 w-12 text-green-500" />,
     rating: 4.6,
-    category: "Pads"
+    category: "Pads",
   },
   {
     id: 5,
@@ -59,7 +99,7 @@ const products = [
     icon: <Package className="h-12 w-12 text-purple-500" />,
     rating: 4.4,
     category: "Tampons",
-    featured: true
+    featured: true,
   },
   {
     id: 6,
@@ -70,7 +110,7 @@ const products = [
     icon: <Activity className="h-12 w-12 text-indigo-500" />,
     rating: 4.1,
     category: "Accessories",
-    isNew: true
+    isNew: true,
   },
   {
     id: 7,
@@ -81,7 +121,7 @@ const products = [
     icon: <Coffee className="h-12 w-12 text-amber-500" />,
     rating: 4.7,
     category: "Wellness",
-    isNew: true
+    isNew: true,
   },
   {
     id: 8,
@@ -91,7 +131,7 @@ const products = [
     oldPrice: 27.99,
     icon: <Pill className="h-12 w-12 text-red-500" />,
     rating: 4.3,
-    category: "Pain Relief"
+    category: "Pain Relief",
   },
   {
     id: 9,
@@ -102,7 +142,7 @@ const products = [
     icon: <Bath className="h-12 w-12 text-teal-500" />,
     rating: 4.9,
     category: "Wellness",
-    featured: true
+    featured: true,
   },
   {
     id: 10,
@@ -113,112 +153,140 @@ const products = [
     icon: <Wind className="h-12 w-12 text-cyan-500" />,
     rating: 4.6,
     category: "Wellness",
-    isNew: true
-  }
-]
+    isNew: true,
+  },
+];
 
-const categories = ["All", "Pads", "Tampons", "Menstrual Cups", "Pain Relief", "Wellness", "Accessories"]
+const SidebarLink = ({ icon, label, onClick, active = false }) => (
+  <button
+    onClick={onClick}
+    className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
+      active
+        ? "bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200"
+        : "text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700"
+    }`}
+  >
+    {icon}
+    <span>{label}</span>
+  </button>
+);
+
+const categories = [
+  "All",
+  "Pads",
+  "Tampons",
+  "Menstrual Cups",
+  "Pain Relief",
+  "Wellness",
+  "Accessories",
+];
 
 const specialOffers = [
   {
     title: "Summer Sale",
     description: "Get 20% off on all menstrual cups",
     code: "SUMMER20",
-    expiry: "Limited time offer"
+    expiry: "Limited time offer",
   },
   {
     title: "Bundle & Save",
     description: "Buy any 3 wellness products and save 15%",
     code: "WELLNESS15",
-    expiry: "Valid until stocks last"
+    expiry: "Valid until stocks last",
   },
   {
     title: "First Purchase",
     description: "10% off on your first order",
     code: "WELCOME10",
-    expiry: "For new customers"
-  }
-]
+    expiry: "For new customers",
+  },
+];
 
 export function Ecom() {
   // const router = useRouter()
-  const [darkMode, setDarkMode] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [cartItems, setCartItems] = useState([])
-  const [favorites, setFavorites] = useState([])
-  const [sortBy, setSortBy] = useState("featured")
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [email, setEmail] = useState("")
+  const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [cartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [sortBy, setSortBy] = useState("featured");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark')
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark')
+      document.documentElement.classList.remove("dark");
     }
-  }, [darkMode])
+  }, [darkMode]);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
-  }
+    setDarkMode(!darkMode);
+  };
 
   const addToCart = (product) => {
-    setCartItems(prev => {
-      const existingItem = prev.find(item => item.id === product.id)
+    setCartItems((prev) => {
+      const existingItem = prev.find((item) => item.id === product.id);
       if (existingItem) {
-        return prev.map(item =>
+        return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
-        )
+        );
       }
-      return [...prev, { ...product, quantity: 1 }]
-    })
-    setIsCartOpen(true)
-  }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+    setIsCartOpen(true);
+  };
 
   const updateCartItemQuantity = (id, quantity) => {
-    setCartItems(prev =>
+    setCartItems((prev) =>
       quantity === 0
-        ? prev.filter(item => item.id !== id)
-        : prev.map(item =>
-            item.id === id ? { ...item, quantity } : item
-          )
-    )
-  }
+        ? prev.filter((item) => item.id !== id)
+        : prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
+  };
 
   const removeCartItem = (id) => {
-    setCartItems(prev => prev.filter(item => item.id !== id))
-  }
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
 
   const toggleFavorite = (productId) => {
-    setFavorites(prev => 
+    setFavorites((prev) =>
       prev.includes(productId)
-        ? prev.filter(id => id !== productId)
+        ? prev.filter((id) => id !== productId)
         : [...prev, productId]
-    )
-  }
+    );
+  };
 
   const handleSubscribe = (e) => {
-    e.preventDefault()
-    alert("Thank you for subscribing!")
-    setEmail("")
-  }
+    e.preventDefault();
+    alert("Thank you for subscribing!");
+    setEmail("");
+  };
 
   const sendMailWithCartItems = async () => {
-    const formspreeEndpoint = "https://formspree.io/f/mqaagdkg" // Replace with your actual Formspree endpoint
+    const formspreeEndpoint = "https://formspree.io/f/mqaagdkg"; // Replace with your actual Formspree endpoint
 
     const emailBody = {
       subject: "FlowCare Order Form - New Order",
       message: `
         New order details:
         
-        ${cartItems.map(item => `${item.name} (${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`).join('\n')}
+        ${cartItems
+          .map(
+            (item) =>
+              `${item.name} (${item.quantity}) - $${(
+                item.price * item.quantity
+              ).toFixed(2)}`
+          )
+          .join("\n")}
         
         Total: $${total.toFixed(2)}
-      `
-    }
+      `,
+    };
 
     try {
       const response = await fetch(formspreeEndpoint, {
@@ -227,82 +295,99 @@ export function Ecom() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(emailBody),
-      })
+      });
 
       if (response.ok) {
-        alert("Order details sent successfully!")
-        setIsCartOpen(false) // Close the cart after sending
-        setCartItems([]) // Clear the cart
+        alert("Order details sent successfully!");
+        setIsCartOpen(false); // Close the cart after sending
+        setCartItems([]); // Clear the cart
       } else {
-        throw new Error("Failed to send order details")
+        throw new Error("Failed to send order details");
       }
     } catch (error) {
-      console.error("Error sending email:", error)
-      alert("Failed to send order details. Please try again.")
+      console.error("Error sending email:", error);
+      alert("Failed to send order details. Please try again.");
     }
-  }
+  };
 
   const filteredProducts = products
-    .filter(product => 
-      (selectedCategory === "All" || product.category === selectedCategory) &&
-      (searchQuery === "" || 
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.brand.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter(
+      (product) =>
+        (selectedCategory === "All" || product.category === selectedCategory) &&
+        (searchQuery === "" ||
+          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.brand.toLowerCase().includes(searchQuery.toLowerCase()))
     )
     .sort((a, b) => {
-      if (sortBy === "priceLowToHigh") return a.price - b.price
-      if (sortBy === "priceHighToLow") return b.price - a.price
-      if (sortBy === "rating") return b.rating - a.rating
-      return 0
-    })
+      if (sortBy === "priceLowToHigh") return a.price - b.price;
+      if (sortBy === "priceHighToLow") return b.price - a.price;
+      if (sortBy === "rating") return b.rating - a.rating;
+      return 0;
+    });
 
-  const featuredProducts = products.filter(p => p.featured)
-  const newArrivals = products.filter(p => p.isNew)
+  const featuredProducts = products.filter((p) => p.featured);
+  const newArrivals = products.filter((p) => p.isNew);
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
-    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
-      <motion.aside
-        initial={{ x: -20, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4 border-r border-gray-200 dark:border-gray-700"
-      >
+    <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
+      <aside className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4">
         <nav className="mt-8 space-y-4">
-          <motion.h1
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-8"
-          >
+          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">
             FlowCare
-          </motion.h1>
-          {[
-            { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/dashboard"},
-            { icon: <Home size={20} />, label: "Home", path: "/" },
-            { icon: <GraduationCap size={20} />, label: "Education", path: "/blogs" },
-            { icon: <ShoppingBag size={20} />, label: "Shop", path: "/Ecom", active: true },
-            { icon: <ActivitySquare size={20} />, label: "Track Your Health", path: "/tracker" },
-            { icon: <Stethoscope size={20} />, label: "Expert Consultation", path: "/consultations" },
-            { icon: <Bot size={20} />, label: "AI Chatbot", path: "/ChatBot" },
-            { icon: <HeartPulse size={20} />, label: "HealthLens", path: "/symptomsanalyzer" },
-            { icon: <MessageSquare size={20} />, label: "Forums", path: "/forums" }
-          ].map((link) => (
-            <motion.button
-              key={link.label}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
-                link.active
-                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              {link.icon}
-              <span>{link.label}</span>
-            </motion.button>
-          ))}
+          </h1>
+          <SidebarLink
+            icon={<LayoutDashboard size={20} />}
+            label="Dashboard"
+            onClick={() => navigate("/dashboard")}
+          />
+          <SidebarLink
+            icon={<Home size={20} />}
+            label="Home"
+            onClick={() => navigate("/")}
+          />
+          <SidebarLink
+            icon={<GraduationCap size={20} />}
+            label="Education"
+            onClick={() => navigate("/blogs")}
+          />
+          <SidebarLink
+            icon={<ShoppingBag size={20} />}
+            label="Shop"
+            onClick={() => navigate("/Ecom")}
+            active
+          />
+          <SidebarLink
+            icon={<ActivitySquare size={20} />}
+            label="Track Your Health"
+            onClick={() => navigate("/tracker")}
+          />
+          <SidebarLink
+            icon={<Stethoscope size={20} />}
+            label="Expert Consultation"
+            onClick={() => navigate("/consultations")}
+          />
+          <SidebarLink
+            icon={<Bot size={20} />}
+            label="AI Chatbot"
+            onClick={() => navigate("/ChatBot")}
+          />
+          <SidebarLink
+            icon={<HeartPulse size={20} />}
+            label="HealthLens"
+            onClick={() => navigate("/symptomsanalyzer")}
+          />
+          <SidebarLink
+            icon={<MessageSquare size={20} />}
+            label="Forums"
+            onClick={() => navigate("/forums")}
+          />
         </nav>
-      </motion.aside>
+      </aside>
 
       <main className="flex-1 p-8 overflow-auto bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto space-y-12">
@@ -321,7 +406,11 @@ export function Ecom() {
                 onClick={toggleDarkMode}
                 className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
               >
-                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                {darkMode ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -364,7 +453,9 @@ export function Ecom() {
               className="px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-300 dark:bg-gray-700 dark:text-white"
             >
               {categories.map((category) => (
-                <option key={category} value={category}>{category}</option>
+                <option key={category} value={category}>
+                  {category}
+                </option>
               ))}
             </select>
             <select
@@ -421,16 +512,20 @@ export function Ecom() {
                     {product.icon}
                   </motion.div>
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {product.brand}
+                    </p>
                     <div className="mt-2 flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className={`h-5 w-5 ${
                             i < Math.floor(product.rating)
-                              ? 'text-yellow-400'
-                              : 'text-gray-300'
+                              ? "text-yellow-400"
+                              : "text-gray-300"
                           }`}
                           fill="currentColor"
                         />
@@ -454,13 +549,17 @@ export function Ecom() {
                         onClick={() => toggleFavorite(product.id)}
                         className={`p-2 rounded-full ${
                           favorites.includes(product.id)
-                            ? 'text-red-500'
-                            : 'text-gray-400'
+                            ? "text-red-500"
+                            : "text-gray-400"
                         }`}
                       >
                         <Heart
                           className="h-6 w-6"
-                          fill={favorites.includes(product.id) ? "currentColor" : "none"}
+                          fill={
+                            favorites.includes(product.id)
+                              ? "currentColor"
+                              : "none"
+                          }
                         />
                       </motion.button>
                     </div>
@@ -489,16 +588,18 @@ export function Ecom() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   whileHover={{ scale: 1.02 }}
-                  className="p-6 bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-xl border border-pink-100 dark:border-pink-800"
+                  className="p-6 bg-gradient-to-br text-white from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-xl border border-pink-100 dark:border-pink-800"
                 >
                   <Gift className="h-8 w-8 text-pink-500 mb-4" />
                   <h3 className="text-lg font-semibold mb-2">{offer.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{offer.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {offer.description}
+                  </p>
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-sm bg-white dark:bg-gray-800 px-2 py-1 rounded">
                       {offer.code}
                     </span>
-                    <span className="text-sm text-gray-500">{offer.expiry}</span>
+                    <span className="text-sm text-white">{offer.expiry}</span>
                   </div>
                 </motion.div>
               ))}
@@ -539,16 +640,20 @@ export function Ecom() {
                     {product.icon}
                   </motion.div>
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {product.brand}
+                    </p>
                     <div className="mt-2 flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className={`h-5 w-5 ${
                             i < Math.floor(product.rating)
-                              ? 'text-yellow-400'
-                              : 'text-gray-300'
+                              ? "text-yellow-400"
+                              : "text-gray-300"
                           }`}
                           fill="currentColor"
                         />
@@ -572,13 +677,17 @@ export function Ecom() {
                         onClick={() => toggleFavorite(product.id)}
                         className={`p-2 rounded-full ${
                           favorites.includes(product.id)
-                            ? 'text-red-500'
-                            : 'text-gray-400'
+                            ? "text-red-500"
+                            : "text-gray-400"
                         }`}
                       >
                         <Heart
                           className="h-6 w-6"
-                          fill={favorites.includes(product.id) ? "currentColor" : "none"}
+                          fill={
+                            favorites.includes(product.id)
+                              ? "currentColor"
+                              : "none"
+                          }
                         />
                       </motion.button>
                     </div>
@@ -601,24 +710,27 @@ export function Ecom() {
               Shop by Category
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {categories.filter(cat => cat !== "All").map((category, index) => (
-                <motion.button
-                  key={category}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`p-6 rounded-xl border text-center transition-colors ${
-                    selectedCategory === category
-                      ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white border-transparent'
-                      : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-700'
-                  }`}
-                >
-                  <h3 className="font-medium">{category}</h3>
-                  <p className="text-sm mt-1 opacity-75">
-                    {products.filter(p => p.category === category).length} Products
-                  </p>
-                </motion.button>
-              ))}
+              {categories
+                .filter((cat) => cat !== "All")
+                .map((category, index) => (
+                  <motion.button
+                    key={category}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`p-6 rounded-xl border text-center transition-colors ${
+                      selectedCategory === category
+                        ? "bg-gradient-to-r  from-pink-500 to-purple-600 text-black border-transparent"
+                        : "bg-white text-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-pink-300 dark:hover:border-pink-700"
+                    }`}
+                  >
+                    <h3 className="font-medium">{category}</h3>
+                    <p className="text-sm mt-1 opacity-75">
+                      {products.filter((p) => p.category === category).length}{" "}
+                      Products
+                    </p>
+                  </motion.button>
+                ))}
             </div>
           </section>
 
@@ -626,11 +738,17 @@ export function Ecom() {
             <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600 opacity-10" />
             <div className="relative p-8 md:p-12">
               <div className="max-w-2xl mx-auto text-center space-y-4">
-                <h2 className="text-2xl md:text-3xl font-bold">Stay Updated</h2>
+                <h2 className="text-2xl text-white md:text-3xl font-bold">
+                  Stay Updated
+                </h2>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Subscribe to our newsletter for exclusive offers and period care tips.
+                  Subscribe to our newsletter for exclusive offers and period
+                  care tips.
                 </p>
-                <form onSubmit={handleSubscribe} className="flex gap-4 max-w-md mx-auto">
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex gap-4 max-w-md mx-auto"
+                >
                   <input
                     type="email"
                     value={email}
@@ -677,16 +795,20 @@ export function Ecom() {
                     {product.icon}
                   </motion.div>
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{product.name}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{product.brand}</p>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {product.brand}
+                    </p>
                     <div className="mt-2 flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className={`h-5 w-5 ${
                             i < Math.floor(product.rating)
-                              ? 'text-yellow-400'
-                              : 'text-gray-300'
+                              ? "text-yellow-400"
+                              : "text-gray-300"
                           }`}
                           fill="currentColor"
                         />
@@ -710,13 +832,17 @@ export function Ecom() {
                         onClick={() => toggleFavorite(product.id)}
                         className={`p-2 rounded-full ${
                           favorites.includes(product.id)
-                            ? 'text-red-500'
-                            : 'text-gray-400'
+                            ? "text-red-500"
+                            : "text-gray-400"
                         }`}
                       >
                         <Heart
                           className="h-6 w-6"
-                          fill={favorites.includes(product.id) ? "currentColor" : "none"}
+                          fill={
+                            favorites.includes(product.id)
+                              ? "currentColor"
+                              : "none"
+                          }
                         />
                       </motion.button>
                     </div>
@@ -745,9 +871,9 @@ export function Ecom() {
                   onClick={() => setIsCartOpen(false)}
                 />
                 <motion.div
-                  initial={{ x: '100%' }}
+                  initial={{ x: "100%" }}
                   animate={{ x: 0 }}
-                  exit={{ x: '100%' }}
+                  exit={{ x: "100%" }}
                   className="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-800 shadow-xl p-6 overflow-auto"
                 >
                   <div className="flex justify-between items-center mb-6">
@@ -772,7 +898,9 @@ export function Ecom() {
                       >
                         <ShoppingBag className="h-8 w-8 text-pink-500" />
                       </motion.div>
-                      <p className="text-gray-500 dark:text-gray-400 text-center">Your cart is empty</p>
+                      <p className="text-gray-500 dark:text-gray-400 text-center">
+                        Your cart is empty
+                      </p>
                       <button
                         onClick={() => setIsCartOpen(false)}
                         className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -797,30 +925,48 @@ export function Ecom() {
                                 {item.icon}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-medium truncate dark:text-white">{item.name}</h4>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">{item.brand}</p>
+                                <h4 className="font-medium truncate dark:text-white">
+                                  {item.name}
+                                </h4>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                  {item.brand}
+                                </p>
                               </div>
                               <div className="flex items-center gap-2">
                                 <motion.button
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
-                                  onClick={() => updateCartItemQuantity(item.id, Math.max(0, item.quantity - 1))}
+                                  onClick={() =>
+                                    updateCartItemQuantity(
+                                      item.id,
+                                      Math.max(0, item.quantity - 1)
+                                    )
+                                  }
                                   className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                                 >
                                   <Minus className="h-4 w-4 dark:text-white" />
                                 </motion.button>
-                                <span className="w-8 text-center">{item.quantity}</span>
+                                <span className="w-8 text-center">
+                                  {item.quantity}
+                                </span>
                                 <motion.button
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
-                                  onClick={() => updateCartItemQuantity(item.id, item.quantity + 1)}
+                                  onClick={() =>
+                                    updateCartItemQuantity(
+                                      item.id,
+                                      item.quantity + 1
+                                    )
+                                  }
                                   className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                                 >
                                   <Plus className="h-4 w-4 dark:text-white" />
                                 </motion.button>
                               </div>
                               <div className="flex items-center gap-4 dark:text-white">
-                                <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                                <p className="font-medium">
+                                  ${(item.price * item.quantity).toFixed(2)}
+                                </p>
                                 <motion.button
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.9 }}
@@ -837,7 +983,9 @@ export function Ecom() {
                       <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-4">
                         <div className="flex items-center justify-between">
                           <span className="font-medium">Total</span>
-                          <span className="font-bold text-lg">${total.toFixed(2)}</span>
+                          <span className="font-bold text-lg">
+                            ${total.toFixed(2)}
+                          </span>
                         </div>
                         <motion.button
                           whileHover={{ scale: 1.02 }}
@@ -864,6 +1012,5 @@ export function Ecom() {
         </div>
       </main>
     </div>
-  )
+  );
 }
-

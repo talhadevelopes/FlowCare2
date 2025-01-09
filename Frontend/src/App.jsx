@@ -1,7 +1,5 @@
 import { useState } from "react";
 import {
-  
-
   createBrowserRouter,
   RouterProvider,
   Routes,
@@ -17,9 +15,9 @@ import { PeriodTracker } from "./components/PeriodTracker";
 import { Ecom } from "./components/Ecom";
 import { Chatbot } from "./components/Chatbot";
 import { Dashboard } from "./components/Dashboard";
-import { ModernTeamShowcase } from "./components/ModernTeamShowcase"
-import { SymptomAnalysis } from "./components/SymptomAnalysis"
-import { ParentDashboard } from "./components/ParentDashboard"
+import { ModernTeamShowcase } from "./components/ModernTeamShowcase";
+import { SymptomAnalysis } from "./components/SymptomAnalysis";
+import { ParentDashboard } from "./components/ParentDashboard";
 
 const router = createBrowserRouter([
   {

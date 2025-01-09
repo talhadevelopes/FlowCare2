@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Home, MessageSquare, HeartPulse, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, ChevronRight, Bell, Calendar, Heart, Moon, Sun, Droplet, Utensils, Smile, Frown, Meh, ThermometerSun, Zap, Coffee, Dumbbell, BookOpen, AlertCircle, CheckCircle, X, ToggleLeft, ToggleRight, Lock, Unlock, AlertTriangle } from 'lucide-react';
 import axios from "axios";
+import {HoverCard } from "../components/cards-hover"
 import { PrivacyForm } from './PrivacyForm';
 
 const server_url = import.meta.env.VITE_SERVER_URL;
@@ -205,7 +206,7 @@ export function Dashboard() {
   }
 
   if (!periodData) {
-    return <div>No period data available. Please update your information.</div>;
+    return <div>Sign/Sign in Required</div>;
   }
 
   const cycleDay =

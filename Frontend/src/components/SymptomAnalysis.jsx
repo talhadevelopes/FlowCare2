@@ -539,7 +539,7 @@ export function SymptomAnalysis() {
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
-      {/* Sidebar */}
+      {/* Sidebar**/}
       <aside
         className={`bg-pink-100 dark:bg-gray-800 fixed min-h-screen  transition-all duration-300 ease-in-out ${
           sidebarVisible ? "w-64" : "w-0"

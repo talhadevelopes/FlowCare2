@@ -1,226 +1,254 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Calendar,
-  HeartPulse,
-  MessageSquare,
-  Frown,
-  Smile,
-  Angry,
-  Coffee,
-  Zap,
-  Moon,
-  ChevronDown,
-  ChevronUp,
-  Heart,
-  Sun,
-  LayoutDashboard,
-  Home,
-  GraduationCap,
-  ShoppingBag,
-  ActivitySquare,
-  Stethoscope,
-  Bot,
-  Search,
-  BookOpen,
-  Utensils,
-  Leaf,
-  Clock,
-  Filter,
-  Bookmark,
-  Share2,
-  Award,
-  Sparkles,
-  Brain,
-  Dumbbell,
-  Pill,
-  Droplet,
-  X,
-} from "lucide-react";
-import { Quiz } from "./Quiz";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar, HeartPulse, MessageSquare, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart, Sun, LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, Search, BookOpen, Utensils, Leaf, Clock, Filter, Bookmark, Share2, Award, Sparkles, Brain, Dumbbell, Pill, Droplet, X, TrendingUp, BarChart, Bell, Info, ArrowRight, ThumbsUp, ThumbsDown, Lock, Unlock } from 'lucide-react';
 
+// Existing blog posts and women's health topics data...
+// (Keep the existing data for blogPosts and womenHealthTopics)
 const blogPosts = [
   {
     id: 1,
     title: "Understanding Your Menstrual Cycle",
-    excerpt:
-      "Learn about the phases of your menstrual cycle and how they affect your body.",
+    excerpt: "Learn about the phases of your menstrual cycle and how they affect your body.",
     author: "Dr. Emily Johnson",
     date: "2024-03-15",
     readingTime: "5 min",
     icon: <Calendar className="h-12 w-12 text-pink-500" />,
     category: "Health",
-    content:
-      "The menstrual cycle is typically 28 days long, but can range from 21 to 35 days. It consists of four main phases: menstruation, the follicular phase, ovulation, and the luteal phase. Each phase is characterized by different hormonal changes that affect your body and mood. Understanding these phases can help you better manage your health and well-being throughout your cycle.",
+    content: "The menstrual cycle is typically 28 days long, but can range from 21 to 35 days. It consists of four main phases: menstruation, the follicular phase, ovulation, and the luteal phase. Each phase is characterized by different hormonal changes that affect your body and mood. Understanding these phases can help you better manage your health and well-being throughout your cycle."
   },
   {
     id: 2,
-    title: "How long does the menstrual cycle and period last?",
-    excerpt:
-      "Discover the best foods to eat during your menstrual cycle for optimal health.",
+    title: "Nutrition Tips for a Healthy Period",
+    excerpt: "Discover the best foods to eat during your menstrual cycle for optimal health.",
     author: "Nutritionist Sarah Lee",
     date: "2024-03-10",
     readingTime: "4 min",
     icon: <Utensils className="h-12 w-12 text-green-500" />,
     category: "Nutrition",
-    content:
-      "Your menstrual cycle takes around 28 days to complete, but this is a good time to point out that EVERYONE is different! Just like your fingerprints are unique, so is your bloody brilliant body and how you experience periods. So, while we say 28 days it might be a little longer, it might be a little shorter, there really aren’t any set rules here. Of those 28 days, you could expect to bleed for anywhere between 3-8 days. Again, everyone is different, and your periods are likely to change. Your body can take some time to get into its own flow, so cut it a bit of slack - it’s learning what to do while you’re getting used to things too!",
+    content: "During your period, it's important to focus on foods rich in iron, such as leafy greens and lean meats, to replenish iron lost through menstruation. Omega-3 fatty acids found in fish and flaxseeds can help reduce inflammation and cramps. Staying hydrated and consuming foods high in magnesium, like nuts and seeds, can also alleviate common period symptoms."
   },
   {
     id: 3,
-    title: "What are the signs that my period is coming?",
-    excerpt:
-      "Explore natural remedies and lifestyle changes to alleviate PMS symptoms.",
+    title: "Managing PMS Symptoms Naturally",
+    excerpt: "Explore natural remedies and lifestyle changes to alleviate PMS symptoms.",
     author: "Holistic Health Coach Maria Garcia",
     date: "2024-03-05",
     readingTime: "6 min",
     icon: <Leaf className="h-12 w-12 text-purple-500" />,
     category: "Wellness",
-    content:
-      "If you’ve never had a period before, there are some signs which might indicate your period is coming and they’re all natural parts of growing up. If you’ve noticed your boobs are beginning to develop, and you’ve started to grow pubic hair, then you could expect to get your period about two years later. A more immediate sign for some people is if you notice discharge in your pants. Discharge is a white or yellowish fluid which usually shows up a few months before your first period. There are lots of other signs your period is coming and these can be both physical and emotional. We call these signs PMS (premenstrual syndrome). Not everyone gets PMS and we all experience it differently. It usually happens just before and during your period, and it’s basically the reason you might find yourself wanting to eat your body weight in chocolate or burst into tears at the smallest of things…lost sock, bad hair day, burnt toast…trust me, we all have those days! PMS brings with it all kinds of symptoms such as headaches, bloating, cramps, mood swings, feeling tired and having trouble concentrating. We’ve got a great blog all about PMS with top tips on how to help with these symptoms and many more, so go and take a look. It will finally explain some of those weird and wonderful feelings that you never knew were thanks to your bloody brilliant period!",
+    content: "Natural remedies for PMS include regular exercise, stress-reduction techniques like meditation, and herbal supplements such as chasteberry and evening primrose oil. Reducing caffeine and salt intake, while increasing complex carbohydrates and calcium-rich foods, can also help balance hormones and reduce symptoms. Always consult with a healthcare provider before starting any new supplement regimen."
   },
   {
     id: 4,
-    title: "Why does the colour vary so much?",
-    excerpt:
-      "A journey through time exploring the evolution of menstrual products.",
+    title: "The History of Menstrual Products",
+    excerpt: "A journey through time exploring the evolution of menstrual products.",
     author: "Historian Dr. Alex Thompson",
     date: "2024-02-28",
     readingTime: "7 min",
     icon: <Clock className="h-12 w-12 text-blue-500" />,
     category: "History",
-    content:
-      "Like we just said, there’s lots of other things going on in there besides blood, that’s why it doesn’t always come out bright red like you might expect. But it’s not just what your period is made up of that determines the colour. The colour of your period can be a great tool for knowing what’s going on in your body. It can highlight signs of a poor diet, possible infections or other health conditions. In most cases a variety of shades is totally normal, with oxygen and hormones (there they are again) also playing a role in the shade of your flow (which is COMPLETELY NATURAL!).We’ve got a handy diagram and more information on the different colours of your period here.",
+    content: "The history of menstrual products dates back to ancient civilizations. Early methods included using papyrus in Egypt and wool in Rome. The first commercial disposable pads were introduced in the late 19th century. Tampons were patented in the 1930s, and menstrual cups were first developed in the 1930s but gained popularity in recent decades. Today, there's a growing focus on sustainable and reusable menstrual products."
   },
   {
     id: 5,
-    title: "Pain and WHAT IS NORMAL?",
-    excerpt:
-      "Learn how to optimize your workouts based on your menstrual cycle phases.",
+    title: "Exercise and Your Menstrual Cycle",
+    excerpt: "Learn how to optimize your workouts based on your menstrual cycle phases.",
     author: "Fitness Expert Lisa Brown",
     date: "2024-03-20",
     readingTime: "5 min",
     icon: <Dumbbell className="h-12 w-12 text-orange-500" />,
     category: "Fitness",
-    content:
-      "A not-so-fun part about getting your period is period pains, or menstrual cramps, as they’re also called. It’s worth pointing out that not everyone gets period cramps. Most women, girls and people who have periods do, but if you don’t, then that’s absolutely nothing to worry about – just embrace the fact you can enjoy your bloody brilliant period cramp free. So, what is period pain? Period pain is mainly caused by your uterus contracting (tensing up like the other muscles in your body) to help get rid of the lining which we spoke about earlier. You can get pains in your stomach, but it can also spread into your back and thighs. We’ve got a whole heap more information on period pain and what you can do to help here. Hopefully by now you’ll be getting the idea that there’s all kinds of normal when it comes to your period: your normal, your mates’ normal, your next-door neighbours’ normal! What we’re trying to say is we’re all unique, but periods themselves are a normal part of life. After all, half the population will have periods at some point in their lives, so we should all be able to support each other. It’s important to have conversations about periods, as it’s something so many of us have in common! Getting to know your body, your feelings, your health and your flow is really important. If you notice changes in your normal, or if you find it difficult to cope with any aspect of your period, ask for support. There’s no shame in asking for advice, like our team of Bloody Brilliant experts - your local doctor or nurse has all the skills and experience needed to help you. Only you know how you feel, so it’s important you get help if you need it! ",
+    content: "Your menstrual cycle can affect your energy levels and exercise performance. During the follicular phase, estrogen levels rise, potentially increasing your strength and endurance. This is a great time for high-intensity workouts. In the luteal phase, you might feel less energetic, making it ideal for lower-intensity exercises like yoga or pilates. Listen to your body and adjust your workout routine accordingly throughout your cycle."
   },
   {
     id: 6,
     title: "Hormones and Mental Health",
-    excerpt:
-      "Understand the connection between hormonal changes and mental well-being.",
+    excerpt: "Understand the connection between hormonal changes and mental well-being.",
     author: "Psychologist Dr. Rachel Green",
     date: "2024-03-25",
     readingTime: "6 min",
     icon: <Brain className="h-12 w-12 text-indigo-500" />,
     category: "Mental Health",
-    content:
-      "Hormonal fluctuations during the menstrual cycle can significantly impact mental health. Many women experience mood swings, anxiety, or depression, especially during the premenstrual phase. Understanding these changes can help in managing symptoms. Techniques such as cognitive-behavioral therapy, mindfulness, and in some cases, medication, can be effective in addressing hormone-related mental health concerns.",
+    content: "Hormonal fluctuations during the menstrual cycle can significantly impact mental health. Many women experience mood swings, anxiety, or depression, especially during the premenstrual phase. Understanding these changes can help in managing symptoms. Techniques such as cognitive-behavioral therapy, mindfulness, and in some cases, medication, can be effective in addressing hormone-related mental health concerns."
   },
   {
     id: 7,
     title: "Menstrual Hygiene Best Practices",
-    excerpt:
-      "Essential tips for maintaining proper menstrual hygiene and preventing infections.",
+    excerpt: "Essential tips for maintaining proper menstrual hygiene and preventing infections.",
     author: "Gynecologist Dr. Sophia Chen",
     date: "2024-03-30",
     readingTime: "4 min",
     icon: <Droplet className="h-12 w-12 text-cyan-500" />,
     category: "Hygiene",
-    content:
-      "Proper menstrual hygiene is crucial for preventing infections and ensuring comfort. Change your menstrual product regularly, at least every 4-8 hours for pads and tampons. Wash your hands before and after changing products. If using reusable products like menstrual cups or cloth pads, ensure they are thoroughly cleaned and sterilized between uses. Avoid scented products as they can disrupt your natural pH balance.",
+    content: "Proper menstrual hygiene is crucial for preventing infections and ensuring comfort. Change your menstrual product regularly, at least every 4-8 hours for pads and tampons. Wash your hands before and after changing products. If using reusable products like menstrual cups or cloth pads, ensure they are thoroughly cleaned and sterilized between uses. Avoid scented products as they can disrupt your natural pH balance."
   },
   {
     id: 8,
     title: "Hormonal Birth Control Options",
-    excerpt:
-      "An overview of different hormonal contraceptive methods and their effects on your cycle.",
+    excerpt: "An overview of different hormonal contraceptive methods and their effects on your cycle.",
     author: "Reproductive Health Specialist Dr. Mark Davis",
     date: "2024-04-05",
     readingTime: "7 min",
     icon: <Pill className="h-12 w-12 text-red-500" />,
     category: "Contraception",
-    content:
-      "Hormonal birth control methods include pills, patches, injections, and intrauterine devices (IUDs). These work by altering your hormone levels to prevent ovulation or fertilization. While effective for contraception, they can also affect your menstrual cycle, often making periods lighter or more regular. Some methods may even stop periods altogether. It's important to discuss the pros and cons of each method with your healthcare provider to find the best option for you.",
+    content: "Hormonal birth control methods include pills, patches, injections, and intrauterine devices (IUDs). These work by altering your hormone levels to prevent ovulation or fertilization. While effective for contraception, they can also affect your menstrual cycle, often making periods lighter or more regular. Some methods may even stop periods altogether. It's important to discuss the pros and cons of each method with your healthcare provider to find the best option for you."
   },
   {
     id: 9,
     title: "Menstrual Disorders: When to Seek Help",
-    excerpt:
-      "Learn about common menstrual disorders and signs that indicate you should consult a doctor.",
+    excerpt: "Learn about common menstrual disorders and signs that indicate you should consult a doctor.",
     author: "Obstetrician Dr. Laura Martinez",
     date: "2024-04-10",
     readingTime: "6 min",
     icon: <Stethoscope className="h-12 w-12 text-teal-500" />,
     category: "Health",
-    content:
-      "While some variation in menstrual cycles is normal, certain symptoms may indicate a disorder. Heavy bleeding, severe pain, irregular cycles, or bleeding between periods could be signs of conditions like endometriosis, PCOS, or fibroids. If you experience these symptoms, or if your period significantly impacts your daily life, it's important to consult with a healthcare provider for proper diagnosis and treatment.",
-  },
+    content: "While some variation in menstrual cycles is normal, certain symptoms may indicate a disorder. Heavy bleeding, severe pain, irregular cycles, or bleeding between periods could be signs of conditions like endometriosis, PCOS, or fibroids. If you experience these symptoms, or if your period significantly impacts your daily life, it's important to consult with a healthcare provider for proper diagnosis and treatment."
+  }
 ];
 
 const womenHealthTopics = [
   {
     id: 1,
-    question: "What is a period?",
-    answer:
-      "Your period or menstruation (that’s the ‘sciencey’ name) is part of your menstrual cycle. This cycle is ultimately your body’s way of preparing itself for a possible pregnancy. During your menstrual cycle, there is an increase and decrease in a number of different hormones such as oestrogen and progesterone which control different aspects of this cycle, you’ll be hearing a lot about these hormones, so sit tight.During your cycle your body releases an egg from your ovaries – we’re talking teeny tiny eggs here - you can’t see them with the naked eye, they’re that small! In order for the egg to be released it has to be matured, which is a job for our hormones.These hormones are also responsible for making the lining of your uterus thick. Should one day an egg get fertilised by sperm, it would land on the thick cosy lining and that’s where a pregnancy would start. However, if the egg doesn’t get fertilised your body no longer needs the lining, so (here comes the hormones again!) your hormones instruct your body to break the lining down and remove it from the uterus via your vagina.",
+    question: "What is the menstrual cycle?",
+    answer: "The menstrual cycle is the monthly series of changes a woman's body goes through in preparation for the possibility of pregnancy.  It's regulated by hormones and typically lasts around 28 days, but this can vary."
   },
   {
     id: 2,
-    question: "Breast Health and Self-Examination",
-    answer:
-      "Regular breast self-examinations are crucial for early detection of any abnormalities. Perform a self-exam once a month, preferably a few days after your period ends. Look for changes in size, shape, or color, and feel for lumps or thickening. If you notice any changes or have concerns, consult with your healthcare provider promptly.",
+    question: "What are the stages of the menstrual cycle?",
+    answer: "The menstrual cycle typically has four stages: menstruation (bleeding), the follicular phase (egg development), ovulation (egg release), and the luteal phase (preparation for potential pregnancy)."
   },
   {
     id: 3,
-    question: "Reproductive Health and Fertility",
-    answer:
-      "Reproductive health encompasses various aspects, including fertility, contraception, and sexual health. Understanding your fertile window, typically the 5 days before ovulation and the day of ovulation, is crucial for both achieving and avoiding pregnancy. Regular check-ups with a gynecologist can help monitor your reproductive health and address any concerns.",
+    question: "What is PMS?",
+    answer: "Premenstrual syndrome (PMS) is a group of symptoms that many women experience in the days leading up to their period.  Symptoms can include mood swings, bloating, breast tenderness, and fatigue."
   },
   {
     id: 4,
-    question: "Menopause and Hormonal Changes",
-    answer:
-      "Menopause is a natural biological process marking the end of menstrual cycles, typically occurring in your 40s or 50s. It's preceded by perimenopause, which can last several years. Common symptoms include irregular periods, hot flashes, mood changes, and sleep disturbances. Hormone replacement therapy and lifestyle changes can help manage symptoms. Regular check-ups during this transition are important for maintaining overall health.",
+    question: "How can I manage PMS symptoms?",
+    answer: "Managing PMS symptoms can involve lifestyle changes like regular exercise, stress reduction, and a healthy diet.  Over-the-counter pain relievers can help with cramps, and in some cases, a doctor may recommend other treatments."
   },
   {
     id: 5,
-    question: "Women's Nutrition and Bone Health",
-    answer:
-      "A balanced diet is crucial for women's health, particularly for maintaining strong bones and preventing osteoporosis. Ensure adequate intake of calcium, vitamin D, and other essential nutrients. Weight-bearing exercises and strength training can also help maintain bone density. As women are at higher risk for osteoporosis, especially after menopause, it's important to prioritize bone health throughout your life.",
+    question: "What is endometriosis?",
+    answer: "Endometriosis is a condition where tissue similar to the lining of the uterus grows outside of the uterus.  It can cause painful periods, pelvic pain, and fertility problems."
   },
+  {
+    id: 6,
+    question: "What is PCOS?",
+    answer: "Polycystic ovary syndrome (PCOS) is a hormonal disorder that can cause irregular periods, weight gain, and acne.  It can also affect fertility."
+  },
+  {
+    id: 7,
+    question: "What are fibroids?",
+    answer: "Uterine fibroids are noncancerous tumors that grow in the uterus.  They can cause heavy bleeding, pelvic pain, and other symptoms."
+  },
+  {
+    id: 8,
+    question: "When should I see a doctor about my menstrual health?",
+    answer: "You should see a doctor if you experience unusually heavy bleeding, severe pain, irregular cycles, bleeding between periods, or any other concerning symptoms."
+  },
+  {
+    id: 9,
+    question: "What are some healthy habits for menstrual health?",
+    answer: "Maintaining a healthy lifestyle, including regular exercise, a balanced diet, and stress management techniques, can contribute to better menstrual health."
+  },
+  {
+    id: 10,
+    question: "What are some options for birth control?",
+    answer: "Various birth control options are available, including pills, patches, implants, IUDs, and more.  It's important to discuss your options with a healthcare provider to find the best fit for your needs and health."
+  },
+  {
+    id: 11,
+    question: "What is perimenopause?",
+    answer: "Perimenopause is the transitional phase leading up to menopause, characterized by hormonal fluctuations and changes in menstrual cycles."
+  },
+  {
+    id: 12,
+    question: "What is menopause?",
+    answer: "Menopause is the natural cessation of menstruation, marking the end of a woman's reproductive years."
+  }
 ];
 
 export function Blogs() {
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(
-    () => localStorage.getItem("darkMode") === "true"
-  );
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [activeItem, setActiveItem] = useState(null);
-  const [readSections, setReadSections] = useState(
-    Array(womenHealthTopics.length).fill(false)
-  );
+  const [readSections, setReadSections] = useState(Array(womenHealthTopics.length).fill(false));
   const [completedBlogs, setCompletedBlogs] = useState(0);
   const [completedTopics, setCompletedTopics] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [savedPosts, setSavedPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [allSectionsRead, setAllSectionsRead] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [trendingTopics, setTrendingTopics] = useState([]);
+  const [showProgressChart, setShowProgressChart] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [showQuiz, setShowQuiz] = useState(false);
   const [quizScore, setQuizScore] = useState(null);
+  const [readingTime, setReadingTime] = useState(0);
+  const readingTimeRef = useRef(null);
+  const [learningProgress, setLearningProgress] = useState(Array(7).fill(0));
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [quizUnlocked, setQuizUnlocked] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    const fetchTrendingTopics = () => {
+      // Simulating an API call
+      setTimeout(() => {
+        setTrendingTopics([
+          "Menstrual Health",
+          "Reproductive Rights",
+          "PCOS Awareness",
+          "Mental Health",
+          "Nutrition for Women",
+          "Hormonal Balance",
+          "Pregnancy",
+          "Menopause",
+        ]);
+      }, 1000);
+    };
+
+    fetchTrendingTopics();
+  }, []);
+
+  useEffect(() => {
+    if (readingTimeRef.current) {
+      clearInterval(readingTimeRef.current);
+    }
+
+    readingTimeRef.current = setInterval(() => {
+      setReadingTime((prevTime) => prevTime + 1);
+      updateLearningProgress();
+    }, 60000); // Increment every minute
+
+    return () => {
+      if (readingTimeRef.current) {
+        clearInterval(readingTimeRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (completedTopics >= 5 && !quizUnlocked) {
+      setQuizUnlocked(true);
+      showNotificationMessage("Congratulations! You've unlocked the quiz. Complete it to earn points!");
+    }
+  }, [completedTopics, quizUnlocked]);
 
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
-      localStorage.setItem("darkMode", newMode.toString());
+      localStorage.setItem('darkMode', newMode.toString());
       return newMode;
     });
   };
@@ -234,11 +262,7 @@ export function Blogs() {
     updatedReadSections[index] = true;
     setReadSections(updatedReadSections);
     setCompletedTopics(updatedReadSections.filter(Boolean).length);
-
-    // Check if all sections are read
-    if (updatedReadSections.every(Boolean)) {
-      setAllSectionsRead(true);
-    }
+    updateLearningProgress();
   };
 
   const handleSavePost = (postId) => {
@@ -246,6 +270,7 @@ export function Blogs() {
       if (prev.includes(postId)) {
         return prev.filter((id) => id !== postId);
       } else {
+        showNotificationMessage("Post saved successfully!");
         return [...prev, postId];
       }
     });
@@ -254,26 +279,57 @@ export function Blogs() {
   const handleShare = (postId) => {
     // Implement sharing functionality here
     console.log(`Sharing post ${postId}`);
+    showNotificationMessage("Sharing functionality coming soon!");
   };
 
   const handleCardClick = (post) => {
     setSelectedPost(post);
     if (!savedPosts.includes(post.id)) {
       setCompletedBlogs((prev) => prev + 1);
+      updateLearningProgress();
     }
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const showNotificationMessage = (message) => {
+    setNotificationMessage(message);
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 3000);
   };
 
   const handleQuizComplete = (score) => {
     setQuizScore(score);
+    const earnedPoints = score * 10; // 10 points per correct answer
+    setTotalPoints((prevPoints) => prevPoints + earnedPoints);
+    showNotificationMessage(`Quiz completed! You earned ${earnedPoints} points. Total points: ${totalPoints + earnedPoints}`);
+    updateLearningProgress();
   };
+
+  const updateLearningProgress = () => {
+    setLearningProgress((prevProgress) => {
+      const today = new Date().getDay();
+      const newProgress = [...prevProgress];
+      newProgress[today] += 1;
+      return newProgress;
+    });
+  };
+
+  const filteredPosts = blogPosts.filter(
+    (post) =>
+      (selectedCategory === "All" || post.category === selectedCategory) &&
+      post.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const SidebarLink = ({ icon, label, onClick, active = false }) => (
     <button
       onClick={onClick}
       className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
         active
-          ? "bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200"
-          : "text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700"
+          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
+          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
       }`}
     >
       {icon}
@@ -281,65 +337,157 @@ export function Blogs() {
     </button>
   );
 
-  const filteredPosts =
-    selectedCategory === "All"
-      ? blogPosts
-      : blogPosts.filter((post) => post.category === selectedCategory);
+  const ProgressChart = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md"
+    >
+      <h3 className="text-lg font-semibold mb-4">Your Weekly Learning Progress</h3>
+      <div className="h-40 flex items-end justify-between">
+        {learningProgress.map((value, index) => (
+          <div key={index} className="w-8 bg-gray-200 dark:bg-gray-700 rounded-t-md relative">
+            <motion.div
+              className="absolute bottom-0 left-0 right-0 bg-pink-500"
+              initial={{ height: 0 }}
+              animate={{ height: `${(value / Math.max(...learningProgress)) * 100}%` }}
+              transition={{ duration: 1, delay: index * 0.1 }}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between mt-2 text-sm text-gray-600 dark:text-gray-400">
+        <span>Sun</span>
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+      </div>
+    </motion.div>
+  );
+
+  const Quiz = () => {
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [score, setScore] = useState(0);
+    const [showScore, setShowScore] = useState(false);
+
+    const questions = [
+      {
+        questionText: "What is the average length of a menstrual cycle?",
+        answerOptions: [
+          { answerText: "14 days", isCorrect: false },
+          { answerText: "28 days", isCorrect: true },
+          { answerText: "45 days", isCorrect: false },
+          { answerText: "60 days", isCorrect: false },
+        ],
+      },
+      {
+        questionText: "Which hormone is responsible for the thickening of the uterine lining?",
+        answerOptions: [
+          { answerText: "Estrogen", isCorrect: true },
+          { answerText: "Progesterone", isCorrect: false },
+          { answerText: "Testosterone", isCorrect: false },
+          { answerText: "Follicle-stimulating hormone", isCorrect: false },
+        ],
+      },
+      {
+        questionText: "What is the name of the phase when an egg is released from the ovary?",
+        answerOptions: [
+          { answerText: "Menstruation", isCorrect: false },
+          { answerText: "Ovulation", isCorrect: true },
+          { answerText: "Luteal phase", isCorrect: false },
+          { answerText: "Follicular phase", isCorrect: false },
+        ],
+      },
+      {
+        questionText: "Which of these is NOT a common symptom of PMS?",
+        answerOptions: [
+          { answerText: "Mood swings", isCorrect: false },
+          { answerText: "Bloating", isCorrect: false },
+          { answerText: "Fever", isCorrect: true },
+          { answerText: "Breast tenderness", isCorrect: false },
+        ],
+      },
+      {
+        questionText: "What is the term for the cessation of menstruation, typically occurring in the late 40s or early 50s?",
+        answerOptions: [
+          { answerText: "Menopause", isCorrect: true },
+          { answerText: "Puberty", isCorrect: false },
+          { answerText: "Ovulation", isCorrect: false },
+          { answerText: "Fertilization", isCorrect: false },
+        ],
+      },
+    ];
+
+    const handleAnswerClick = (isCorrect) => {
+      if (isCorrect) {
+        setScore(score + 1);
+      }
+
+      const nextQuestion = currentQuestion + 1;
+      if (nextQuestion < questions.length) {
+        setCurrentQuestion(nextQuestion);
+      } else {
+        setShowScore(true);
+        handleQuizComplete(score + (isCorrect ? 1 : 0));
+      }
+    };
+
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+        {showScore ? (
+          <div className="text-center">
+            <h2 className="text-2xl font-bold mb-4">Quiz Completed!</h2>
+            <p className="text-xl mb-4">You scored {score} out of {questions.length}</p>
+            <button
+              onClick={() => setShowQuiz(false)}
+              className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-300"
+            >
+              Close Quiz
+            </button>
+          </div>
+        ) : (
+          <>
+            <h2 className="text-2xl font-bold mb-4">Women's Health Quiz</h2>
+            <div className="mb-4">
+              <span className="font-semibold">Question {currentQuestion + 1}</span>/{questions.length}
+            </div>
+            <p className="text-lg mb-4">{questions[currentQuestion].questionText}</p>
+            <div className="grid grid-cols-1 gap-4">
+              {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswerClick(answerOption.isCorrect)}
+                  className="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 p-2 rounded-lg hover:bg-pink-200 dark:hover:bg-pink-800 transition-colors duration-300"
+                >
+                  {answerOption.answerText}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
       {/* Sidebar */}
       <aside className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4">
         <nav className="mt-8 space-y-4">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">
-            FlowCare
-          </h1>
-          <SidebarLink
-            icon={<LayoutDashboard size={20} />}
-            label="Dashboard"
-            onClick={() => navigate("/dashboard")}
-          />
-          <SidebarLink
-            icon={<Home size={20} />}
-            label="Home"
-            onClick={() => navigate("/")}
-          />
-          <SidebarLink
-            icon={<GraduationCap size={20} />}
-            label="Education"
-            onClick={() => navigate("/blogs")}
-            active
-          />
-          <SidebarLink
-            icon={<ShoppingBag size={20} />}
-            label="Shop"
-            onClick={() => navigate("/Ecom")}
-          />
-          <SidebarLink
-            icon={<ActivitySquare size={20} />}
-            label="Track Your Health"
-            onClick={() => navigate("/tracker")}
-          />
-          <SidebarLink
-            icon={<Stethoscope size={20} />}
-            label="Expert Consultation"
-            onClick={() => navigate("/consultations")}
-          />
-          <SidebarLink
-            icon={<Bot size={20} />}
-            label="AI Chatbot"
-            onClick={() => navigate("/ChatBot")}
-          />
-          <SidebarLink
-            icon={<HeartPulse size={20} />}
-            label="HealthLens"
-            onClick={() => navigate("/symptomsanalyzer")}
-          />
-          <SidebarLink
-            icon={<MessageSquare size={20} />}
-            label="Forums"
-            onClick={() => navigate("/forums")}
-          />
+          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">FlowCare</h1>
+          <SidebarLink icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
+          <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
+          <SidebarLink icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} active />
+          <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
+          <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
+          <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
+          <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
+          <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" onClick={() => navigate('/symptomsanalyzer')} />
+          <SidebarLink icon={<MessageSquare size={20} />} label="Community Forum" onClick={() => navigate('/forum')} />
         </nav>
       </aside>
 
@@ -351,17 +499,68 @@ export function Blogs() {
             <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400">
               Education Hub
             </h1>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-transform hover:scale-110"
-            >
-              {darkMode ? (
-                <Sun className="h-5 w-5 text-yellow-400" />
-              ) : (
-                <Moon className="h-5 w-5 text-gray-800" />
-              )}
-            </button>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setShowProgressChart(!showProgressChart)}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-transform hover:scale-110"
+              >
+                <BarChart className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+              </button>
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-transform hover:scale-110"
+              >
+                {darkMode ? (
+                  <Sun className="h-5 w-5 text-yellow-400" />
+                ) : (
+                  <Moon className="h-5 w-5 text-gray-800" />
+                )}
+              </button>
+            </div>
           </div>
+
+          <AnimatePresence>
+            {showProgressChart && <ProgressChart />}
+          </AnimatePresence>
+
+          {/* Reading Time and Points */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              Your Learning Progress
+            </h2>
+            <div className="flex justify-between items-center">
+              <p className="text-gray-600 dark:text-gray-400">
+                Time spent reading: {readingTime} minutes
+              </p>
+              <p className="text-gray-600 dark:text-gray-400">
+                Total points: {totalPoints}
+              </p>
+            </div>
+          </div>
+
+          {/* Trending Topics */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg"
+          >
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+              Trending Topics
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {trendingTopics.map((topic, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 rounded-full text-sm font-medium"
+                >
+                  {topic}
+                </motion.span>
+              ))}
+            </div>
+          </motion.div>
 
           {/* Featured Article */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300">
@@ -372,13 +571,8 @@ export function Blogs() {
             <div className="flex items-center space-x-4">
               <Award className="h-16 w-16 text-pink-500" />
               <div>
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                  Embracing Your Cycle: A Guide to Menstrual Wellness
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mt-2">
-                  Discover how to work with your menstrual cycle for optimal
-                  health and well-being.
-                </p>
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Embracing Your Cycle: A Guide to Menstrual Wellness</h3>
+                <p className="text-gray-600 dark:text-gray-400 mt-2">Discover how to work with your menstrual cycle for optimal health and well-being.</p>
               </div>
             </div>
             <button className="mt-4 bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-300">
@@ -392,6 +586,8 @@ export function Blogs() {
               <input
                 type="text"
                 placeholder="Search articles..."
+                value={searchTerm}
+                onChange={handleSearchChange}
                 className="w-full px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-300 dark:bg-gray-700 dark:text-white transition-all duration-300 focus:shadow-lg"
               />
               <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -420,19 +616,15 @@ export function Blogs() {
             </h2>
             <div className="flex flex-col space-y-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                  Articles Read
-                </h3>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Articles Read</h3>
                 <div className="flex justify-center gap-4">
                   {[...Array(9)].map((_, index) => (
                     <BookOpen
                       key={index}
                       className={`h-8 w-8 transition-all duration-300 ${
-                        index < completedBlogs
-                          ? "text-pink-500 scale-110"
-                          : "text-gray-300 dark:text-gray-600"
+                        index < completedBlogs ? 'text-pink-500 scale-110' : 'text-gray-300 dark:text-gray-600'
                       }`}
-                      fill={index < completedBlogs ? "currentColor" : "none"}
+                      fill={index < completedBlogs ? 'currentColor' : 'none'}
                     />
                   ))}
                 </div>
@@ -441,63 +633,78 @@ export function Blogs() {
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                  Topics Completed
-                </h3>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Topics Completed</h3>
                 <div className="flex justify-center gap-4">
-                  {[...Array(5)].map((_, index) => (
+                  {[...Array(12)].map((_, index) => (
                     <GraduationCap
                       key={index}
                       className={`h-8 w-8 transition-all duration-300 ${
-                        index < completedTopics
-                          ? "text-purple-500 scale-110"
-                          : "text-gray-300 dark:text-gray-600"
+                        index < completedTopics ? 'text-purple-500 scale-110' : 'text-gray-300 dark:text-gray-600'
                       }`}
-                      fill={index < completedTopics ? "currentColor" : "none"}
+                      fill={index < completedTopics ? 'currentColor' : 'none'}
                     />
                   ))}
                 </div>
                 <p className="mt-2 text-gray-800 dark:text-gray-300">
-                  {completedTopics} out of 5 topics completed
+                  {completedTopics} out of 12 topics completed
                 </p>
               </div>
               {quizScore !== null && (
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                    Quiz Score
-                  </h3>
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Quiz Performance</h3>
                   <div className="flex justify-center items-center">
-                    <Award
-                      className={`h-12 w-12 ${
-                        quizScore === 3
-                          ? "text-yellow-500"
-                          : quizScore === 2
-                          ? "text-gray-400"
-                          : "text-bronze-500"
-                      }`}
-                    />
-                    <span className="ml-2 text-2xl font-bold">
-                      {quizScore}/3
-                    </span>
+                    <Award className={`h-12 w-12 ${
+                      quizScore === 5 ? 'text-yellow-500' :
+                      quizScore >= 3 ? 'text-gray-500' :
+                      'text-bronze-500'
+                    }`} />
+                    <span className="ml-2 text-2xl font-bold">{quizScore}/5</span>
                   </div>
                   <p className="mt-2 text-gray-800 dark:text-gray-300">
-                    {quizScore === 3
-                      ? "Perfect score!"
-                      : quizScore === 2
-                      ? "Great job!"
-                      : "Keep learning!"}
+                    {quizScore === 5 ? 'Perfect score!' :
+                     quizScore >= 3 ? 'Great job!' :
+                     'Keep learning!'}
                   </p>
                 </div>
               )}
             </div>
           </div>
 
+          {/* Quiz Unlock Status */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              Quiz Status
+            </h3>
+            <div className="flex items-center justify-between">
+              <p className="text-gray-600 dark:text-gray-400">
+                {quizUnlocked ? "Quiz Unlocked!" : `Complete ${5 - completedTopics} more topics to unlock the quiz`}
+              </p>
+              {quizUnlocked ? (
+                <button
+                  onClick={() => setShowQuiz(true)}
+                  className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-300"
+                >
+                  Take Quiz
+                </button>
+              ) : (
+                <Lock className="h-6 w-6 text-gray-400" />
+              )}
+            </div>
+          </div>
+
           {/* Blog Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {filteredPosts.map((post) => (
-              <div
+              <motion.div
                 key={post.id}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-all duration-300 cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer"
                 onClick={() => handleCardClick(post)}
               >
                 <div className="p-4">
@@ -511,8 +718,8 @@ export function Blogs() {
                         }}
                         className={`p-2 rounded-full ${
                           savedPosts.includes(post.id)
-                            ? "bg-pink-100 text-pink-500"
-                            : "bg-gray-100 text-gray-500"
+                            ? 'bg-pink-100 text-pink-500'
+                            : 'bg-gray-100 text-gray-500'
                         } hover:bg-pink-200 transition-colors duration-300`}
                       >
                         <Bookmark className="h-5 w-5" />
@@ -528,70 +735,46 @@ export function Blogs() {
                       </button>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-400 mb-4">
-                    {post.excerpt}
-                  </p>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">{post.title}</h3>
+                  <p className="text-gray-700 dark:text-gray-400 mb-4">{post.excerpt}</p>
                   <div className="flex justify-between items-center text-sm text-gray-700 dark:text-gray-400">
                     <span>{post.author}</span>
                     <span>{post.readingTime} read</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Women's Health Topics Section */}
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400 mb-4">
-              Women's Health 101
-            </h2>
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400 mb-4">Women's Health 101</h2>
             <p className="text-gray-800 dark:text-gray-300 mb-6">
-              Explore key topics in women's health to deepen your understanding
-              and take control of your well-being.
+              Explore key topics in women's health to deepen your understanding and take control of your well-being.
             </p>
 
             {/* Progress Bar */}
             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6 dark:bg-gray-700 overflow-hidden">
-              <div
-                className="bg-gradient-to-r from-pink-500 to-purple-500 h-2.5 rounded-full transition-all duration-500 ease-out"
-                style={{
-                  width: `${
-                    (readSections.filter(Boolean).length /
-                      readSections.length) *
-                    100
-                  }%`,
-                }}
+              <div 
+                className="bg-gradient-to-r from-pink-500 to-purple-500 h-2.5 rounded-full transition-all duration-500 ease-out" 
+                style={{ width: `${(readSections.filter(Boolean).length / readSections.length) * 100}%` }}
               ></div>
             </div>
 
             {/* Accordion */}
             <div className="space-y-4">
               {womenHealthTopics.map(({ id, question, answer }, index) => (
-                <div
-                  key={id}
-                  className="border border-pink-200 dark:border-pink-800 rounded-lg overflow-hidden transition-all duration-300"
-                >
+                <div key={id} className="border border-pink-200 dark:border-pink-800 rounded-lg overflow-hidden transition-all duration-300">
                   <button
                     className="flex justify-between items-center w-full p-4 text-left bg-pink-50 dark:bg-gray-700 hover:bg-pink-100 dark:hover:bg-gray-600 transition-colors duration-300"
                     onClick={() => toggleAccordion(id)}
                   >
-                    <span className="text-lg font-medium text-gray-800 dark:text-gray-200">
-                      {question}
-                    </span>
-                    {activeItem === id ? (
-                      <ChevronUp className="text-pink-500" />
-                    ) : (
-                      <ChevronDown className="text-pink-500" />
-                    )}
+                    <span className="text-lg font-medium text-gray-800 dark:text-gray-200">{question}</span>
+                    {activeItem === id ? <ChevronUp className="text-pink-500" /> : <ChevronDown className="text-pink-500" />}
                   </button>
                   {activeItem === id && (
                     <div className="p-4 bg-white dark:bg-gray-800">
-                      <p className="text-gray-800 dark:text-gray-300">
-                        {answer}
-                      </p>
+                      <p className="text-gray-800 dark:text-gray-300">{answer}</p>
                       <div className="mt-4">
                         <label className="flex items-center space-x-2 text-gray-800 dark:text-gray-300 cursor-pointer">
                           <input
@@ -611,130 +794,77 @@ export function Blogs() {
           </div>
 
           {/* Quiz Section */}
-          {allSectionsRead && (
-            <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-400 dark:to-purple-400 mb-4">
-                Knowledge Check Quiz
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Test your knowledge on women's health topics. Answer the
-                questions below and see how much you've learned!
-              </p>
-              <Quiz onQuizComplete={handleQuizComplete} />
-            </div>
-          )}
+          {showQuiz && <Quiz />}
         </div>
       </main>
 
       {/* Modal for selected post */}
-      {selectedPost && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {selectedPost.title}
-              </h2>
-              <button
-                onClick={() => setSelectedPost(null)}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            <div className="mb-4">{selectedPost.icon}</div>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              {selectedPost.content}
-            </p>
-            <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-              <span>{selectedPost.author}</span>
-              <span>{selectedPost.date}</span>
-            </div>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {selectedPost && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{selectedPost.title}</h2>
+                <button onClick={() => setSelectedPost(null)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <div className="mb-4">{selectedPost.icon}</div>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{selectedPost.content}</p>
+              <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+                <span>{selectedPost.author}</span>
+                <span>{selectedPost.date}</span>
+              </div>
+              <div className="mt-4 flex justify-between">
+                <button
+                  onClick={() => {
+                    // Implement feedback functionality
+                    showNotificationMessage("Thank you for your feedback!");
+                  }}
+                  className="flex items-center space-x-2 text-green-500 hover:text-green-600"
+                >
+                  <ThumbsUp className="h-5 w-5" />
+                  <span>Helpful</span>
+                </button>
+                <button
+                  onClick={() => {
+                    // Implement feedback functionality
+                    showNotificationMessage("We'll work on improving this content. Thank you!");
+                  }}
+                  className="flex items-center space-x-2 text-red-500 hover:text-red-600"
+                >
+                  <ThumbsDown className="h-5 w-5" />
+                  <span>Not Helpful</span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Notification */}
+      <AnimatePresence>
+        {showNotification && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg"
+          >
+            {notificationMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
-
-// function Quiz() {
-//   const [currentQuestion, setCurrentQuestion] = useState(0);
-//   const [score, setScore] = useState(0);
-//   const [showScore, setShowScore] = useState(false);
-//   const props = {}; // Added to avoid error in handleAnswerClick
-
-//   const questions = [
-//     {
-//       questionText: "What is the average length of a menstrual cycle?",
-//       answerOptions: [
-//         { answerText: "14 days", isCorrect: false },
-//         { answerText: "28 days", isCorrect: true },
-//         { answerText: "45 days", isCorrect: false },
-//         { answerText: "60 days", isCorrect: false },
-//       ],
-//     },
-//     {
-//       questionText: "Which of these is NOT a phase of the menstrual cycle?",
-//       answerOptions: [
-//         { answerText: "Follicular phase", isCorrect: false },
-//         { answerText: "Ovulation", isCorrect: false },
-//         { answerText: "Luteal phase", isCorrect: false },
-//         { answerText: "Gestation phase", isCorrect: true },
-//       ],
-//     },
-//     {
-//       questionText: "What hormone is responsible for the thickening of the uterine lining?",
-//       answerOptions: [
-//         { answerText: "Estrogen", isCorrect: true },
-//         { answerText: "Testosterone", isCorrect: false },
-//         { answerText: "Adrenaline", isCorrect: false },
-//         { answerText: "Insulin", isCorrect: false },
-//       ],
-//     },
-//   ];
-
-//   const handleAnswerClick = (isCorrect) => {
-//     if (isCorrect) {
-//       setScore(score + 1);
-//     }
-
-//     const nextQuestion = currentQuestion + 1;
-//     if (nextQuestion < questions.length) {
-//       setCurrentQuestion(nextQuestion);
-//     } else {
-//       setShowScore(true);
-//       props.onQuizComplete(score);
-//     }
-//   };
-
-//   return (
-//     <div className="quiz">
-//       {showScore ? (
-//         <div className="score-section text-xl font-semibold text-center p-4">
-//           You scored {score} out of {questions.length}
-//         </div>
-//       ) : (
-//         <>
-//           <div className="question-section mb-6">
-//             <div className="question-count text-lg font-medium mb-2">
-//               <span>Question {currentQuestion + 1}</span>/{questions.length}
-//             </div>
-//             <div className="question-text text-xl font-semibold">{questions[currentQuestion].questionText}</div>
-//           </div>
-//           <div className="answer-section grid grid-cols-1 gap-4">
-//             {questions[currentQuestion].answerOptions.map((answerOption, index) => (
-//               <button
-//                 key={index}
-//                 onClick={() => handleAnswerClick(answerOption.isCorrect)}
-//                 className="px-4 py-2 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-colors duration-300"
-//               >
-//                 {answerOption.answerText}
-//               </button>
-//             ))}
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Blogs;

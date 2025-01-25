@@ -43,7 +43,6 @@ export function Landing() {
     }
   }, [darkMode]);
 
-  
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;

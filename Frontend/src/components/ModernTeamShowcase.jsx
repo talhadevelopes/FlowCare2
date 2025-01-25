@@ -27,6 +27,7 @@ const teamMembers = [
     // bio: "You dont know me, but your wife does, and the nigga who complained about me - bruh your mom loves pan cakes right?",
     bio: "An undergrad refining skills with MERN in hand, deploying apps with DevOps to take a stand. Crafting solutions that work across the land, the digital world is mine to command.",
     linkedin: "https://www.linkedin.com/in/mohammed-talha-ahmed-6871a42ab/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    github: "https://www.github.com/talhadevelopes",
     isLead: false
   },
   {
@@ -36,6 +37,7 @@ const teamMembers = [
     image: noumanImage,
     bio: "Hi, I'm Mohammed Nouman! I'm currently in my 3rd semester of IT engineering, diving deep into DevOps while sharpening my Full Stack skills. When I'm not coding, I'm either watching Hollywood action films or enjoying some thrilling sports moments. 🚀🎥⚽",
     linkedin: "https://www.linkedin.com/in/mohammed-nouman-3320a7279/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    github: "https://www.github.com/MOHAMMED-NOUMAN",
     isLead: false
   },
   {
@@ -206,4 +208,3 @@ export function ModernTeamShowcase() {
     </div>
   )
 }
-

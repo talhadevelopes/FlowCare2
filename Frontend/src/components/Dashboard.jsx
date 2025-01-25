@@ -205,7 +205,7 @@ export function Dashboard() {
   }
 
   if (!periodData) {
-    return <div>Sign/Sign in Required</div>;
+    return <div>Sign Up/Sign in Required</div>;
   }
 
   const cycleDay =

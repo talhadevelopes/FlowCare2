@@ -43,6 +43,7 @@ export function Landing() {
     }
   }, [darkMode]);
 
+  
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
@@ -589,7 +590,7 @@ export function Landing() {
                       Team EmpowerHer
                     </h3>
                     <p className="text-gray-400">
-                      Building for HackRevolution - January 5, 2024
+                      Building for HackForge - January 25, 2025
                     </p>
                   </div>
                   <div className="bg-green-500/20 px-3 py-1 rounded-full flex items-center">
@@ -673,7 +674,7 @@ export function Landing() {
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-4 w-4 text-gray-400" />
                     <span className="text-gray-400 text-sm">
-                      Started: Dec 2023
+                      Started: Jan 2025
                     </span>
                   </div>
                   <div className="flex items-center space-x-2 justify-end">

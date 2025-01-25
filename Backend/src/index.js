@@ -48,6 +48,7 @@ app.post("/signup", async(req, res) => {
     }
 });
 
+
 app.post("/trackerdata", async (req, res) => {
     const { userId, ...trackerData } = req.body;
 

@@ -46,6 +46,7 @@ const doctors = [
   }
 ]
 
+
 export function Consultations() {
   const navigate = useNavigate()
   const [selectedSpecialization, setSelectedSpecialization] = useState('')

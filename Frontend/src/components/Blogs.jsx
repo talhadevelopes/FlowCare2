@@ -221,6 +221,7 @@ export function Blogs() {
     fetchTrendingTopics();
   }, []);
 
+  
   useEffect(() => {
     if (readingTimeRef.current) {
       clearInterval(readingTimeRef.current);

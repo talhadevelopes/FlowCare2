@@ -57,7 +57,7 @@ export function Landing() {
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
-      {/* Sidebar */}
+      {/* Sidebarr */}
       <aside
         className={`bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4 fixed transition-all duration-300 ease-in-out ${
           sidebarVisible ? "translate-x-0" : "-translate-x-full"

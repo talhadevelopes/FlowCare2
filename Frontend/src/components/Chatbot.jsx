@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Send, Moon, Sun, Home, Trash2, LayoutDashboard,ActivitySquare, Loader,GraduationCap, Bot,MessageSquare, HeartPulse, Paperclip, Smile, Volume2, VolumeX, HelpCircle, BookOpen, ShoppingBag, Activity, Stethoscope, MessageCircle } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Sidebar } from "./Sidebar"
+
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -194,39 +196,11 @@ export function Chatbot() {
     return () => document.head.removeChild(style);
   }, []);
 
-  const SidebarLink = ({ icon, label, onClick, active = false }) => (
-    <button
-      onClick={onClick}
-      className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
-        active
-          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
-          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </button>
-  );
+  
 
   return (
     <div className={`flowcare-chatbot ${isDarkMode ? '' : 'light'} flex h-screen`}>
-      {/* Sidebar */}
-      <aside className="bg-[var(--fc-bg-secondary)] w-64 p-4 border-r border-[var(--fc-accent)]">
-      <nav className="mt-8">
-          <div className="px-4 py-4 flex flex-col space-y-2">
-            <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">FlowCare</h1>
-            <SidebarLink icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
-            <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
-            <SidebarLink icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} />
-            <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
-            <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
-            <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
-            <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} active/>
-            <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" onClick={() => navigate('/symptomsanalyzer')} />
-            <SidebarLink icon={<MessageSquare size={20} />} label="Forums" onClick={() => navigate('/forums')}  />
-          </div>
-        </nav>
-      </aside>
+     <Sidebar darkMode={isDarkMode} />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col bg-[var(--fc-bg-primary)] transition-colors duration-200">

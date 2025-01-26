@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, HeartPulse, MessageSquare, Frown, Smile, Angry, Coffee, Zap, Moon, ChevronDown, ChevronUp, Heart, Sun, LayoutDashboard, Home, GraduationCap, ShoppingBag, ActivitySquare, Stethoscope, Bot, Search, BookOpen, Utensils, Leaf, Clock, Filter, Bookmark, Share2, Award, Sparkles, Brain, Dumbbell, Pill, Droplet, X, TrendingUp, BarChart, Bell, Info, ArrowRight, ThumbsUp, ThumbsDown, Lock, Unlock } from 'lucide-react';
+import { Sidebar } from "./Sidebar"
 
 // Existing blog posts and women's health topics data...
 // (Keep the existing data for blogPosts and womenHealthTopics)
@@ -324,19 +325,7 @@ export function Blogs() {
       post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const SidebarLink = ({ icon, label, onClick, active = false }) => (
-    <button
-      onClick={onClick}
-      className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
-        active
-          ? 'bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200'
-          : 'text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700'
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </button>
-  );
+  
 
   const ProgressChart = () => (
     <motion.div
@@ -476,21 +465,7 @@ export function Blogs() {
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
-      {/* Sidebar */}
-      <aside className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4">
-        <nav className="mt-8 space-y-4">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">FlowCare</h1>
-          <SidebarLink icon={<LayoutDashboard size={20} />} label="Dashboard" onClick={() => navigate('/dashboard')} />
-          <SidebarLink icon={<Home size={20} />} label="Home" onClick={() => navigate('/')} />
-          <SidebarLink icon={<GraduationCap size={20} />} label="Education" onClick={() => navigate('/blogs')} active />
-          <SidebarLink icon={<ShoppingBag size={20} />} label="Shop" onClick={() => navigate('/Ecom')} />
-          <SidebarLink icon={<ActivitySquare size={20} />} label="Track Your Health" onClick={() => navigate('/tracker')} />
-          <SidebarLink icon={<Stethoscope size={20} />} label="Expert Consultation" onClick={() => navigate('/consultations')} />
-          <SidebarLink icon={<Bot size={20} />} label="AI Chatbot" onClick={() => navigate('/ChatBot')} />
-          <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" onClick={() => navigate('/symptomsanalyzer')} />
-          <SidebarLink icon={<MessageSquare size={20} />} label="Community Forum" onClick={() => navigate('/forum')} />
-        </nav>
-      </aside>
+      <Sidebar darkMode={darkMode} />
 
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-auto bg-gradient-to-br from-pink-50 to-purple-50 dark:from-gray-900 dark:to-purple-900">

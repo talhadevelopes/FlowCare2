@@ -26,6 +26,8 @@ import {
   HeartPulse,
   MessageSquare,
 } from "lucide-react";
+import { Sidebar } from "./Sidebar"
+
 
 const commonSymptoms = [
   "Abdominal cramps",
@@ -87,32 +89,6 @@ export function SymptomAnalysis() {
 
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
-  };
-
-  const SidebarLink = ({ icon, label, onClick, active = false }) => {
-    return (
-      <button
-        onClick={onClick}
-        className={`flex items-center space-x-2 w-full px-2 py-2 rounded-lg transition-colors ${
-          active
-            ? "bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200"
-            : "text-gray-900 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700"
-        }`}
-      >
-        {icon}
-        <span>{label}</span>
-      </button>
-    );
-  };
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
-  const handleSymptomToggle = (symptom) => {
-    setSelectedSymptoms((prev) =>
-      prev.includes(symptom)
-        ? prev.filter((s) => s !== symptom)
-        : [...prev, symptom]
-    );
   };
 
   const handleAddCustomSymptom = () => {
@@ -539,88 +515,15 @@ export function SymptomAnalysis() {
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
-      {/* Sidebar**/}
-      <aside
-        className={`bg-pink-100 dark:bg-gray-800 fixed min-h-screen  transition-all duration-300 ease-in-out ${
-          sidebarVisible ? "w-64" : "w-0"
-        }`}
-        style={{
-          zIndex: 40,
-          overflow: sidebarVisible ? "visible" : "hidden",
-        }}
-      >
-        <div className="px-4 py-4 flex flex-col space-y-2">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">
-            FlowCare
-          </h1>
-          <SidebarLink
-            icon={<LayoutDashboard size={20} />}
-            label="Dashboard"
-            onClick={() => navigate("/dashboard")}
-          />
-          <SidebarLink
-            icon={<Home size={20} />}
-            label="Home"
-            onClick={() => navigate("/")}
-          />
-          <SidebarLink
-            icon={<GraduationCap size={20} />}
-            label="Education"
-            onClick={() => navigate("/blogs")}
-          />
-          <SidebarLink
-            icon={<ShoppingBag size={20} />}
-            label="Shop"
-            onClick={() => navigate("/Ecom")}
-          />
-          <SidebarLink
-            icon={<ActivitySquare size={20} />}
-            label="Track Your Health"
-            onClick={() => navigate("/tracker")}
-          />
-          <SidebarLink
-            icon={<Stethoscope size={20} />}
-            label="Expert Consultation"
-            onClick={() => navigate("/consultations")}
-          />
-          <SidebarLink
-            icon={<Bot size={20} />}
-            label="AI Chatbot"
-            onClick={() => navigate("/ChatBot")}
-          />
-          <SidebarLink
-            icon={<HeartPulse size={20} />}
-            label="HealthLens"
-            onClick={() => navigate("/symptomsanalyzer")}
-          />
-          <SidebarLink
-            icon={<MessageSquare size={20} />}
-            label="Forums"
-            onClick={() => navigate("/forums")}
-          />
-        </div>
-      </aside>
+     <Sidebar darkMode={darkMode} />
 
       {/* Sidebar Toggle Button */}
-      <button
-        onClick={toggleSidebar}
-        className={`fixed top-4 z-10 p-2 bg-pink-600 text-white rounded-r-md transition-all duration-300 ease-in-out focus:outline-none ${
-          sidebarVisible ? "left-64" : "left-0"
-        }`}
-        aria-label={sidebarVisible ? "Hide sidebar" : "Show sidebar"}
-      >
-        <ChevronRight
-          size={24}
-          className={`transition-transform duration-300 ${
-            sidebarVisible ? "rotate-180" : "rotate-0"
-          }`}
-        />
-      </button>
+      
 
       {/* Main Content */}
       <div
         className={`transition-all duration-300 ease-in-out ${
-          sidebarVisible ? "ml-64" : "ml-0"
+          sidebarVisible ? "ml-0" : "ml-0"
         } flex-1 dark:bg-gray-900`}
       >
         <div className="max-w-screen-xl mx-auto p-4 space-y-6  dark:text-gray-100">

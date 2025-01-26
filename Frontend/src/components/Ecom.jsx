@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Sidebar } from "./Sidebar"
+
 // import { useRouter } from "nexet/navigation"
 import {
   ShoppingCart,
@@ -157,19 +159,8 @@ const products = [
   },
 ];
 
-const SidebarLink = ({ icon, label, onClick, active = false }) => (
-  <button
-    onClick={onClick}
-    className={`flex items-center space-x-2 w-full px-4 py-2 rounded-lg transition-colors ${
-      active
-        ? "bg-pink-200 dark:bg-pink-900 text-pink-800 dark:text-pink-200"
-        : "text-gray-600 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700"
-    }`}
-  >
-    {icon}
-    <span>{label}</span>
-  </button>
-);
+
+
 
 const categories = [
   "All",
@@ -335,59 +326,7 @@ export function Ecom() {
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
-      <aside className="bg-white dark:bg-gray-800 w-64 min-h-screen p-4">
-        <nav className="mt-8 space-y-4">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-8">
-            FlowCare
-          </h1>
-          <SidebarLink
-            icon={<LayoutDashboard size={20} />}
-            label="Dashboard"
-            onClick={() => navigate("/dashboard")}
-          />
-          <SidebarLink
-            icon={<Home size={20} />}
-            label="Home"
-            onClick={() => navigate("/")}
-          />
-          <SidebarLink
-            icon={<GraduationCap size={20} />}
-            label="Education"
-            onClick={() => navigate("/blogs")}
-          />
-          <SidebarLink
-            icon={<ShoppingBag size={20} />}
-            label="Shop"
-            onClick={() => navigate("/Ecom")}
-            active
-          />
-          <SidebarLink
-            icon={<ActivitySquare size={20} />}
-            label="Track Your Health"
-            onClick={() => navigate("/tracker")}
-          />
-          <SidebarLink
-            icon={<Stethoscope size={20} />}
-            label="Expert Consultation"
-            onClick={() => navigate("/consultations")}
-          />
-          <SidebarLink
-            icon={<Bot size={20} />}
-            label="AI Chatbot"
-            onClick={() => navigate("/ChatBot")}
-          />
-          <SidebarLink
-            icon={<HeartPulse size={20} />}
-            label="HealthLens"
-            onClick={() => navigate("/symptomsanalyzer")}
-          />
-          <SidebarLink
-            icon={<MessageSquare size={20} />}
-            label="Forums"
-            onClick={() => navigate("/forums")}
-          />
-        </nav>
-      </aside>
+     <Sidebar darkMode={darkMode} />
 
       <main className="flex-1 p-8 overflow-auto bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto space-y-12">

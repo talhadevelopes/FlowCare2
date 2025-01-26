@@ -26,6 +26,8 @@ import {
   UserCircle,
   UsersRound,
 } from "lucide-react";
+import { Sidebar } from "./Sidebar"
+
 
 export function Landing() {
   const navigate = useNavigate();
@@ -51,91 +53,18 @@ export function Landing() {
     });
   };
 
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
+
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
-      {/* Sidebarr */}
-      <aside
-        className={`bg-pink-100 dark:bg-gray-800 w-64 min-h-screen p-4 fixed transition-all duration-300 ease-in-out ${
-          sidebarVisible ? "translate-x-0" : "-translate-x-full"
-        }`}
-        style={{ zIndex: 40 }}
-      >
-        <div className="px-4 py-4 flex flex-col space-y-2">
-          <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">
-            FlowCare
-          </h1>
-          <SidebarLink
-            icon={<LayoutDashboard size={20} />}
-            label="Dashboard"
-            onClick={() => navigate("/dashboard")}
-          />
-          <SidebarLink
-            icon={<Home size={20} />}
-            label="Home"
-            onClick={() => navigate("/")}
-          />
-          <SidebarLink
-            icon={<GraduationCap size={20} />}
-            label="Education"
-            onClick={() => navigate("/blogs")}
-          />
-          <SidebarLink
-            icon={<ShoppingBag size={20} />}
-            label="Shop"
-            onClick={() => navigate("/Ecom")}
-          />
-          <SidebarLink
-            icon={<ActivitySquare size={20} />}
-            label="Track Your Health"
-            onClick={() => navigate("/tracker")}
-          />
-          <SidebarLink
-            icon={<Stethoscope size={20} />}
-            label="Expert Consultation"
-            onClick={() => navigate("/consultations")}
-          />
-          <SidebarLink
-            icon={<Bot size={20} />}
-            label="AI Chatbot"
-            onClick={() => navigate("/ChatBot")}
-          />
-          <SidebarLink
-            icon={<HeartPulse size={20} />}
-            label="HealthLens"
-            onClick={() => navigate("/symptomsanalyzer")}
-          />
-          <SidebarLink
-            icon={<MessageSquare size={20} />}
-            label="Forums"
-            onClick={() => navigate("/forums")}
-          />
-        </div>
-      </aside>
+     <Sidebar darkMode={darkMode} />
 
-      <button
-        onClick={toggleSidebar}
-        className="fixed left-0 top-4 z-10 p-2 bg-pink-600 text-white rounded-r-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
-        style={{
-          transform: sidebarVisible ? "translateX(256px)" : "translateX(0)",
-        }}
-        aria-label={sidebarVisible ? "Hide sidebar" : "Show sidebar"}
-      >
-        <ChevronRight
-          size={24}
-          className={`transition-transform duration-300 ${
-            sidebarVisible ? "rotate-180" : "rotate-0"
-          }`}
-        />
-      </button>
+    
 
       {/* Main Content */}
       <main
         className={`flex-1 p-6 overflow-auto bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out ${
-          sidebarVisible ? "ml-64" : "ml-0"
+          sidebarVisible ? "ml-0" : "ml-0"
         }`}
       >
         <div className="max-w-6xl mx-auto space-y-12">

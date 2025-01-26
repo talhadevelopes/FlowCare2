@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import { CalendarIcon, MapPin, Search, Star, Clock, DollarSign, ChevronDown, Sun, Moon } from "lucide-react"

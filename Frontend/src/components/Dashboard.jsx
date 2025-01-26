@@ -18,7 +18,7 @@ export function Dashboard() {
   const [periodData, setPeriodData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [sidebarVisible, setSidebarVisible] = useState(true);   
   const [selectedData, setSelectedData] = useState({
     cycleInfo: true,
     moodData: true,

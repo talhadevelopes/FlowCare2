@@ -3,7 +3,7 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import { CalendarIcon, MapPin, Search, Star, Clock, DollarSign, ChevronDown, Sun, Moon } from "lucide-react"
-import Sidebar from "./Sidebar"
+import { Sidebar } from "./Sidebar"
 
 const specializations = [
   "Gynecology",

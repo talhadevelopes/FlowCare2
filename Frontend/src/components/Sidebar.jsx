@@ -1,6 +1,6 @@
-import React from "react"
+import {useState} from "react"
 import { Link } from "react-router-dom"
-import {
+import { 
   LayoutDashboard,
   Home,
   GraduationCap,
@@ -10,6 +10,7 @@ import {
   Bot,
   HeartPulse,
   MessageSquare,
+  ChevronRight,
 } from "lucide-react"
 
 const SidebarLink = ({ icon, label, to }) => (
@@ -20,9 +21,15 @@ const SidebarLink = ({ icon, label, to }) => (
     {icon}
     <span>{label}</span>
   </Link>
+  
 )
 
-const Sidebar = ({ darkMode }) => {
+
+export const Sidebar = ({ darkMode }) => {
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
   return (
     <aside className={`bg-white dark:bg-gray-800 w-64 min-h-screen p-4 ${darkMode ? "dark" : ""}`}>
       <nav className="mt-8 space-y-4">
@@ -38,8 +45,8 @@ const Sidebar = ({ darkMode }) => {
         <SidebarLink icon={<MessageSquare size={20} />} label="Forums" to="/forums" />
       </nav>
     </aside>
+    
   )
 }
 
-export default Sidebar
 

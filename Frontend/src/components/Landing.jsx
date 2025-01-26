@@ -64,7 +64,7 @@ export function Landing() {
       {/* Main Content */}
       <main
         className={`flex-1 p-6 overflow-auto bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out ${
-          sidebarVisible ? "ml-64" : "ml-0"
+          sidebarVisible ? "ml-0" : "ml-0"
         }`}
       >
         <div className="max-w-6xl mx-auto space-y-12">

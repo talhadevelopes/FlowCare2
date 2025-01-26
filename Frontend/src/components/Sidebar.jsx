@@ -11,7 +11,7 @@ import {
   HeartPulse,
   MessageSquare,
 } from "lucide-react";
-import SidebarLink from "./SidebarLink"; 
+import Sidebar from "./Sidebar"; 
 
 const Sidebar = ({ darkMode }) => {
   const navigate = useNavigate();

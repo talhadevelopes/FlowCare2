@@ -10,7 +10,7 @@ import {
   Bot,
   HeartPulse,
   MessageSquare,
-  ChevronRight,
+  
 } from "lucide-react"
 
 const SidebarLink = ({ icon, label, to }) => (
@@ -24,12 +24,11 @@ const SidebarLink = ({ icon, label, to }) => (
   
 )
 
-
+const toggleSidebar = () => {
+  setSidebarVisible(!sidebarVisible);
+};
 export const Sidebar = ({ darkMode }) => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
   return (
     <aside className={`bg-white dark:bg-gray-800 w-64 min-h-screen p-4 ${darkMode ? "dark" : ""}`}>
       <nav className="mt-8 space-y-4">
@@ -44,9 +43,24 @@ export const Sidebar = ({ darkMode }) => {
         <SidebarLink icon={<HeartPulse size={20} />} label="HealthLens" to="/symptomsanalyzer" />
         <SidebarLink icon={<MessageSquare size={20} />} label="Forums" to="/forums" />
       </nav>
+      <button
+        onClick={toggleSidebar}
+        className="fixed left-0 top-4 z-10 p-2 bg-pink-600 text-white rounded-r-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50"
+        style={{
+          transform: sidebarVisible ? "translateX(256px)" : "translateX(0)",
+        }}
+        aria-label={sidebarVisible ? "Hide sidebar" : "Show sidebar"}
+      >
+        <ChevronRight
+          size={24}
+          className={`transition-transform duration-300 ${
+            sidebarVisible ? "rotate-180" : "rotate-0"
+          }`}
+        />
+      </button>
     </aside>
-    
   )
 }
 
 
+ 

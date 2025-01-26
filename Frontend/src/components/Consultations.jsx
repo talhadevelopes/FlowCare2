@@ -1,17 +1,16 @@
-'use client'
+"use client"
 
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import { CalendarIcon, MapPin, Search, Star, Clock, DollarSign, ChevronDown, Sun, Moon } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-import { Sidebar } from './Sidebar'
+import React, { useState } from "react"
+import { motion } from "framer-motion"
+import { CalendarIcon, MapPin, Search, Star, Clock, DollarSign, ChevronDown, Sun, Moon } from "lucide-react"
+import Sidebar from "./Sidebar"
 
 const specializations = [
   "Gynecology",
   "Obstetrics",
   "Reproductive Endocrinology",
   "Urogynecology",
-  "Gynecologic Oncology"
+  "Gynecologic Oncology",
 ]
 
 const doctors = [
@@ -23,7 +22,7 @@ const doctors = [
     reviewCount: 124,
     availableDate: "2024-03-15",
     price: 150,
-    image: "/placeholder.svg?height=100&width=100"
+    image: "/placeholder.svg?height=100&width=100",
   },
   {
     id: 2,
@@ -33,7 +32,7 @@ const doctors = [
     reviewCount: 98,
     availableDate: "2024-03-16",
     price: 180,
-    image: "/placeholder.svg?height=100&width=100"
+    image: "/placeholder.svg?height=100&width=100",
   },
   {
     id: 3,
@@ -43,32 +42,31 @@ const doctors = [
     reviewCount: 86,
     availableDate: "2024-03-17",
     price: 200,
-    image: "/placeholder.svg?height=100&width=100"
-  }
+    image: "/placeholder.svg?height=100&width=100",
+  },
 ]
 
 export function Consultations() {
-  const navigate = useNavigate()
-  const [selectedSpecialization, setSelectedSpecialization] = useState('')
+  const [selectedSpecialization, setSelectedSpecialization] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true")
 
   const toggleDarkMode = () => {
-    setDarkMode(prevMode => {
+    setDarkMode((prevMode) => {
       const newMode = !prevMode
-      localStorage.setItem('darkMode', newMode.toString())
+      localStorage.setItem("darkMode", newMode.toString())
       return newMode
     })
   }
 
   return (
-    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
-      <Sidebar />
+    <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
+      <Sidebar darkMode={darkMode} />
 
       <main className="flex-1 p-8 overflow-auto bg-white dark:bg-gray-900 transition-all duration-300 ease-in-out">
         <div className="container mx-auto py-8 px-4">
           <div className="flex justify-between items-center mb-8">
-            <motion.h1 
+            <motion.h1
               className="text-4xl font-bold text-center text-pink-600 dark:text-pink-400"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -84,7 +82,7 @@ export function Consultations() {
             </button>
           </div>
 
-          <motion.div 
+          <motion.div
             className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -94,7 +92,9 @@ export function Consultations() {
             <p className="text-gray-600 dark:text-gray-300 mb-6">Search for women's health experts in your area</p>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="flex-1 relative">
-                <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Location</label>
+                <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Location
+                </label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <input
@@ -106,14 +106,22 @@ export function Consultations() {
                 </div>
               </div>
               <div className="flex-1 relative">
-                <label htmlFor="specialization" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Specialization</label>
+                <label
+                  htmlFor="specialization"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                >
+                  Specialization
+                </label>
                 <div className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="w-full text-left pl-3 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 bg-white dark:bg-gray-700 dark:text-white"
                   >
                     {selectedSpecialization || "Select specialization"}
-                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                    <ChevronDown
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                      size={18}
+                    />
                   </button>
                   {isDropdownOpen && (
                     <motion.ul
@@ -156,7 +164,11 @@ export function Consultations() {
               >
                 <div className="p-6">
                   <div className="flex items-center space-x-4 mb-4">
-                    <img src={doctor.image} alt={doctor.name} className="w-16 h-16 rounded-full object-cover" />
+                    <img
+                      src={doctor.image || "/placeholder.svg"}
+                      alt={doctor.name}
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
                     <div>
                       <h3 className="text-lg font-semibold dark:text-white">{doctor.name}</h3>
                       <p className="text-gray-600 dark:text-gray-300">{doctor.specialization}</p>
@@ -164,10 +176,12 @@ export function Consultations() {
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
                     <div>
-                      <Star className="inline-block text-yellow-400" size={18} /> {doctor.rating} ({doctor.reviewCount} reviews)
+                      <Star className="inline-block text-yellow-400" size={18} /> {doctor.rating} ({doctor.reviewCount}{" "}
+                      reviews)
                     </div>
                     <div>
-                      <CalendarIcon className="inline-block text-gray-400" size={18} /> Available: {doctor.availableDate}
+                      <CalendarIcon className="inline-block text-gray-400" size={18} /> Available:{" "}
+                      {doctor.availableDate}
                     </div>
                     <div>
                       <DollarSign className="inline-block text-green-400" size={18} /> Price: ${doctor.price}
@@ -182,3 +196,4 @@ export function Consultations() {
     </div>
   )
 }
+

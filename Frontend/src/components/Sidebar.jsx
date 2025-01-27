@@ -23,8 +23,8 @@ const SidebarLink = ({ icon, label, onClick, active = false, collapsed = false }
           : "text-gray-900 dark:text-gray-300 hover:bg-pink-100 dark:hover:bg-gray-700"
       }`}
     >
-      {icon}
-      {!collapsed && <span>{label}</span>}
+      <div className="flex items-center justify-center w-8">{icon}</div>
+      {collapsed ? null : <span>{label}</span>}
     </button>
   )
 }
@@ -40,14 +40,14 @@ export const Sidebar = ({ darkMode }) => {
   return (
     <aside
       className={`bg-pink-100 dark:bg-gray-800 min-h-screen sticky top-0 transition-all duration-300 z-30
-        ${isCollapsed ? "w-16" : "w-64"}`}
+        ${isCollapsed ? "w-24" : "w-64"}`}
     >
       <div className="h-full px-4 py-4 flex flex-col space-y-2">
         <h1
-          className={`text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4 transition-opacity duration-200
-          ${isCollapsed ? "opacity-0 h-0 mb-0" : "opacity-100"}`}
+          className={`text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4 transition-all duration-200 text-center
+          ${isCollapsed ? "text-xl" : ""}`}
         >
-          FlowCare
+          {isCollapsed ? "FC" : "FlowCare"}
         </h1>
         <SidebarLink
           icon={<LayoutDashboard size={20} />}
@@ -109,7 +109,7 @@ export const Sidebar = ({ darkMode }) => {
         onClick={() => setIsCollapsed(!isCollapsed)}
         className={`fixed top-8 z-50 p-2 bg-pink-600 text-white rounded-r-md transition-all duration-300 ease-in-out 
           focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50
-          ${isCollapsed ? "left-16" : "left-64"}`}
+          ${isCollapsed ? "left-24" : "left-64"}`}
         aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         <ChevronRight

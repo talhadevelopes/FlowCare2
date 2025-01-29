@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
-const Footer = ({ darkMode }) => {
+export const Footer = ({ darkMode }) => {
+  const navigate = useNavigate(); // Initialize navigate
+
   return (
     <footer className={`mt-12 pt-8 border-t ${darkMode ? "border-gray-700" : "border-gray-200"}`}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -12,7 +15,7 @@ const Footer = ({ darkMode }) => {
           <ul className="space-y-2">
             <li>
               <button
-                onClick={() => navigate("/symptomsanalyzer")}
+                onClick={() => navigate("/symptomsanalyzer")} // Use navigate for routing
                 className={`${darkMode ? "text-gray-400 hover:text-pink-400" : "text-gray-700 hover:text-pink-600"}`}
               >
                 About Us
@@ -20,7 +23,7 @@ const Footer = ({ darkMode }) => {
             </li>
             <li>
               <button
-                onClick={() => navigate("/parents")}
+                onClick={() => navigate("/parents")} // Use navigate for routing
                 className={`${darkMode ? "text-gray-400 hover:text-pink-400" : "text-gray-700 hover:text-pink-600"}`}
               >
                 Careers
@@ -147,5 +150,3 @@ const Footer = ({ darkMode }) => {
     </footer>
   );
 };
-
-export default Footer;
